@@ -121,13 +121,22 @@
             align-items: center;
             justify-content: center;
             position: relative;
+            overflow: hidden;
+        }
+
+        /* 画像を表示させるためのCSS */
+        .work-visual img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
         }
 
         .work-visual::after {
-            content: "GALLERY IMAGE";
-            font-size: 3rem;
-            color: #1a1a1a;
-            letter-spacing: 1em;
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(180deg, transparent 50%, #000 100%);
+            opacity: 0.8;
         }
 
         .work-info {
@@ -232,17 +241,46 @@
         <h2 class="section-title">GALLERY</h2>
 
         <div class="work-item">
-            <div class="work-visual"></div>
+            <div class="work-visual">
+                <img src="images/manga_1.png" alt="4コマ漫画：ツムツムと電車" />
+            </div>
             <div class="work-info">
-                <h3 class="work-type">4-Panel Manga<br>Structure</h3>
+                <h3 class="work-type">Manga 1: Tsum Tsum Journey</h3>
                 <div class="work-desc">
                     <p>
-                        起承転結の論理構造をGemに事前学習させ、物語のリズムを自動制御。
-                        キャラクターの一貫性を保ちながら、視覚的な誘導までを含めた構成案を瞬時に導き出します。
+                        電車での移動中、退屈していた女性がLINE: Disney Tsum Tsumをプレイして、最高スコアを出すまでの物語。AIが「最高スコア」の達成感をビジュアルとリズムで強調するよう、構成と表情を制御しています。
                     </p>
-                    <div class="mechanism-box">
-                        Mechanism: 構成Gemが物語の骨子を作成し、ビジュアルGemがNano Banana 2と連携。画風と感情表現をパラメータ化して固定しています。
-                    </div>
+                    <div class="mechanism-box">Mechanism: 構成Gemが、日常の退屈からゲームの達成感、そして共有という感情の起伏を設計。ビジュアルGemがツムツムのキャラクターの一貫性と、プレイ画面のリアリティをNano Banana 2と連携して固定しています。</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="work-item">
+            <div class="work-visual">
+                <img src="images/manga_2.png" alt="4コマ漫画：お点前と猫と1位" />
+            </div>
+            <div class="work-info">
+                <h3 class="work-type">Manga 2: Zen and the Online Ranking</h3>
+                <div class="work-desc">
+                    <p>
+                        お点前で心を落ち着けている最中、猫が持ってきたタブレットでネットゲームをプレイし、全国ランキング1位を獲得する師匠の物語。AIが「和の心」と「ネットゲームの興奮」というコントラストを強調するよう、構成と表情を制御しています。
+                    </p>
+                    <div class="mechanism-box">Mechanism: 構成Gemが、和の静寂からネットゲームの興奮、そして和の心はどこへ......という感情の起伏を設計。ビジュアルGemが、和の空間とネットゲームのプレイ画面のコントラストをNano Banana 2と連携して固定しています。</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="work-item">
+            <div class="work-visual">
+                <img src="images/manga_3.png" alt="4コマ漫画：デジタルとアナログ" />
+            </div>
+            <div class="work-info">
+                <h3 class="work-type">Manga 3: The Pitfalls of Digitalization</h3>
+                <div class="work-desc">
+                    <p>
+                        新ツールの導入により業務効率が劇的に改善したと喜ぶ上司と、早すぎて処理が追いつかない部下の物語。AIが「デジタルとアナログのコントラスト」を強調するよう、構成と表情を制御しています。
+                    </p>
+                    <div class="mechanism-box">Mechanism: 構成Gemが、デジタルとアナログのコントラストを設計。ビジュアルGemが、デジタルツールのプレイ画面とアナログの紙のコントラストをNano Banana 2と連携して固定しています。</div>
                 </div>
             </div>
         </div>
@@ -250,14 +288,13 @@
         <div class="work-item">
             <div class="work-visual" style="height: 400px;"></div>
             <div class="work-info">
-                <h3 class="work-type">Premium<br>Header Art</h3>
+                <h3 class="work-type">Automated Header Art<br>Visualization</h3>
                 <div class="work-desc">
                     <p>
-                        ブランドの本質を捉えたメインビジュアルの構築。
-                        黄金比や色彩心理に基づいた構図をGemが提案し、圧倒的なインパクトを持つヘッダーを生成します。
+                        抽象的なブランドキーワードをGemが黄金比や色彩心理に基づいた構図へと変換し、インパクトを持つ高解像度ヘッダーを自動生成します。
                     </p>
                     <div class="mechanism-box">
-                        Mechanism: 抽象的なブランドキーワードを、空間構成データへと変換。光の拡散と影のコントラストを数学的に配置するシステムです。
+                        Mechanism: 黄金比、色彩心理、構図 Gemがデータに基づいて、インパクトのあるヘッダーを生成します。
                     </div>
                 </div>
             </div>
@@ -266,18 +303,18 @@
         <div class="work-item">
             <div class="work-visual"></div>
             <div class="work-info">
-                <h3 class="work-type">Sketch to Reality<br>Perspectives</h3>
+                <h3 class="work-type">Sketch to Reality<br>Perspectives ( Exterior/Interior )</h3>
                 <div class="work-desc">
                     <p>
-                        手書きのラフイラストや簡素なパース図を、質感豊かな実写写真へと昇華。
-                        外観の重厚感から内観の細かな木目まで、物理的なリアリティをGemが補完します。
+                        手書きのラフイラストや簡素なパース図をGemが物理的なリアリティを補完し、質感豊かな実写写真へと昇華します。
                     </p>
                     <div class="mechanism-box">
-                        Mechanism: イラストの輪郭線を構造データとして抽出。マテリアル合成エンジンを通じて、現実の建築素材の質感をピクセル単位で再構築します。
+                        Mechanism: イラスト、輪郭線、構造 Gemがデータに基づいて、質感のある写真を生成します。
                     </div>
                 </div>
             </div>
         </div>
+
     </section>
 
     <section class="store-section">
