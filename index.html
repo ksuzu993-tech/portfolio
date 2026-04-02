@@ -139,6 +139,45 @@
             opacity: 0.8;
         }
 
+        /* ビフォー・アフター比較用のCSS */
+        .work-visual.compare-mode {
+            display: flex;
+            height: 600px;
+        }
+
+        .work-visual.compare-mode img {
+            height: 100%;
+            width: 50%;
+            object-fit: cover;
+            max-width: none;
+            max-height: none;
+        }
+
+        /* 比較モード用のオーバーレイ調整（画像がよく見えるように） */
+        .work-visual.compare-mode::after {
+            background: transparent;
+        }
+
+        /* ビフォー・アフターのラベルCSS */
+        .compare-label {
+            position: absolute;
+            top: 20px;
+            font-size: 0.8rem;
+            color: #ffffff;
+            border: 1px solid #ffffff;
+            padding: 5px 15px;
+            opacity: 0.6;
+            letter-spacing: 0.3em;
+        }
+
+        .compare-label.before {
+            left: 20px;
+        }
+
+        .compare-label.after {
+            right: 20px;
+        }
+
         .work-info {
             display: grid;
             grid-template-columns: 1fr 2fr;
@@ -205,6 +244,8 @@
             .section-title { font-size: 2.5rem; }
             .gem-concept, .work-info { grid-template-columns: 1fr; }
             .work-visual { height: 500px; }
+            .work-visual.compare-mode { height: auto; flex-direction: column; }
+            .work-visual.compare-mode img { width: 100%; height: auto; }
         }
     </style>
 </head>
@@ -226,7 +267,7 @@
                 <div class="gem-text">
                     Geminiの「Gem」は、単なる回答者ではありません。
                     特定のクリエイティブ理論や建築的思考、物語の構成力をプログラムされた「知能の拡張」です。
-                    私はこのシステムを核に、一貫性のある高度な成果物を生み出しています。
+                    私はこのシステムを核に,一貫性のある高度な成果物を生み出しています。
                 </div>
                 <div class="gem-card">
                     <h3>System Architecture</h3>
@@ -239,6 +280,41 @@
     <section class="container">
         <span class="section-label">Archive</span>
         <h2 class="section-title">GALLERY</h2>
+
+        <div class="work-item">
+            <div class="work-visual compare-mode">
+                <span class="compare-label before">BEFORE | 3D PERSPECTIVE</span>
+                <img src="images/interior_sketch.png" alt="内観3Dパース（スケッチ）" class="compare-img sketch" />
+                <span class="compare-label after">AFTER | REALISTIC PHOTO</span>
+                <img src="images/interior_photo.png" alt="最終的なリアルな内観写真" class="compare-img photo" />
+            </div>
+            <div class="work-info">
+                <h3 class="work-type">Sketch to Reality<br>Interior Visualization</h3>
+                <div class="work-desc">
+                    <p>
+                        初期の3Dパース（左）から、光と質感を極限まで高めたリアルな写真（右）への変換。Gemが空間の奥行きや素材の質感を理解し、不自然さのないビジュアライゼーションを構築します。
+                    </p>
+                    <div class="mechanism-box">
+                        Mechanism: 空間構成Gemが初期パースの構造を読み込み、マテリアル合成エンジンによって、現実世界の光と質感をピクセル単位で再構築します。
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="work-item">
+            <div class="work-visual">
+                <img src="images/manga_2.png" alt="4コマ漫画：お点前と猫と1位" />
+            </div>
+            <div class="work-info">
+                <h3 class="work-type">Zen and the Online Ranking</h3>
+                <div class="work-desc">
+                    <p>
+                        お点前で心を落ち着けている最中、猫が持ってきたタブレットでネットゲームをプレイし、全国ランキング1位を獲得する師匠の物語。AIが「和の心」と「ネットゲームの興奮」というコントラストを強調するよう、構成と表情を制御しています。
+                    </p>
+                    <div class="mechanism-box">Mechanism: 構成Gemが、和の静寂からネットゲームの興奮、そして和の心はどこへ......という感情の起伏を設計。ビジュアルGemが、和の空間とネットゲームのプレイ画面のコントラストをNano Banana 2と連携して固定しています。</div>
+                </div>
+            </div>
+        </div>
 
         <div class="work-item">
             <div class="work-visual">
@@ -257,21 +333,6 @@
 
         <div class="work-item">
             <div class="work-visual">
-                <img src="images/manga_2.png" alt="4コマ漫画：お点前と猫と1位" />
-            </div>
-            <div class="work-info">
-                <h3 class="work-type">Manga 2: Zen and the Online Ranking</h3>
-                <div class="work-desc">
-                    <p>
-                        お点前で心を落ち着けている最中、猫が持ってきたタブレットでネットゲームをプレイし、全国ランキング1位を獲得する師匠の物語。AIが「和の心」と「ネットゲームの興奮」というコントラストを強調するよう、構成と表情を制御しています。
-                    </p>
-                    <div class="mechanism-box">Mechanism: 構成Gemが、和の静寂からネットゲームの興奮、そして和の心はどこへ......という感情の起伏を設計。ビジュアルGemが、和の空間とネットゲームのプレイ画面のコントラストをNano Banana 2と連携して固定しています。</div>
-                </div>
-            </div>
-        </div>
-
-        <div class="work-item">
-            <div class="work-visual">
                 <img src="images/manga_3.png" alt="4コマ漫画：デジタルとアナログ" />
             </div>
             <div class="work-info">
@@ -281,36 +342,6 @@
                         新ツールの導入により業務効率が劇的に改善したと喜ぶ上司と、早すぎて処理が追いつかない部下の物語。AIが「デジタルとアナログのコントラスト」を強調するよう、構成と表情を制御しています。
                     </p>
                     <div class="mechanism-box">Mechanism: 構成Gemが、デジタルとアナログのコントラストを設計。ビジュアルGemが、デジタルツールのプレイ画面とアナログの紙のコントラストをNano Banana 2と連携して固定しています。</div>
-                </div>
-            </div>
-        </div>
-
-        <div class="work-item">
-            <div class="work-visual" style="height: 400px;"></div>
-            <div class="work-info">
-                <h3 class="work-type">Automated Header Art<br>Visualization</h3>
-                <div class="work-desc">
-                    <p>
-                        抽象的なブランドキーワードをGemが黄金比や色彩心理に基づいた構図へと変換し、インパクトを持つ高解像度ヘッダーを自動生成します。
-                    </p>
-                    <div class="mechanism-box">
-                        Mechanism: 黄金比、色彩心理、構図 Gemがデータに基づいて、インパクトのあるヘッダーを生成します。
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="work-item">
-            <div class="work-visual"></div>
-            <div class="work-info">
-                <h3 class="work-type">Sketch to Reality<br>Perspectives ( Exterior/Interior )</h3>
-                <div class="work-desc">
-                    <p>
-                        手書きのラフイラストや簡素なパース図をGemが物理的なリアリティを補完し、質感豊かな実写写真へと昇華します。
-                    </p>
-                    <div class="mechanism-box">
-                        Mechanism: イラスト、輪郭線、構造 Gemがデータに基づいて、質感のある写真を生成します。
-                    </div>
                 </div>
             </div>
         </div>
