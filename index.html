@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>YAMADA | VISUAL ARCHITECT</title>
+    <title>YAMADA | AI ARCHITECT</title>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400&family=Noto+Serif+JP:wght@200;300&family=Montserrat:wght@100;200;300&display=swap" rel="stylesheet">
     <style>
         /* 全体設定：太字を完全に排除 */
@@ -11,202 +11,191 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-weight: 200 !important; /* 極細〜細身のウェイトで統一 */
+            font-weight: 200 !important;
         }
 
         body {
             background-color: #000000;
             color: #ffffff;
             font-family: 'Montserrat', 'Noto Serif JP', serif;
-            line-height: 2.2;
-            letter-spacing: 0.18em;
+            line-height: 2.4;
+            letter-spacing: 0.2em;
             overflow-x: hidden;
         }
 
         .container {
             max-width: 1400px;
             margin: 0 auto;
-            padding: 0 60px;
+            padding: 0 80px;
         }
 
         /* ヒーローセクション */
         header {
-            height: 90vh;
+            height: 100vh;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
             text-align: center;
-            border-bottom: 1px solid #1a1a1a;
+            background: radial-gradient(circle at center, #111 0%, #000 100%);
         }
 
         .brand-name {
             font-family: 'Cinzel', serif;
-            font-size: 6rem;
-            letter-spacing: 0.5em;
+            font-size: 7rem;
+            letter-spacing: 0.6em;
             color: #d4af37;
-            margin-bottom: 30px;
+            margin-bottom: 40px;
         }
 
         .sub-tagline {
-            font-size: 1.4rem;
+            font-size: 1.6rem;
             color: #888;
             text-transform: uppercase;
-            letter-spacing: 0.8em;
+            letter-spacing: 1em;
         }
 
         /* セクション共通 */
         section {
-            padding: 180px 0;
+            padding: 250px 0;
         }
 
         .section-label {
             font-family: 'Cinzel', serif;
-            font-size: 1rem;
+            font-size: 1.1rem;
             color: #d4af37;
             display: block;
-            margin-bottom: 30px;
+            margin-bottom: 40px;
             text-align: center;
-            letter-spacing: 0.5em;
+            letter-spacing: 0.6em;
         }
 
         .section-title {
-            font-size: 3.5rem;
+            font-size: 4rem;
             text-align: center;
-            margin-bottom: 120px;
-            letter-spacing: 0.3em;
-            color: #fff;
+            margin-bottom: 150px;
+            letter-spacing: 0.4em;
         }
 
         /* Gem紹介 */
         .gem-intro {
             background-color: #050505;
-            border-bottom: 1px solid #111;
         }
 
         .gem-concept {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 120px;
-            align-items: flex-start;
+            gap: 150px;
+            align-items: center;
         }
 
         .gem-text {
-            font-size: 1.6rem;
-            color: #bbbbbb;
-            text-align: justify;
+            font-size: 1.8rem;
+            color: #cccccc;
         }
 
         .gem-card {
             border-left: 1px solid #d4af37;
-            padding: 30px 50px;
-            margin-bottom: 50px;
-            background: linear-gradient(90deg, rgba(212, 175, 55, 0.03), transparent);
+            padding: 40px 60px;
+            background: linear-gradient(90deg, rgba(212, 175, 55, 0.05), transparent);
         }
 
         .gem-card h3 {
-            font-size: 1.8rem;
-            margin-bottom: 15px;
+            font-size: 2.2rem;
+            margin-bottom: 20px;
             color: #d4af37;
         }
 
-        .gem-card p {
-            font-size: 1.2rem;
-            color: #888;
+        /* ギャラリー項目 */
+        .work-item {
+            margin-bottom: 350px;
         }
 
-        /* ギャラリー */
-        .gallery-item {
-            margin-bottom: 250px;
-        }
-
-        .image-showcase {
+        .work-visual {
             width: 100%;
-            height: 700px;
+            height: 800px;
             background: #0a0a0a;
-            border: 1px solid #222;
+            border: 1px solid #1a1a1a;
+            margin-bottom: 80px;
             display: flex;
-            flex-direction: column;
             align-items: center;
             justify-content: center;
-            margin-bottom: 60px;
             position: relative;
-            overflow: hidden;
         }
 
-        /* ビフォー・アフター感を出すためのプレースホルダ */
-        .image-showcase::before {
-            content: "SKETCH";
-            position: absolute;
-            left: 50px;
-            top: 50px;
-            font-size: 0.8rem;
-            color: #444;
-            border: 1px solid #333;
-            padding: 5px 15px;
-        }
-
-        .image-showcase::after {
-            content: "REALISTIC PHOTOGRAPH";
-            font-size: 2.5rem;
+        .work-visual::after {
+            content: "GALLERY IMAGE";
+            font-size: 3rem;
             color: #1a1a1a;
-            letter-spacing: 0.6em;
+            letter-spacing: 1em;
         }
 
-        .item-info {
+        .work-info {
             display: grid;
-            grid-template-columns: 1.2fr 2fr;
-            gap: 80px;
-            align-items: baseline;
+            grid-template-columns: 1fr 2fr;
+            gap: 100px;
         }
 
-        .item-category {
-            font-size: 2.5rem;
+        .work-type {
+            font-size: 2.8rem;
             color: #d4af37;
             line-height: 1.2;
         }
 
-        .item-body {
-            font-size: 1.4rem;
+        .work-desc {
+            font-size: 1.6rem;
             color: #999;
         }
 
-        /* リンクボタン */
-        .btn-action {
-            display: inline-block;
-            margin-top: 50px;
-            padding: 25px 80px;
-            border: 1px solid #d4af37;
-            color: #d4af37;
-            text-decoration: none;
-            font-size: 1.1rem;
-            transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
-            text-transform: uppercase;
-            letter-spacing: 0.4em;
+        .mechanism-box {
+            margin-top: 40px;
+            padding: 30px;
+            border: 1px solid #222;
+            font-size: 1.2rem;
+            color: #777;
         }
 
-        .btn-action:hover {
-            background: #d4af37;
-            color: #000;
-            padding: 25px 100px;
+        /* ストア紹介 */
+        .store-section {
+            text-align: center;
+            background: #050505;
+        }
+
+        .store-links {
+            display: flex;
+            justify-content: center;
+            gap: 80px;
+            margin-top: 80px;
+        }
+
+        .store-link {
+            font-size: 2rem;
+            color: #d4af37;
+            text-decoration: none;
+            border-bottom: 1px solid transparent;
+            transition: 0.5s;
+        }
+
+        .store-link:hover {
+            border-bottom: 1px solid #d4af37;
+            letter-spacing: 0.3em;
         }
 
         /* フッター */
         footer {
-            padding: 120px 0;
+            padding: 150px 0;
             text-align: center;
             border-top: 1px solid #1a1a1a;
             color: #333;
-            letter-spacing: 0.5em;
-            font-size: 0.9rem;
+            letter-spacing: 0.8em;
+            font-size: 1rem;
         }
 
-        /* レスポンシブ */
         @media (max-width: 1100px) {
             .brand-name { font-size: 4rem; }
             .section-title { font-size: 2.5rem; }
-            .gem-concept, .item-info { grid-template-columns: 1fr; gap: 40px; }
-            .image-showcase { height: 450px; }
+            .gem-concept, .work-info { grid-template-columns: 1fr; }
+            .work-visual { height: 500px; }
         }
     </style>
 </head>
@@ -214,88 +203,99 @@
 
     <header>
         <div class="container">
-            <span class="sub-tagline">Visual Transformation</span>
+            <span class="sub-tagline">Beyond the Prompt</span>
             <h1 class="brand-name">YAMADA</h1>
-            <p style="color: #555; font-size: 1.1rem;">想像を現実に、絵を写真に変える知能のデザイン。</p>
+            <p style="color: #444; font-size: 1.4rem;">AIを設計し、想像を現実へと変換する。</p>
         </div>
     </header>
 
     <section class="gem-intro">
         <div class="container">
-            <span class="section-label">Our Core System</span>
+            <span class="section-label">Foundation</span>
             <h2 class="section-title">GEMINI GEMS</h2>
-            
             <div class="gem-concept">
                 <div class="gem-text">
-                    私が構築した専用Gemは、手書きのスケッチや未完成の絵から、光と質感の情報を補完し、息を呑むようなリアルな写真を生成します。
-                    建築のパース、理想の空間、そしてWebサイトの顔となるヘッダーデザイン。
-                    これらはすべて、AIとの対話から生まれる新しい芸術の形です。
+                    Geminiの「Gem」は、単なる回答者ではありません。
+                    特定のクリエイティブ理論や建築的思考、物語の構成力をプログラムされた「知能の拡張」です。
+                    私はこのシステムを核に、一貫性のある高度な成果物を生み出しています。
                 </div>
-                <div class="gem-system-list">
-                    <div class="gem-card">
-                        <h3>Visual Rendering Gem</h3>
-                        <p>線の情報を物理的な質感へと変換。木材、石材、光の反射を極めて正確に再現します。</p>
+                <div class="gem-card">
+                    <h3>System Architecture</h3>
+                    <p>プロンプトを毎回書くのではなく、AI自体を「漫画家」や「建築写真家」へと作り変えるアプローチです。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="container">
+        <span class="section-label">Archive</span>
+        <h2 class="section-title">GALLERY</h2>
+
+        <div class="work-item">
+            <div class="work-visual"></div>
+            <div class="work-info">
+                <h3 class="work-type">4-Panel Manga<br>Structure</h3>
+                <div class="work-desc">
+                    <p>
+                        起承転結の論理構造をGemに事前学習させ、物語のリズムを自動制御。
+                        キャラクターの一貫性を保ちながら、視覚的な誘導までを含めた構成案を瞬時に導き出します。
+                    </p>
+                    <div class="mechanism-box">
+                        Mechanism: 構成Gemが物語の骨子を作成し、ビジュアルGemがNano Banana 2と連携。画風と感情表現をパラメータ化して固定しています。
                     </div>
-                    <div class="gem-card">
-                        <h3>Architectural Logic</h3>
-                        <p>空間の奥行きや構造を理解し、不自然さのない内観・外観のパースを構築します。</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="work-item">
+            <div class="work-visual" style="height: 400px;"></div>
+            <div class="work-info">
+                <h3 class="work-type">Premium<br>Header Art</h3>
+                <div class="work-desc">
+                    <p>
+                        ブランドの本質を捉えたメインビジュアルの構築。
+                        黄金比や色彩心理に基づいた構図をGemが提案し、圧倒的なインパクトを持つヘッダーを生成します。
+                    </p>
+                    <div class="mechanism-box">
+                        Mechanism: 抽象的なブランドキーワードを、空間構成データへと変換。光の拡散と影のコントラストを数学的に配置するシステムです。
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="work-item">
+            <div class="work-visual"></div>
+            <div class="work-info">
+                <h3 class="work-type">Sketch to Reality<br>Perspectives</h3>
+                <div class="work-desc">
+                    <p>
+                        手書きのラフイラストや簡素なパース図を、質感豊かな実写写真へと昇華。
+                        外観の重厚感から内観の細かな木目まで、物理的なリアリティをGemが補完します。
+                    </p>
+                    <div class="mechanism-box">
+                        Mechanism: イラストの輪郭線を構造データとして抽出。マテリアル合成エンジンを通じて、現実の建築素材の質感をピクセル単位で再構築します。
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <section class="gallery">
+    <section class="store-section">
         <div class="container">
-            <span class="section-label">Visual Archive</span>
-            <h2 class="section-title">GALLERY</h2>
-
-            <div class="gallery-item">
-                <div class="image-showcase"></div>
-                <div class="item-info">
-                    <h3 class="item-category">Interior<br>Visualization</h3>
-                    <div class="item-body">
-                        <p>
-                            簡素な室内スケッチを、ラグジュアリーなリビングルームへと昇華させます。
-                            窓から差し込む自然光の角度、家具の配置、素材の光沢をGemが計算し、実在する写真のようなクオリティで描き出します。
-                        </p>
-                    </div>
-                </div>
+            <span class="section-label">Acquisition</span>
+            <h2 class="section-title">OFFICIAL STORES</h2>
+            <p style="font-size: 1.8rem; color: #666;">培った知見とシステムを、以下のプラットフォームで公開しています。</p>
+            <div class="store-links">
+                <a href="#" class="store-link">BRAIN</a>
+                <a href="#" class="store-link">TIPS</a>
+                <a href="#" class="store-link">NOTE</a>
             </div>
-
-            <div class="gallery-item">
-                <div class="image-showcase"></div>
-                <div class="item-info">
-                    <h3 class="item-category">Exterior<br>Architecture</h3>
-                    <div class="item-body">
-                        <p>
-                            建物の外観イメージを、モダンな建築写真へと変換。
-                            周囲の風景や空の表情、夜のライティングまで、プロンプトひとつで自在にコントロール可能です。
-                        </p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="gallery-item">
-                <div class="image-showcase" style="height: 400px;"></div>
-                <div class="item-info">
-                    <h3 class="item-category">Premium<br>Header Design</h3>
-                    <div class="item-body">
-                        <p>
-                            Webサイトのブランド価値を決定づけるメインビジュアル。
-                            抽象的なラフ画から、洗練された構図と色彩を持つ高解像度ヘッダーを制作します。
-                        </p>
-                        <a href="#" class="btn-action">Request Work</a>
-                    </div>
-                </div>
-            </div>
-
         </div>
     </section>
 
     <footer>
         <div class="container">
-            <p>&copy; 2026 YAMADA. BEYOND THE CREATIVE.</p>
+            <p>&copy; 2026 YAMADA. DESIGNING THE INTELLIGENCE.</p>
         </div>
     </footer>
 
