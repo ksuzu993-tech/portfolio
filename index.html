@@ -18,8 +18,8 @@
             background-color: #000000;
             color: #ffffff;
             font-family: 'Montserrat', 'Noto Serif JP', serif;
-            line-height: 2.4;
-            letter-spacing: 0.2em;
+            line-height: 2.6;
+            letter-spacing: 0.25em;
             overflow-x: hidden;
         }
 
@@ -42,17 +42,17 @@
 
         .brand-name {
             font-family: 'Cinzel', serif;
-            font-size: 7rem;
+            font-size: 8rem;
             letter-spacing: 0.6em;
             color: #d4af37;
             margin-bottom: 40px;
         }
 
         .sub-tagline {
-            font-size: 1.6rem;
+            font-size: 1.8rem;
             color: #888;
             text-transform: uppercase;
-            letter-spacing: 1em;
+            letter-spacing: 1.2em;
         }
 
         /* セクション共通 */
@@ -62,19 +62,19 @@
 
         .section-label {
             font-family: 'Cinzel', serif;
-            font-size: 1.1rem;
+            font-size: 1.2rem;
             color: #d4af37;
             display: block;
-            margin-bottom: 40px;
+            margin-bottom: 50px;
             text-align: center;
-            letter-spacing: 0.6em;
+            letter-spacing: 0.8em;
         }
 
         .section-title {
-            font-size: 4rem;
+            font-size: 4.5rem;
             text-align: center;
-            margin-bottom: 150px;
-            letter-spacing: 0.4em;
+            margin-bottom: 180px;
+            letter-spacing: 0.5em;
         }
 
         /* Gem紹介 */
@@ -90,33 +90,33 @@
         }
 
         .gem-text {
-            font-size: 1.8rem;
+            font-size: 2rem;
             color: #cccccc;
         }
 
         .gem-card {
             border-left: 1px solid #d4af37;
-            padding: 40px 60px;
+            padding: 50px 70px;
             background: linear-gradient(90deg, rgba(212, 175, 55, 0.05), transparent);
         }
 
         .gem-card h3 {
-            font-size: 2.2rem;
-            margin-bottom: 20px;
+            font-size: 2.5rem;
+            margin-bottom: 30px;
             color: #d4af37;
         }
 
         /* ギャラリー項目 */
         .work-item {
-            margin-bottom: 350px;
+            margin-bottom: 400px;
         }
 
         .work-visual {
             width: 100%;
-            height: 800px;
+            height: 850px;
             background: #0a0a0a;
             border: 1px solid #1a1a1a;
-            margin-bottom: 80px;
+            margin-bottom: 100px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -124,83 +124,64 @@
             overflow: hidden;
         }
 
-        /* 画像を表示させるためのCSS */
         .work-visual img {
             max-width: 100%;
             max-height: 100%;
             object-fit: contain;
         }
 
-        .work-visual::after {
-            content: "";
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(180deg, transparent 50%, #000 100%);
-            opacity: 0.8;
-        }
-
-        /* ビフォー・アフター比較用のCSS */
+        /* ビフォー・アフター比較用 */
         .work-visual.compare-mode {
             display: flex;
-            height: 600px;
+            height: 650px;
         }
 
         .work-visual.compare-mode img {
             height: 100%;
             width: 50%;
             object-fit: cover;
-            max-width: none;
-            max-height: none;
         }
 
-        /* 比較モード用のオーバーレイ調整（画像がよく見えるように） */
-        .work-visual.compare-mode::after {
-            background: transparent;
-        }
-
-        /* ビフォー・アフターのラベルCSS */
         .compare-label {
             position: absolute;
-            top: 20px;
-            font-size: 0.8rem;
+            top: 30px;
+            font-size: 1rem;
             color: #ffffff;
             border: 1px solid #ffffff;
-            padding: 5px 15px;
+            padding: 8px 20px;
             opacity: 0.6;
-            letter-spacing: 0.3em;
+            letter-spacing: 0.4em;
+            background: rgba(0,0,0,0.5);
+            z-index: 10;
         }
 
-        .compare-label.before {
-            left: 20px;
-        }
-
-        .compare-label.after {
-            right: 20px;
-        }
+        .compare-label.before { left: 30px; }
+        .compare-label.after { right: 30px; }
 
         .work-info {
             display: grid;
             grid-template-columns: 1fr 2fr;
-            gap: 100px;
+            gap: 120px;
         }
 
         .work-type {
-            font-size: 2.8rem;
+            font-size: 3.2rem;
             color: #d4af37;
-            line-height: 1.2;
+            line-height: 1.3;
         }
 
         .work-desc {
-            font-size: 1.6rem;
+            font-size: 1.8rem;
             color: #999;
         }
 
         .mechanism-box {
-            margin-top: 40px;
-            padding: 30px;
+            margin-top: 60px;
+            padding: 40px;
             border: 1px solid #222;
-            font-size: 1.2rem;
+            font-size: 1.4rem;
             color: #777;
+            background: rgba(255, 255, 255, 0.02);
         }
 
         /* ストア紹介 */
@@ -212,31 +193,31 @@
         .store-links {
             display: flex;
             justify-content: center;
-            gap: 80px;
-            margin-top: 80px;
+            gap: 100px;
+            margin-top: 100px;
         }
 
         .store-link {
-            font-size: 2rem;
+            font-size: 2.5rem;
             color: #d4af37;
             text-decoration: none;
             border-bottom: 1px solid transparent;
-            transition: 0.5s;
+            transition: 0.6s;
         }
 
         .store-link:hover {
             border-bottom: 1px solid #d4af37;
-            letter-spacing: 0.3em;
+            letter-spacing: 0.4em;
         }
 
         /* フッター */
         footer {
-            padding: 150px 0;
+            padding: 180px 0;
             text-align: center;
             border-top: 1px solid #1a1a1a;
             color: #333;
-            letter-spacing: 0.8em;
-            font-size: 1rem;
+            letter-spacing: 1em;
+            font-size: 1.1rem;
         }
 
         @media (max-width: 1100px) {
@@ -253,9 +234,9 @@
 
     <header>
         <div class="container">
-            <span class="sub-tagline">Beyond the Prompt</span>
+            <span class="sub-tagline">Intelligence Design</span>
             <h1 class="brand-name">YAMADA</h1>
-            <p style="color: #444; font-size: 1.4rem;">AIを設計し、想像を現実へと変換する。</p>
+            <p style="color: #444; font-size: 1.6rem;">プロンプトの先にある、真のクリエイティブを設計する。</p>
         </div>
     </header>
 
@@ -265,13 +246,13 @@
             <h2 class="section-title">GEMINI GEMS</h2>
             <div class="gem-concept">
                 <div class="gem-text">
-                    Geminiの「Gem」は、単なる回答者ではありません。
-                    特定のクリエイティブ理論や建築的思考、物語の構成力をプログラムされた「知能の拡張」です。
-                    私はこのシステムを核に,一貫性のある高度な成果物を生み出しています。
+                    Geminiの「Gem」とは、単なるAIではありません。
+                    特定の専門知識、倫理観、そして独自の美学をプログラムされた「デジタル・アーキテクト」です。
+                    私はこのGemを高度に設計し、複雑なクリエイティブ工程を自動化・高精度化しています。
                 </div>
                 <div class="gem-card">
-                    <h3>System Architecture</h3>
-                    <p>プロンプトを毎回書くのではなく、AI自体を「漫画家」や「建築写真家」へと作り変えるアプローチです。</p>
+                    <h3>Beyond Prompting</h3>
+                    <p>プロンプトを打つのではなく、AIそのものを「作家」や「写真家」へと作り変えるアプローチです。</p>
                 </div>
             </div>
         </div>
@@ -283,19 +264,20 @@
 
         <div class="work-item">
             <div class="work-visual compare-mode">
-                <span class="compare-label before">BEFORE | 3D PERSPECTIVE</span>
-                <img src="images/interior_sketch.png" alt="内観3Dパース（スケッチ）" class="compare-img sketch" />
-                <span class="compare-label after">AFTER | REALISTIC PHOTO</span>
-                <img src="images/interior_photo.png" alt="最終的なリアルな内観写真" class="compare-img photo" />
+                <span class="compare-label before">3D PERSPECTIVE</span>
+                <img src="interior_sketch.jpg" alt="内観3Dパース" />
+                <span class="compare-label after">REALISTIC PHOTO</span>
+                <img src="interior_photo.jpg" alt="リアルな写真" />
             </div>
             <div class="work-info">
-                <h3 class="work-type">Sketch to Reality<br>Interior Visualization</h3>
+                <h3 class="work-type">Sketch to Reality<br>Interior</h3>
                 <div class="work-desc">
                     <p>
-                        初期の3Dパース（左）から、光と質感を極限まで高めたリアルな写真（右）への変換。Gemが空間の奥行きや素材の質感を理解し、不自然さのないビジュアライゼーションを構築します。
+                        簡素な3Dパースから、光の反射や素材の質感を極限まで高めた実写クオリティへの変換。
+                        Gemが空間の構造を正確に把握し、最適なマテリアルをピクセル単位で割り当てます。
                     </p>
                     <div class="mechanism-box">
-                        Mechanism: 空間構成Gemが初期パースの構造を読み込み、マテリアル合成エンジンによって、現実世界の光と質感をピクセル単位で再構築します。
+                        Mechanism: 構造解析Gemが線のデータを空間ベクトルとして抽出。ライティングエンジンとの連携により、物理的に正しい光の拡散を再現します。
                     </div>
                 </div>
             </div>
@@ -303,45 +285,65 @@
 
         <div class="work-item">
             <div class="work-visual">
-                <img src="images/manga_2.png" alt="4コマ漫画：お点前と猫と1位" />
+                <img src="manga_1.jpg" alt="4コマ漫画：ツムツム" />
             </div>
             <div class="work-info">
-                <h3 class="work-type">Zen and the Online Ranking</h3>
+                <h3 class="work-type">AI Manga 01:<br>Tsum Tsum</h3>
                 <div class="work-desc">
                     <p>
-                        お点前で心を落ち着けている最中、猫が持ってきたタブレットでネットゲームをプレイし、全国ランキング1位を獲得する師匠の物語。AIが「和の心」と「ネットゲームの興奮」というコントラストを強調するよう、構成と表情を制御しています。
+                        日常のワンシーンを切り取った4コマ漫画。
+                        Gemが物語の「起承転結」における感情曲線を設計し、読者の共感を生むリズムを構築します。
                     </p>
-                    <div class="mechanism-box">Mechanism: 構成Gemが、和の静寂からネットゲームの興奮、そして和の心はどこへ......という感情の起伏を設計。ビジュアルGemが、和の空間とネットゲームのプレイ画面のコントラストをNano Banana 2と連携して固定しています。</div>
+                    <div class="mechanism-box">
+                        Mechanism: 構成Gemが物語の骨組みと台詞を生成。その後、キャラクターの表情と一貫性を保持する専用のイメージ制御エンジンへとバトンを渡します。
+                    </div>
                 </div>
             </div>
         </div>
 
         <div class="work-item">
             <div class="work-visual">
-                <img src="images/manga_1.png" alt="4コマ漫画：ツムツムと電車" />
+                <img src="manga_2.jpg" alt="4コマ漫画：お点前" />
             </div>
             <div class="work-info">
-                <h3 class="work-type">Manga 1: Tsum Tsum Journey</h3>
+                <h3 class="work-type">AI Manga 02:<br>Zen & Game</h3>
                 <div class="work-desc">
                     <p>
-                        電車での移動中、退屈していた女性がLINE: Disney Tsum Tsumをプレイして、最高スコアを出すまでの物語。AIが「最高スコア」の達成感をビジュアルとリズムで強調するよう、構成と表情を制御しています。
+                        「静」と「動」の対比を描いたユーモラスな作品。
+                        伝統的な風景と現代的なガジェットの融合を、違和感なく一枚の絵に収める知能をGemに持たせています。
                     </p>
-                    <div class="mechanism-box">Mechanism: 構成Gemが、日常の退屈からゲームの達成感、そして共有という感情の起伏を設計。ビジュアルGemがツムツムのキャラクターの一貫性と、プレイ画面のリアリティをNano Banana 2と連携して固定しています。</div>
                 </div>
             </div>
         </div>
 
         <div class="work-item">
             <div class="work-visual">
-                <img src="images/manga_3.png" alt="4コマ漫画：デジタルとアナログ" />
+                <img src="manga_3.jpg" alt="4コマ漫画：デジタル" />
             </div>
             <div class="work-info">
-                <h3 class="work-type">Manga 3: The Pitfalls of Digitalization</h3>
+                <h3 class="work-type">AI Manga 03:<br>Digitalization</h3>
                 <div class="work-desc">
                     <p>
-                        新ツールの導入により業務効率が劇的に改善したと喜ぶ上司と、早すぎて処理が追いつかない部下の物語。AIが「デジタルとアナログのコントラスト」を強調するよう、構成と表情を制御しています。
+                        ビジネスシーンの皮肉を描いた作品。
+                        登場人物の服装やオフィスの小道具まで、細部にわたる世界観の維持をシステムとして実現しています。
                     </p>
-                    <div class="mechanism-box">Mechanism: 構成Gemが、デジタルとアナログのコントラストを設計。ビジュアルGemが、デジタルツールのプレイ画面とアナログの紙のコントラストをNano Banana 2と連携して固定しています。</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="work-item">
+            <div class="work-visual" style="height: 450px; background: #111;">
+                </div>
+            <div class="work-info">
+                <h3 class="work-type">Automated<br>Header Design</h3>
+                <div class="work-desc">
+                    <p>
+                        Webサイトの顔となるメインビジュアルを、ブランドキーワードから自動生成。
+                        黄金比、色彩心理、構図の理論をGemに組み込み、一目で惹きつけるデザインを創出します。
+                    </p>
+                    <div class="mechanism-box">
+                        Mechanism: ブランドの「コンセプト」をGemが視覚的パラメータに変換。余白の取り方やフォントの配置までを計算した、洗練されたビジュアルを構築します。
+                    </div>
                 </div>
             </div>
         </div>
@@ -352,7 +354,7 @@
         <div class="container">
             <span class="section-label">Acquisition</span>
             <h2 class="section-title">OFFICIAL STORES</h2>
-            <p style="font-size: 1.8rem; color: #666;">培った知見とシステムを、以下のプラットフォームで公開しています。</p>
+            <p style="font-size: 2.2rem; color: #666; margin-bottom: 50px;">培ったシステムとノウハウを、以下の場所で継承しています。</p>
             <div class="store-links">
                 <a href="#" class="store-link">BRAIN</a>
                 <a href="#" class="store-link">TIPS</a>
@@ -363,7 +365,7 @@
 
     <footer>
         <div class="container">
-            <p>&copy; 2026 YAMADA. DESIGNING THE INTELLIGENCE.</p>
+            <p>&copy; 2026 YAMADA. ARCHITECTING THE FUTURE.</p>
         </div>
     </footer>
 
