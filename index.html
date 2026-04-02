@@ -3,195 +3,199 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Yamada | AI Creator Portfolio</title>
+    <title>YAMADA | AI ARCHITECT</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400&family=Noto+Serif+JP:wght@300&family=Montserrat:wght@200;300&display=swap" rel="stylesheet">
     <style>
-        /* 基本設定 */
+        /* 全体設定：太字(Bold)を一切使用しない */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-weight: 300 !important; /* すべてを細身に設定 */
+        }
+
         body {
-            margin: 0;
-            padding: 0;
-            background-color: #050505;
-            color: #f0f0f0;
-            font-family: "Times New Roman", "YuMincho", "Hiragino Mincho ProN", "MS PMincho", serif;
-            line-height: 1.8;
-            letter-spacing: 0.05em;
+            background-color: #000000;
+            color: #ffffff;
+            font-family: 'Montserrat', 'Noto Serif JP', serif;
+            line-height: 2;
+            letter-spacing: 0.15em;
+            overflow-x: hidden;
         }
 
-        a {
-            color: #d4af37;
-            text-decoration: none;
-            transition: 0.3s;
-        }
-
-        a:hover {
-            opacity: 0.7;
-        }
-
-        ul {
-            list-style: none;
-            padding: 0;
-        }
-
-        /* コンテナ */
         .container {
-            max-width: 1000px;
+            max-width: 1400px;
             margin: 0 auto;
-            padding: 0 20px;
+            padding: 0 40px;
         }
 
-        /* ヘッダー */
+        /* ヒーローセクション */
         header {
-            padding: 60px 0;
-            text-align: center;
-            border-bottom: 1px solid #333;
-        }
-
-        h1 {
-            font-size: 2.5rem;
-            margin: 0;
-            font-weight: normal;
-            letter-spacing: 0.2em;
-        }
-
-        .tagline {
-            font-size: 0.9rem;
-            color: #999;
-            margin-top: 10px;
-        }
-
-        /* ナビゲーション */
-        nav {
-            margin-top: 30px;
-        }
-
-        nav ul {
+            height: 80vh;
             display: flex;
+            flex-direction: column;
             justify-content: center;
-            gap: 30px;
-            font-size: 0.8rem;
+            align-items: center;
+            text-align: center;
+            border-bottom: 1px solid #1a1a1a;
+        }
+
+        .brand-name {
+            font-family: 'Cinzel', serif;
+            font-size: 5rem;
+            letter-spacing: 0.4em;
+            color: #d4af37; /* ゴールド */
+            margin-bottom: 20px;
+        }
+
+        .sub-tagline {
+            font-size: 1.2rem;
+            color: #888;
             text-transform: uppercase;
         }
 
-        /* セクション共通 */
-        section {
-            padding: 80px 0;
-            border-bottom: 1px solid #222;
-        }
-
-        h2 {
-            font-size: 1.8rem;
+        /* セクションタイトル */
+        .section-label {
+            font-family: 'Cinzel', serif;
+            font-size: 0.9rem;
+            color: #d4af37;
+            display: block;
+            margin-bottom: 20px;
             text-align: center;
-            margin-bottom: 50px;
-            font-weight: normal;
-            position: relative;
         }
 
-        h2::after {
-            content: '';
-            position: absolute;
-            bottom: -15px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 40px;
-            height: 1px;
-            background-color: #d4af37;
+        .section-title {
+            font-size: 3rem;
+            text-align: center;
+            margin-bottom: 80px;
+            letter-spacing: 0.2em;
         }
 
-        /* ギャラリー (AI Manga) */
-        .gallery-grid {
+        /* Gemini Gems解説セクション */
+        .gem-intro {
+            padding: 150px 0;
+            background-color: #050505;
+        }
+
+        .gem-concept {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            grid-template-columns: 1fr 1fr;
+            gap: 100px;
+            align-items: center;
+            margin-bottom: 100px;
+        }
+
+        .gem-text {
+            font-size: 1.4rem;
+            color: #cccccc;
+        }
+
+        .gem-system-list {
+            display: grid;
+            grid-template-columns: 1fr;
             gap: 40px;
         }
 
+        .gem-card {
+            border-left: 1px solid #d4af37;
+            padding: 20px 40px;
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        .gem-card h3 {
+            font-size: 1.6rem;
+            margin-bottom: 10px;
+            color: #d4af37;
+        }
+
+        .gem-card p {
+            font-size: 1.1rem;
+            color: #999;
+        }
+
+        /* ギャラリーセクション */
+        .gallery {
+            padding: 150px 0;
+        }
+
         .gallery-item {
-            border: 1px solid #333;
-            padding: 15px;
-            background: #0a0a0a;
-            transition: transform 0.4s ease;
+            margin-bottom: 200px;
+            display: flex;
+            flex-direction: column;
+            gap: 40px;
         }
 
-        .gallery-item:hover {
-            transform: translateY(-5px);
-            border-color: #d4af37;
-        }
-
-        .manga-placeholder {
+        .image-container {
             width: 100%;
-            aspect-ratio: 3 / 4;
-            background-color: #1a1a1a;
+            height: 600px;
+            background: #111;
             display: flex;
             align-items: center;
             justify-content: center;
-            color: #444;
-            margin-bottom: 15px;
-        }
-
-        .item-info h3 {
-            font-size: 1.1rem;
-            margin: 0 0 10px 0;
-        }
-
-        .item-info p {
-            font-size: 0.85rem;
-            color: #aaa;
-            margin: 0;
-        }
-
-        /* ペルソナ (Persona) */
-        .persona-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
-            gap: 30px;
-        }
-
-        .persona-card {
-            background: linear-gradient(145deg, #0f0f0f, #050505);
             border: 1px solid #222;
-            padding: 30px;
             position: relative;
+            overflow: hidden;
         }
 
-        .persona-card h3 {
-            border-left: 2px solid #d4af37;
-            padding-left: 15px;
-            margin-top: 0;
+        .image-container::after {
+            content: "PREVIEW IMAGE";
+            color: #333;
+            font-size: 2rem;
+            letter-spacing: 1em;
         }
 
-        /* ロードマップ */
-        .roadmap-content {
-            text-align: center;
-            max-width: 600px;
-            margin: 0 auto;
+        .item-detail {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 60px;
         }
 
-        .btn-github {
+        .item-title {
+            font-size: 2.2rem;
+            line-height: 1.4;
+            color: #d4af37;
+        }
+
+        .item-description {
+            font-size: 1.3rem;
+            color: #aaa;
+        }
+
+        /* リンクボタン */
+        .btn-premium {
             display: inline-block;
-            margin-top: 20px;
-            padding: 12px 30px;
+            margin-top: 40px;
+            padding: 20px 60px;
             border: 1px solid #d4af37;
             color: #d4af37;
-            font-size: 0.9rem;
+            text-decoration: none;
+            font-size: 1rem;
+            transition: all 0.5s ease;
+            text-transform: uppercase;
         }
 
-        .btn-github:hover {
-            background-color: #d4af37;
+        .btn-premium:hover {
+            background: #d4af37;
             color: #000;
+            letter-spacing: 0.3em;
         }
 
         /* フッター */
         footer {
-            padding: 60px 0;
+            padding: 100px 0;
             text-align: center;
-            color: #666;
-            font-size: 0.75rem;
+            border-top: 1px solid #1a1a1a;
+            color: #444;
+            letter-spacing: 0.3em;
+            font-size: 0.8rem;
         }
 
-        /* スマホ対応 */
-        @media (max-width: 600px) {
-            .persona-grid {
-                grid-template-columns: 1fr;
-            }
-            h1 { font-size: 1.8rem; }
+        /* レスポンシブ */
+        @media (max-width: 1000px) {
+            .brand-name { font-size: 3rem; }
+            .section-title { font-size: 2rem; }
+            .gem-concept, .item-detail { grid-template-columns: 1fr; }
+            .image-container { height: 400px; }
         }
     </style>
 </head>
@@ -199,79 +203,77 @@
 
     <header>
         <div class="container">
-            <h1>YAMADA</h1>
-            <p class="tagline">AI Content Creator & Prompt Engineer</p>
-            <nav>
-                <ul>
-                    <li><a href="#gallery">Gallery</a></li>
-                    <li><a href="#persona">Persona</a></li>
-                    <li><a href="#roadmap">Roadmap</a></li>
-                    <li><a href="#store">Store</a></li>
-                </ul>
-            </nav>
+            <span class="sub-tagline">The Art of AI Engineering</span>
+            <h1 class="brand-name">YAMADA</h1>
+            <p style="color: #666; max-width: 600px; margin: 20px auto;">
+                Geminiの知能をデザインし、新しい価値を創造する。
+            </p>
         </div>
     </header>
 
-    <main class="container">
-
-        <section id="gallery">
-            <h2>AI Manga Gallery</h2>
-            <div class="gallery-grid">
-                <article class="gallery-item">
-                    <div class="manga-placeholder">Image Placeholder</div>
-                    <div class="item-info">
-                        <h3>4コマ漫画タイトルA</h3>
-                        <p>構成のヒント：日常の違和感をAIで誇張した演出案。</p>
-                    </div>
-                </article>
-                <article class="gallery-item">
-                    <div class="manga-placeholder">Image Placeholder</div>
-                    <div class="item-info">
-                        <h3>4コマ漫画タイトルB</h3>
-                        <p>構成のヒント：感情の起伏をプロンプトで制御する手法。</p>
-                    </div>
-                </article>
-            </div>
-        </section>
-
-        <section id="persona">
-            <h2>AI Persona Encyclopedia</h2>
-            <div class="persona-grid">
-                <div class="persona-card">
-                    <h3>Sora-sensei</h3>
-                    <p>韓国語講師。論理的な解説と温かい励ましを両立させたプロンプト設計。親しみやすさを重視した命令系統を採用しています。</p>
+    <section class="gem-intro">
+        <div class="container">
+            <span class="section-label">Core Technology</span>
+            <h2 class="section-title">GEMINI GEMS</h2>
+            
+            <div class="gem-concept">
+                <div class="gem-text">
+                    Geminiの「Gem」とは、特定の専門知識や振る舞いをプログラムされた、あなただけのカスタムAIアシスタントです。
+                    私はこのGemを高度にカスタマイズし、クリエイティブとロジックを融合させた独自のシステムを構築しています。
                 </div>
-                <div class="persona-card">
-                    <h3>Ji-woo</h3>
-                    <p>美容・AIインフルエンサー。トレンドをいち早く捉える感性と、洗練された言葉選びをコアに持つAIペルソナです。</p>
+                <div class="gem-system-list">
+                    <div class="gem-card">
+                        <h3>Identity Design</h3>
+                        <p>AIの性格や専門性をゼロから設計し、一貫性のある出力を実現します。</p>
+                    </div>
+                    <div class="gem-card">
+                        <h3>Workflow Automation</h3>
+                        <p>複雑な工程をGemに記憶させ、ワンクリックで最高品質の成果物を生成します。</p>
+                    </div>
                 </div>
             </div>
-        </section>
+        </div>
+    </section>
 
-        <section id="roadmap">
-            <h2>Development Roadmap</h2>
-            <div class="roadmap-content">
-                <p>現在開発中のプロジェクトや、今後のリリース予定はGitHubのIssuesにて公開・管理しています。ユーザーの皆様からのリクエストもこちらで受け付けております。</p>
-                <a href="https://github.com/あなたのユーザー名/リポジトリ名/issues" class="btn-github" target="_blank">View on GitHub Issues</a>
+    <section class="gallery">
+        <div class="container">
+            <span class="section-label">Archive</span>
+            <h2 class="section-title">WORKS</h2>
+
+            <div class="gallery-item">
+                <div class="image-container"></div>
+                <div class="item-detail">
+                    <h3 class="item-title">AI Manga<br>Generation System</h3>
+                    <div class="item-description">
+                        <p>
+                            4コマ漫画の構成、台詞回し、感情表現を制御する専用Gemを開発。
+                            Nano Banana 2との連携により、一貫したビジュアルとリズムを持つ作品群を自動生成します。
+                        </p>
+                        <a href="#" class="btn-premium">Explore on Brain</a>
+                    </div>
+                </div>
             </div>
-        </section>
 
-        <section id="store" style="border-bottom: none;">
-            <h2>Store</h2>
-            <div style="text-align: center;">
-                <p>最新のプロンプトやスクリプトは以下のプラットフォームで販売中です。</p>
-                <p>
-                    <a href="#" style="margin: 0 15px;">Brain</a> / 
-                    <a href="#" style="margin: 0 15px;">note</a>
-                </p>
+            <div class="gallery-item">
+                <div class="image-container"></div>
+                <div class="item-detail">
+                    <h3 class="item-title">Data-Driven<br>Prediction AI</h3>
+                    <div class="item-description">
+                        <p>
+                            ボートレースの膨大な統計データを瞬時に解析する専門Gem。
+                            確実性の高い予測ロジックをシステム化し、24時間体制でのデータ分析を実現しました。
+                        </p>
+                        <a href="#" class="btn-premium">View Project</a>
+                    </div>
+                </div>
             </div>
-        </section>
 
-    </main>
+        </div>
+    </section>
 
     <footer>
         <div class="container">
-            <p>&copy; 2026 Yamada. All Rights Reserved.</p>
+            <p>&copy; 2026 YAMADA. ALL RIGHTS RESERVED.</p>
         </div>
     </footer>
 
