@@ -3,226 +3,178 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI Prompt Portfolio | 高品質なGemプロンプトギャラリー</title>
+    <title>Portfolio Gallery | kuzu993-tech</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet">
     <style>
-        /* 全体のデザイン設定 */
+        :root {
+            --bg-dark: #0f172a;
+            --card-bg: #1e293b;
+            --primary-accent: #38bdf8; /* 鮮やかなブルー */
+            --text-main: #f8fafc;
+            --text-sub: #94a3b8;
+        }
         body {
-            font-family: 'Helvetica Neue', Arial, 'Hiragino Kaku Gothic ProN', 'Hiragino Sans', Meiryo, sans-serif;
-            line-height: 1.6;
-            color: #333;
-            background-color: #f9f9fa;
             margin: 0;
-            padding: 0;
+            font-family: 'Inter', 'Noto Sans JP', sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            line-height: 1.6;
         }
         header {
-            background-color: #ffffff;
-            padding: 2rem 1rem;
+            background: rgba(15, 23, 42, 0.9);
+            backdrop-filter: blur(10px);
+            padding: 1rem 5%;
+            position: fixed;
+            width: 90%;
+            top: 0;
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+        .hero {
+            height: 60vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
             text-align: center;
-            border-bottom: 1px solid #eaeaea;
+            padding: 0 20px;
+            margin-top: 60px;
+            background: radial-gradient(circle at center, #1e293b 0%, #0f172a 100%);
         }
-        h1 {
-            margin: 0;
-            font-size: 1.8rem;
-            color: #2c3e50;
-        }
-        p.subtitle {
-            color: #7f8c8d;
-            font-size: 1rem;
-            margin-top: 0.5rem;
-        }
-        .container {
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 2rem 1rem;
-        }
-        /* Gem解説セクション */
-        .gem-guide {
-            background: #e8f4fd;
-            border-radius: 12px;
-            padding: 2rem;
-            margin-bottom: 3rem;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
-        }
-        .gem-guide h2 {
-            color: #1a5276;
-            margin-top: 0;
-            border-bottom: 2px solid #aecce4;
-            padding-bottom: 0.5rem;
-        }
-        .step-box {
-            background: #ffffff;
-            padding: 1.5rem;
-            border-radius: 8px;
-            margin-top: 1.5rem;
-        }
-        .step {
+        .hero h1 {
+            font-size: 3.5rem;
             margin-bottom: 1rem;
+            letter-spacing: -1px;
+            color: var(--text-main);
         }
-        .step-title {
-            font-weight: bold;
-            color: #2980b9;
+        .hero p { font-size: 1.2rem; color: var(--text-sub); max-width: 600px; }
+
+        /* Gemini 紹介セクション */
+        .gemini-intro {
+            background: linear-gradient(90deg, rgba(56,189,248,0.1) 0%, rgba(15,23,42,0) 100%);
+            padding: 60px 10%;
+            border-left: 4px solid var(--primary-accent);
+            margin: 40px 10%;
+            border-radius: 0 15px 15px 0;
         }
-        /* 作品カードセクション */
+        .gemini-intro h2 { color: var(--primary-accent); margin-top: 0; }
+
+        .container { padding: 40px 10% 80px; }
         .section-title {
+            font-size: 2rem;
+            margin-bottom: 40px;
             text-align: center;
-            font-size: 1.5rem;
-            margin-bottom: 2rem;
-            color: #2c3e50;
+            position: relative;
+        }
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 50px;
+            height: 3px;
+            background: var(--primary-accent);
+            margin: 10px auto;
+        }
+        
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
         }
         .card {
-            background: #ffffff;
-            border-radius: 12px;
-            padding: 2rem;
-            margin-bottom: 2rem;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-            transition: transform 0.2s;
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 30px;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255,255,255,0.05);
+            display: flex;
+            flex-direction: column;
         }
         .card:hover {
-            transform: translateY(-3px);
+            transform: translateY(-10px);
+            border-color: var(--primary-accent);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
         }
-        .badge {
-            display: inline-block;
-            background: #ff4757;
-            color: white;
-            font-size: 0.8rem;
-            font-weight: bold;
-            padding: 0.3rem 0.8rem;
-            border-radius: 20px;
-            margin-bottom: 1rem;
-        }
-        .card h3 {
-            margin-top: 0;
-            font-size: 1.4rem;
-            color: #2c3e50;
-        }
-        .output-sample {
-            background: #f1f2f6;
-            border-left: 4px solid #7bed9f;
-            padding: 1rem;
-            border-radius: 0 8px 8px 0;
-            margin: 1.5rem 0;
-            font-size: 0.95rem;
-        }
-        /* ボタン設定 */
-        .btn-container {
-            text-align: center;
-            margin-top: 1.5rem;
-        }
+        .card h3 { color: var(--text-main); font-size: 1.4rem; margin-top: 0; }
+        .card p { color: var(--text-sub); flex-grow: 1; }
+        
         .btn {
             display: inline-block;
-            background-color: #2ed573;
-            color: #ffffff;
+            padding: 10px 20px;
+            background: transparent;
+            color: var(--primary-accent);
             text-decoration: none;
+            border: 1px solid var(--primary-accent);
+            border-radius: 8px;
             font-weight: bold;
-            padding: 1rem 2.5rem;
-            border-radius: 30px;
-            box-shadow: 0 4px 6px rgba(46, 213, 115, 0.3);
-            transition: background-color 0.2s;
+            transition: all 0.3s;
+            text-align: center;
         }
         .btn:hover {
-            background-color: #26c267;
+            background: var(--primary-accent);
+            color: var(--bg-dark);
         }
-        .btn-note {
-            background-color: #1e90ff;
-            box-shadow: 0 4px 6px rgba(30, 144, 255, 0.3);
+
+        footer { text-align: center; padding: 60px; background: #000; color: var(--text-sub); font-size: 0.9rem; }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
         }
-        .btn-note:hover {
-            background-color: #1c81e6;
-        }
-        footer {
-            text-align: center;
-            padding: 2rem;
-            color: #7f8c8d;
-            font-size: 0.9rem;
-        }
+        section, .card { animation: fadeInUp 0.8s ease-out forwards; }
     </style>
 </head>
 <body>
 
 <header>
-    <h1>Prompt Showcase</h1>
-    <p class="subtitle">AIのポテンシャルを最大限に引き出す、高品質なGem専用プロンプトギャラリー</p>
+    <div style="font-weight: bold; font-size: 1.2rem; letter-spacing: 1px;">KUZU TECH</div>
+    <nav>
+        <a href="#works" style="text-decoration: none; color: var(--text-main); font-size: 0.9rem;">GALLERY</a>
+    </nav>
 </header>
 
-<div class="container">
-    <section class="gem-guide">
-        <h2>🤖 はじめに：Gemini「Gem」機能とは？</h2>
-        <p>このポートフォリオで紹介しているプロンプト（AIへの指示書）は、GoogleのAI「Gemini」の拡張機能である<strong>「Gem」</strong>を活用して、最高の出力結果を出すように特別に設計されています。</p>
-        <p>Gem機能を使えば、長くて複雑なプロンプトを毎回入力する必要はありません。一度設定するだけで、あなただけの「専属アシスタント」がいつでも使えるようになります。</p>
-        
-        <div class="step-box">
-            <div class="step"><span class="step-title">【STEP 1】</span> Geminiを開き、左メニューから「Gemマネージャー」→「＋ 新しいGemを作成」をクリック。</div>
-            <div class="step"><span class="step-title">【STEP 2】</span> 販売ページ（Brain/note）で購入した「専用プロンプト全文」を、Gemの指示欄にそのままコピー＆ペースト。</div>
-            <div class="step"><span class="step-title">【STEP 3】</span> 保存してチャットをスタート！たったこれだけで、以下のような驚きの結果をすぐに引き出せます。</div>
-        </div>
-    </section>
+<section class="hero">
+    <h1>Portfolio Gallery</h1>
+    <p>AIテクノロジーとクリエイティブの融合。次世代の表現を探求するショーケース。</p>
+</section>
 
-    <h2 class="section-title">🌟 プロンプト一覧・出力サンプル</h2>
+<section class="gemini-intro">
+    <h2>Gemini 紹介</h2>
+    <p>このポートフォリオは、Googleの最新AI「Gemini」との共同作業によって構築されています。プロンプトエンジニアリングを活用し、デザインからコーディングまでAIの力を最大限に引き出しています。</p>
+</section>
 
-    <div class="card">
-        <span class="badge">🏆 リリース直後、2日間で7部販売の実績！</span>
-        <h3>たった1行でオチまで完璧！4コマ漫画シナリオ生成プロンプト</h3>
-        <p>アイデア出しで止まっていませんか？このプロンプトをGemにセットすれば、短いテーマを投げるだけで、起承転結の効いた4コマ漫画のシナリオとコマ割りを瞬時に提案してくれます。</p>
-        
-        <div class="output-sample">
-            <strong>【出力サンプル】</strong><br>
-            ユーザー入力：「寝坊した朝」<br>
-            <br>
-            Gem出力：<br>
-            1コマ目：目覚まし時計が「8:00」を指している。主人公、布団の中で青ざめている。<br>
-            2コマ目：トーストを口にくわえ、片足ケンケンで靴下を履きながら玄関を飛び出す。<br>
-            3コマ目：全力疾走で駅の改札を華麗にすり抜ける。額には汗。<br>
-            4コマ目：オチ。たどり着いた教室は真っ暗。スマホを見ると「日曜日」の文字。主人公が白目になっている。
+<div class="container" id="works">
+    <h2 class="section-title">My Works</h2>
+    <div class="grid">
+        <div class="card">
+            <h3>Manga Creation</h3>
+            <p>4コママンガの制作やWeb掲載用プロンプトの作成。視覚的なストーリーテリングを追求しています。</p>
+            <a href="#" class="btn">View Project</a>
         </div>
-        
-        <p>💡 <strong>ここがすごい：</strong> キャラクターの性格や世界観がブレないよう、裏側で特殊な制御をかけています。漫画制作のスピードが劇的に上がります。</p>
-        
-        <div class="btn-container">
-            <a href="【ここにBrainのURLを貼ります】" class="btn" target="_blank">Brainでプロンプト（設定用テキスト）を購入する</a>
+        <div class="card">
+            <h3>AI Personas</h3>
+            <p>Ji-woo, Sora, Alex。個性を持ち、対話可能なAIキャラクターの設計・開発を行っています。</p>
+            <a href="#" class="btn">View Project</a>
+        </div>
+        <div class="card">
+            <h3>Brain Sales</h3>
+            <p>BrainプラットフォームにてAIプロンプトを販売。実用的で再現性の高い手法を提供中。</p>
+            <a href="#" class="btn">Visit Brain</a>
+        </div>
+        <div class="card">
+            <h3>note Articles</h3>
+            <p>AI活用のTipsや創作活動の記録をnoteで発信。知識の共有とコミュニティ形成を目指します。</p>
+            <a href="#" class="btn">Read note</a>
         </div>
     </div>
-
-    <div class="card">
-        <h3>優しく的確にナビゲート！専属の韓国語ティーチャー「Sora」</h3>
-        <p>語学学習で一番大切なのは「実際に話す」こと。Soraは、あなたのレベルに合わせて自然な会話を引き出し、間違えた表現は優しくネイティブの表現に修正してくれるAI言語コーチです。</p>
-        
-        <div class="output-sample">
-            <strong>【出力サンプル】</strong><br>
-            ユーザー入力：「昨日、友達と映画を見たしました。」<br>
-            <br>
-            Sora出力：<br>
-            「素晴らしいですね！映画は何を見たんですか？🎬✨<br><br>
-            少しだけ表現を直してみましょう！<br>
-            ❌ 見たしました<br>
-            ⭕️ 見ました (봤어요 - プァッソヨ)<br><br>
-            『어제 친구랑 영화를 봤어요（昨日、友達と映画を見ました）』と言ってみましょう！発音してみてね😊」
-        </div>
-        
-        <p>💡 <strong>ここがすごい：</strong> 単なる翻訳機ではなく、「先生としての温かい人格」と「訂正フォーマット」をプロンプトで完全に定義しています。</p>
-        
-        <div class="btn-container">
-            <a href="【ここにnoteのURLを貼ります】" class="btn btn-note" target="_blank">noteでプロンプト（設定用テキスト）を入手する</a>
-        </div>
-    </div>
-
-    <div class="card">
-        <h3>最新トレンドを網羅！美容系AIインフルエンサー「Ji-woo」</h3>
-        <p>コスメやファッションの最新情報、SNS映えする表現を学習させたペルソナです。キャッチーなSNS投稿文の作成や、トレンドリサーチのアシスタントとして大活躍します。※現在プロンプト準備中</p>
-        
-        <div class="btn-container">
-            <a href="#" class="btn btn-note" style="background-color:#95a5a6; box-shadow:none;">近日公開予定</a>
-        </div>
-    </div>
-    
-    <div class="card">
-        <h3>実践的なビジネス英語コーチ「Alex」</h3>
-        <p>本番さながらの英語面接対策や、ビジネスメールの添削など、プロフェッショナルな環境で使える英語表現を徹底的に鍛え上げるAIコーチです。※現在プロンプト準備中</p>
-    </div>
-
 </div>
 
 <footer>
-    <p>&copy; 2026 AI Prompt Portfolio. All Rights Reserved.</p>
+    <p>&copy; 2026 kuzu993-tech | Powered by Gemini & GitHub Pages</p>
 </footer>
 
 </body>
