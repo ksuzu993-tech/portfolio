@@ -1,373 +1,447 @@
 <!DOCTYPE html>
-<html lang="ja">
+<html lang="ja" class="scroll-smooth">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>YAMADA | AI ARCHITECT</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400&family=Noto+Serif+JP:wght@200;300&family=Montserrat:wght@100;200;300&display=swap" rel="stylesheet">
-    <style>
-        /* 全体設定：太字を完全に排除 */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-weight: 200 !important;
-        }
-
-        body {
-            background-color: #000000;
-            color: #ffffff;
-            font-family: 'Montserrat', 'Noto Serif JP', serif;
-            line-height: 2.6;
-            letter-spacing: 0.25em;
-            overflow-x: hidden;
-        }
-
-        .container {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 0 80px;
-        }
-
-        /* ヒーローセクション */
-        header {
-            height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            background: radial-gradient(circle at center, #111 0%, #000 100%);
-        }
-
-        .brand-name {
-            font-family: 'Cinzel', serif;
-            font-size: 8rem;
-            letter-spacing: 0.6em;
-            color: #d4af37;
-            margin-bottom: 40px;
-        }
-
-        .sub-tagline {
-            font-size: 1.8rem;
-            color: #888;
-            text-transform: uppercase;
-            letter-spacing: 1.2em;
-        }
-
-        /* セクション共通 */
-        section {
-            padding: 250px 0;
-        }
-
-        .section-label {
-            font-family: 'Cinzel', serif;
-            font-size: 1.2rem;
-            color: #d4af37;
-            display: block;
-            margin-bottom: 50px;
-            text-align: center;
-            letter-spacing: 0.8em;
-        }
-
-        .section-title {
-            font-size: 4.5rem;
-            text-align: center;
-            margin-bottom: 180px;
-            letter-spacing: 0.5em;
-        }
-
-        /* Gem紹介 */
-        .gem-intro {
-            background-color: #050505;
-        }
-
-        .gem-concept {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 150px;
-            align-items: center;
-        }
-
-        .gem-text {
-            font-size: 2rem;
-            color: #cccccc;
-        }
-
-        .gem-card {
-            border-left: 1px solid #d4af37;
-            padding: 50px 70px;
-            background: linear-gradient(90deg, rgba(212, 175, 55, 0.05), transparent);
-        }
-
-        .gem-card h3 {
-            font-size: 2.5rem;
-            margin-bottom: 30px;
-            color: #d4af37;
-        }
-
-        /* ギャラリー項目 */
-        .work-item {
-            margin-bottom: 400px;
-        }
-
-        .work-visual {
-            width: 100%;
-            height: 850px;
-            background: #0a0a0a;
-            border: 1px solid #1a1a1a;
-            margin-bottom: 100px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .work-visual img {
-            max-width: 100%;
-            max-height: 100%;
-            object-fit: contain;
-        }
-
-        /* ビフォー・アフター比較用 */
-        .work-visual.compare-mode {
-            display: flex;
-            height: 650px;
-        }
-
-        .work-visual.compare-mode img {
-            height: 100%;
-            width: 50%;
-            object-fit: cover;
-        }
-
-        .compare-label {
-            position: absolute;
-            top: 30px;
-            font-size: 1rem;
-            color: #ffffff;
-            border: 1px solid #ffffff;
-            padding: 8px 20px;
-            opacity: 0.6;
-            letter-spacing: 0.4em;
-            background: rgba(0,0,0,0.5);
-            z-index: 10;
-        }
-
-        .compare-label.before { left: 30px; }
-        .compare-label.after { right: 30px; }
-
-        .work-info {
-            display: grid;
-            grid-template-columns: 1fr 2fr;
-            gap: 120px;
-        }
-
-        .work-type {
-            font-size: 3.2rem;
-            color: #d4af37;
-            line-height: 1.3;
-        }
-
-        .work-desc {
-            font-size: 1.8rem;
-            color: #999;
-        }
-
-        .mechanism-box {
-            margin-top: 60px;
-            padding: 40px;
-            border: 1px solid #222;
-            font-size: 1.4rem;
-            color: #777;
-            background: rgba(255, 255, 255, 0.02);
-        }
-
-        /* ストア紹介 */
-        .store-section {
-            text-align: center;
-            background: #050505;
-        }
-
-        .store-links {
-            display: flex;
-            justify-content: center;
-            gap: 100px;
-            margin-top: 100px;
-        }
-
-        .store-link {
-            font-size: 2.5rem;
-            color: #d4af37;
-            text-decoration: none;
-            border-bottom: 1px solid transparent;
-            transition: 0.6s;
-        }
-
-        .store-link:hover {
-            border-bottom: 1px solid #d4af37;
-            letter-spacing: 0.4em;
-        }
-
-        /* フッター */
-        footer {
-            padding: 180px 0;
-            text-align: center;
-            border-top: 1px solid #1a1a1a;
-            color: #333;
-            letter-spacing: 1em;
-            font-size: 1.1rem;
-        }
-
-        @media (max-width: 1100px) {
-            .brand-name { font-size: 4rem; }
-            .section-title { font-size: 2.5rem; }
-            .gem-concept, .work-info { grid-template-columns: 1fr; }
-            .work-visual { height: 500px; }
-            .work-visual.compare-mode { height: auto; flex-direction: column; }
-            .work-visual.compare-mode img { width: 100%; height: auto; }
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>すずき - ポートフォリオ</title>
+  
+  <!-- Tailwind CSS (CDN) -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- Lucide Icons (CDN) -->
+  <script src="https://unpkg.com/lucide@latest"></script>
 </head>
-<body>
+<body class="min-h-screen bg-slate-950 text-slate-200 font-sans selection:bg-blue-500/30">
 
-    <header>
-        <div class="container">
-            <span class="sub-tagline">Intelligence Design</span>
-            <h1 class="brand-name">YAMADA</h1>
-            <p style="color: #444; font-size: 1.6rem;">プロンプトの先にある、真のクリエイティブを設計する。</p>
-        </div>
-    </header>
+  <!-- AI Brain Background Effects -->
+  <div class="fixed inset-0 z-[-2] bg-slate-950"></div>
+  <!-- Glowing Orbs -->
+  <div class="fixed top-[-10%] left-[-10%] w-[50vw] h-[50vw] rounded-full bg-blue-900/20 blur-[120px] z-[-2] pointer-events-none"></div>
+  <div class="fixed bottom-[-10%] right-[-10%] w-[50vw] h-[50vw] rounded-full bg-purple-900/20 blur-[120px] z-[-2] pointer-events-none"></div>
+  <!-- Neural Network Canvas -->
+  <canvas id="neural-bg" class="fixed top-0 left-0 w-full h-full z-[-1] opacity-70 pointer-events-none"></canvas>
 
-    <section class="gem-intro">
-        <div class="container">
-            <span class="section-label">Foundation</span>
-            <h2 class="section-title">GEMINI GEMS</h2>
-            <div class="gem-concept">
-                <div class="gem-text">
-                    Geminiの「Gem」とは、単なるAIではありません。
-                    特定の専門知識、倫理観、そして独自の美学をプログラムされた「デジタル・アーキテクト」です。
-                    私はこのGemを高度に設計し、複雑なクリエイティブ工程を自動化・高精度化しています。
-                </div>
-                <div class="gem-card">
-                    <h3>Beyond Prompting</h3>
-                    <p>プロンプトを打つのではなく、AIそのものを「作家」や「写真家」へと作り変えるアプローチです。</p>
-                </div>
-            </div>
+  <!-- --- Header / Navigation --- -->
+  <header class="fixed top-0 w-full z-50 bg-slate-950/80 backdrop-blur-md border-b border-slate-800">
+    <div class="max-w-6xl mx-auto px-6 h-20 flex items-center justify-between">
+      <a href="#" class="text-xl font-bold tracking-tighter text-white">
+        すずき<span class="text-blue-500">.</span>
+      </a>
+
+      <!-- Desktop Nav -->
+      <nav class="hidden md:flex gap-8">
+        <a href="#about" class="text-sm font-medium transition-colors hover:text-blue-400 text-slate-300">About</a>
+        <a href="#skills" class="text-sm font-medium transition-colors hover:text-blue-400 text-slate-300">Skills</a>
+        <a href="#projects" class="text-sm font-medium transition-colors hover:text-blue-400 text-slate-300">Projects</a>
+        <a href="#contact" class="text-sm font-medium transition-colors hover:text-blue-400 text-slate-300">Contact</a>
+      </nav>
+
+      <!-- Mobile Menu Button -->
+      <button id="menu-btn" class="md:hidden text-slate-300 hover:text-white">
+        <i data-lucide="menu" id="icon-menu"></i>
+        <i data-lucide="x" id="icon-x" class="hidden"></i>
+      </button>
+    </div>
+
+    <!-- Mobile Nav -->
+    <nav id="mobile-menu" class="hidden absolute top-20 left-0 w-full bg-slate-900 border-b border-slate-800 flex-col px-6 pb-6 md:hidden">
+      <a href="#about" class="mobile-link block py-4 border-b border-slate-800 text-center text-lg text-sm font-medium transition-colors hover:text-blue-400 text-slate-300">About</a>
+      <a href="#skills" class="mobile-link block py-4 border-b border-slate-800 text-center text-lg text-sm font-medium transition-colors hover:text-blue-400 text-slate-300">Skills</a>
+      <a href="#projects" class="mobile-link block py-4 border-b border-slate-800 text-center text-lg text-sm font-medium transition-colors hover:text-blue-400 text-slate-300">Projects</a>
+      <a href="#contact" class="mobile-link block py-4 text-center text-lg text-sm font-medium transition-colors hover:text-blue-400 text-slate-300">Contact</a>
+    </nav>
+  </header>
+
+  <main>
+    <!-- --- Hero Section --- -->
+    <section id="home" class="min-h-screen flex items-center justify-center pt-20 px-6 relative">
+      <div class="max-w-4xl mx-auto text-center">
+        <p class="text-blue-400 font-mono mb-4 tracking-wide">こんにちは、私の名前は</p>
+        <h1 class="text-5xl md:text-7xl font-extrabold text-white mb-6 tracking-tight">
+          すずき
+        </h1>
+        <h2 class="text-3xl md:text-5xl font-bold text-slate-400 mb-8">
+          AIエンジニア / 開発者
+        </h2>
+        <p class="text-lg text-slate-400 max-w-2xl mx-auto mb-12 leading-relaxed">
+          生成AIを活用したツール開発とオープンソースへの貢献。
+        </p>
+        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+          <a href="#projects" class="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-full font-medium transition-colors">
+            プロジェクトを見る
+          </a>
+          <a href="#contact" class="border border-slate-700 hover:border-slate-500 hover:bg-slate-800 text-white px-8 py-3 rounded-full font-medium transition-all">
+            公式LINEはこちら
+          </a>
         </div>
+      </div>
+      
+      <div class="absolute bottom-10 left-1/2 transform -translate-x-1/2 animate-bounce">
+        <a href="#about" class="text-slate-500 hover:text-blue-400">
+          <i data-lucide="chevron-down" class="w-8 h-8"></i>
+        </a>
+      </div>
     </section>
 
-    <section class="container">
-        <span class="section-label">Archive</span>
-        <h2 class="section-title">GALLERY</h2>
-
-        <div class="work-item">
-            <div class="work-visual compare-mode">
-                <span class="compare-label before">3D PERSPECTIVE</span>
-                <img src="interior_sketch.jpg" alt="内観3Dパース" />
-                <span class="compare-label after">REALISTIC PHOTO</span>
-                <img src="interior_photo.jpg" alt="リアルな写真" />
-            </div>
-            <div class="work-info">
-                <h3 class="work-type">Sketch to Reality<br>Interior</h3>
-                <div class="work-desc">
-                    <p>
-                        簡素な3Dパースから、光の反射や素材の質感を極限まで高めた実写クオリティへの変換。
-                        Gemが空間の構造を正確に把握し、最適なマテリアルをピクセル単位で割り当てます。
-                    </p>
-                    <div class="mechanism-box">
-                        Mechanism: 構造解析Gemが線のデータを空間ベクトルとして抽出。ライティングエンジンとの連携により、物理的に正しい光の拡散を再現します。
-                    </div>
-                </div>
-            </div>
+    <!-- --- About Section --- -->
+    <section id="about" class="py-24 px-6 bg-slate-900/40 backdrop-blur-sm">
+      <div class="max-w-4xl mx-auto">
+        <div class="flex items-center gap-4 mb-12">
+          <h2 class="text-3xl font-bold text-white">About Me</h2>
+          <div class="h-px bg-slate-700 flex-1"></div>
         </div>
-
-        <div class="work-item">
-            <div class="work-visual">
-                <img src="manga_1.jpg" alt="4コマ漫画：ツムツム" />
+        
+        <div class="grid md:grid-cols-2 gap-12 items-center">
+          <div>
+            <p class="text-slate-300 leading-relaxed mb-6">
+              Geminiをはじめとする生成AIを活用し、様々なコンテンツやGem、開発者向けツールを作成しているエンジニアです。AIを用いた学習の効率化やクリエイティブなコンテンツ生成を探求し、得られた知見やツールをGitHubを通じてオープンに共有しています。OSSコミュニティとのコラボレーションを常に歓迎しています。
+            </p>
+            <p class="text-slate-300 leading-relaxed">
+              新しい技術を学ぶこと、そしてそれを活用して人々の生活を少しでも豊かにするプロダクトを作ることが私の情熱です。趣味はコーヒーの飲み比べと、週末のハイキングです。
+            </p>
+          </div>
+          <div class="relative group">
+            <div class="absolute inset-0 bg-blue-500 rounded-2xl transform translate-x-4 translate-y-4 transition-transform group-hover:translate-x-2 group-hover:translate-y-2"></div>
+            <div class="relative bg-slate-800 rounded-2xl p-2 h-80 flex items-center justify-center border border-slate-700 overflow-hidden">
+               <!-- Placeholder for Profile Image -->
+               <div class="w-full h-full bg-slate-700 flex flex-col items-center justify-center text-slate-500 rounded-xl">
+                  <i data-lucide="bot" class="w-16 h-16 mb-4 opacity-50"></i>
+                  <p class="text-sm font-mono">Creator Profile</p>
+               </div>
             </div>
-            <div class="work-info">
-                <h3 class="work-type">AI Manga 01:<br>Tsum Tsum</h3>
-                <div class="work-desc">
-                    <p>
-                        日常のワンシーンを切り取った4コマ漫画。
-                        Gemが物語の「起承転結」における感情曲線を設計し、読者の共感を生むリズムを構築します。
-                    </p>
-                    <div class="mechanism-box">
-                        Mechanism: 構成Gemが物語の骨組みと台詞を生成。その後、キャラクターの表情と一貫性を保持する専用のイメージ制御エンジンへとバトンを渡します。
-                    </div>
-                </div>
-            </div>
+          </div>
         </div>
-
-        <div class="work-item">
-            <div class="work-visual">
-                <img src="manga_2.jpg" alt="4コマ漫画：お点前" />
-            </div>
-            <div class="work-info">
-                <h3 class="work-type">AI Manga 02:<br>Zen & Game</h3>
-                <div class="work-desc">
-                    <p>
-                        「静」と「動」の対比を描いたユーモラスな作品。
-                        伝統的な風景と現代的なガジェットの融合を、違和感なく一枚の絵に収める知能をGemに持たせています。
-                    </p>
-                </div>
-            </div>
-        </div>
-
-        <div class="work-item">
-            <div class="work-visual">
-                <img src="manga_3.jpg" alt="4コマ漫画：デジタル" />
-            </div>
-            <div class="work-info">
-                <h3 class="work-type">AI Manga 03:<br>Digitalization</h3>
-                <div class="work-desc">
-                    <p>
-                        ビジネスシーンの皮肉を描いた作品。
-                        登場人物の服装やオフィスの小道具まで、細部にわたる世界観の維持をシステムとして実現しています。
-                    </p>
-                </div>
-            </div>
-        </div>
-
-        <div class="work-item">
-            <div class="work-visual" style="height: 450px; background: #111;">
-                </div>
-            <div class="work-info">
-                <h3 class="work-type">Automated<br>Header Design</h3>
-                <div class="work-desc">
-                    <p>
-                        Webサイトの顔となるメインビジュアルを、ブランドキーワードから自動生成。
-                        黄金比、色彩心理、構図の理論をGemに組み込み、一目で惹きつけるデザインを創出します。
-                    </p>
-                    <div class="mechanism-box">
-                        Mechanism: ブランドの「コンセプト」をGemが視覚的パラメータに変換。余白の取り方やフォントの配置までを計算した、洗練されたビジュアルを構築します。
-                    </div>
-                </div>
-            </div>
-        </div>
-
+      </div>
     </section>
 
-    <section class="store-section">
-        <div class="container">
-            <span class="section-label">Acquisition</span>
-            <h2 class="section-title">OFFICIAL STORES</h2>
-            <p style="font-size: 2.2rem; color: #666; margin-bottom: 50px;">培ったシステムとノウハウを、以下の場所で継承しています。</p>
-            <div class="store-links">
-                <a href="#" class="store-link">BRAIN</a>
-                <a href="#" class="store-link">TIPS</a>
-                <a href="#" class="store-link">NOTE</a>
-            </div>
+    <!-- --- Skills Section --- -->
+    <section id="skills" class="py-24 px-6">
+      <div class="max-w-4xl mx-auto">
+        <div class="flex items-center gap-4 mb-12">
+          <h2 class="text-3xl font-bold text-white">Skills <span class="text-lg text-slate-400 font-normal ml-2">- 活用できる技術・得意なこと -</span></h2>
+          <div class="h-px bg-slate-800 flex-1"></div>
         </div>
+
+        <div class="grid md:grid-cols-3 gap-8">
+          <!-- Skill 1 -->
+          <div class="bg-slate-900/60 backdrop-blur-md border border-slate-700/50 p-6 rounded-2xl hover:border-blue-500/50 transition-all shadow-lg shadow-blue-900/10 flex flex-col">
+            <div class="flex items-center gap-3 mb-4">
+              <i data-lucide="bot" class="text-blue-400 w-6 h-6"></i>
+              <h3 class="text-xl font-semibold text-white">AI・プロンプト</h3>
+            </div>
+            <p class="text-sm text-slate-400 mb-6 leading-relaxed flex-grow">
+              GeminiやChatGPTを活用し、意図した精度の高い出力を引き出すためのプロンプト構築や、特定の目的に特化したカスタムAI（Gem）の開発・調整を得意としています。
+            </p>
+            <div class="flex flex-wrap gap-2">
+              <span class="bg-slate-800 text-slate-300 text-xs px-3 py-1.5 rounded-full">Gemini</span>
+              <span class="bg-slate-800 text-slate-300 text-xs px-3 py-1.5 rounded-full">ChatGPT</span>
+              <span class="bg-slate-800 text-slate-300 text-xs px-3 py-1.5 rounded-full">プロンプト構築</span>
+              <span class="bg-slate-800 text-slate-300 text-xs px-3 py-1.5 rounded-full">カスタムGem開発</span>
+            </div>
+          </div>
+          <!-- Skill 2 -->
+          <div class="bg-slate-900/60 backdrop-blur-md border border-slate-700/50 p-6 rounded-2xl hover:border-purple-500/50 transition-all shadow-lg shadow-purple-900/10 flex flex-col">
+            <div class="flex items-center gap-3 mb-4">
+              <i data-lucide="image" class="text-purple-400 w-6 h-6"></i>
+              <h3 class="text-xl font-semibold text-white">コンテンツ制作</h3>
+            </div>
+            <p class="text-sm text-slate-400 mb-6 leading-relaxed flex-grow">
+              画像生成AIを活用したイラスト作成や、AIと対話しながら進める4コマ漫画のストーリー・セリフ作成など、AIと協働したクリエイティブなコンテンツ制作を行っています。
+            </p>
+            <div class="flex flex-wrap gap-2">
+              <span class="bg-slate-800 text-slate-300 text-xs px-3 py-1.5 rounded-full">AIマンガ制作</span>
+              <span class="bg-slate-800 text-slate-300 text-xs px-3 py-1.5 rounded-full">ストーリー構築</span>
+              <span class="bg-slate-800 text-slate-300 text-xs px-3 py-1.5 rounded-full">画像生成AI</span>
+            </div>
+          </div>
+          <!-- Skill 3 -->
+          <div class="bg-slate-900/60 backdrop-blur-md border border-slate-700/50 p-6 rounded-2xl hover:border-green-500/50 transition-all shadow-lg shadow-green-900/10 flex flex-col">
+            <div class="flex items-center gap-3 mb-4">
+              <i data-lucide="book-open" class="text-green-400 w-6 h-6"></i>
+              <h3 class="text-xl font-semibold text-white">語学・学習AI活用</h3>
+            </div>
+            <p class="text-sm text-slate-400 mb-6 leading-relaxed flex-grow">
+              AIを優秀なネイティブチューターとして活用し、実践的な英会話や韓国語学習を行う独自の効果的なメソッドを実践・体系化しています。
+            </p>
+            <div class="flex flex-wrap gap-2">
+              <span class="bg-slate-800 text-slate-300 text-xs px-3 py-1.5 rounded-full">英語学習</span>
+              <span class="bg-slate-800 text-slate-300 text-xs px-3 py-1.5 rounded-full">韓国語学習</span>
+              <span class="bg-slate-800 text-slate-300 text-xs px-3 py-1.5 rounded-full">AIチューター活用法</span>
+            </div>
+          </div>
+        </div>
+      </div>
     </section>
 
-    <footer>
-        <div class="container">
-            <p>&copy; 2026 YAMADA. ARCHITECTING THE FUTURE.</p>
+    <!-- --- Projects Section --- -->
+    <section id="projects" class="py-24 px-6 bg-slate-900/40 backdrop-blur-sm">
+      <div class="max-w-5xl mx-auto">
+        <div class="flex items-center gap-4 mb-12">
+          <h2 class="text-3xl font-bold text-white">Featured Projects</h2>
+          <div class="h-px bg-slate-700 flex-1"></div>
         </div>
-    </footer>
 
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <!-- Project 1 -->
+          <div class="bg-slate-950/80 backdrop-blur-md border border-slate-700/50 rounded-2xl overflow-hidden hover:-translate-y-2 transition-all duration-300 group shadow-lg shadow-purple-900/10">
+            <div class="h-48 bg-slate-800/80 relative overflow-hidden flex items-center justify-center border-b border-slate-700/50">
+               <div class="absolute inset-0 bg-blue-900/20 group-hover:bg-transparent transition-colors"></div>
+               <i data-lucide="bot" class="w-12 h-12 text-slate-500 group-hover:text-blue-400 transition-colors relative z-10"></i>
+            </div>
+            <div class="p-6">
+              <div class="flex justify-between items-start mb-4">
+                <h3 class="text-xl font-bold text-white group-hover:text-blue-400 transition-colors">
+                  オリジナルGem・開発紹介
+                </h3>
+                <div class="flex gap-3 text-slate-400">
+                  <a href="#" class="hover:text-white transition-colors"><i data-lucide="github" class="w-5 h-5"></i></a>
+                  <a href="#" class="hover:text-white transition-colors"><i data-lucide="external-link" class="w-5 h-5"></i></a>
+                </div>
+              </div>
+              <p class="text-slate-400 text-sm mb-6 leading-relaxed">
+                日々の業務や学習をサポートするために開発したカスタムGemのコレクション。ユーザーのニーズに合わせたプロンプトチューニングを行っています。
+              </p>
+              <div class="flex flex-wrap gap-2 mt-auto">
+                <span class="text-xs font-mono text-blue-400 bg-blue-400/10 px-2 py-1 rounded">Custom Gem</span>
+                <span class="text-xs font-mono text-blue-400 bg-blue-400/10 px-2 py-1 rounded">Gemini API</span>
+                <span class="text-xs font-mono text-blue-400 bg-blue-400/10 px-2 py-1 rounded">Prompt Engineering</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Project 2 -->
+          <div class="bg-slate-950/80 backdrop-blur-md border border-slate-700/50 rounded-2xl overflow-hidden hover:-translate-y-2 transition-all duration-300 group shadow-lg shadow-green-900/10">
+            <div class="h-48 bg-slate-800/80 relative overflow-hidden flex items-center justify-center border-b border-slate-700/50">
+               <div class="absolute inset-0 bg-blue-900/20 group-hover:bg-transparent transition-colors"></div>
+               <i data-lucide="book-open" class="w-12 h-12 text-slate-500 group-hover:text-green-400 transition-colors relative z-10"></i>
+            </div>
+            <div class="p-6">
+              <div class="flex justify-between items-start mb-4">
+                <h3 class="text-xl font-bold text-white group-hover:text-blue-400 transition-colors">
+                  生成AI x 語学学習の実践
+                </h3>
+                <div class="flex gap-3 text-slate-400">
+                  <a href="#" class="hover:text-white transition-colors"><i data-lucide="github" class="w-5 h-5"></i></a>
+                  <a href="#" class="hover:text-white transition-colors"><i data-lucide="external-link" class="w-5 h-5"></i></a>
+                </div>
+              </div>
+              <p class="text-slate-400 text-sm mb-6 leading-relaxed">
+                AIをネイティブスピーカーの友人に見立てて、英語や韓国語の会話練習を行うプロジェクト。効果的な学習プロンプトや、実際の会話ログをまとめています。
+              </p>
+              <div class="flex flex-wrap gap-2 mt-auto">
+                <span class="text-xs font-mono text-blue-400 bg-blue-400/10 px-2 py-1 rounded">English</span>
+                <span class="text-xs font-mono text-blue-400 bg-blue-400/10 px-2 py-1 rounded">Korean</span>
+                <span class="text-xs font-mono text-blue-400 bg-blue-400/10 px-2 py-1 rounded">AI Chat</span>
+                <span class="text-xs font-mono text-blue-400 bg-blue-400/10 px-2 py-1 rounded">Study Method</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Project 3 -->
+          <div class="bg-slate-950/80 backdrop-blur-md border border-slate-700/50 rounded-2xl overflow-hidden hover:-translate-y-2 transition-all duration-300 group shadow-lg shadow-blue-900/10">
+            <div class="h-48 bg-slate-800/80 relative overflow-hidden flex items-center justify-center border-b border-slate-700/50">
+               <div class="absolute inset-0 bg-blue-900/20 group-hover:bg-transparent transition-colors"></div>
+               <i data-lucide="image" class="w-12 h-12 text-slate-500 group-hover:text-purple-400 transition-colors relative z-10"></i>
+            </div>
+            <div class="p-6">
+              <div class="flex justify-between items-start mb-4">
+                <h3 class="text-xl font-bold text-white group-hover:text-blue-400 transition-colors">
+                  AI 漫画・4コマ漫画制作
+                </h3>
+                <div class="flex gap-3 text-slate-400">
+                  <a href="#" class="hover:text-white transition-colors"><i data-lucide="github" class="w-5 h-5"></i></a>
+                  <a href="#" class="hover:text-white transition-colors"><i data-lucide="external-link" class="w-5 h-5"></i></a>
+                </div>
+              </div>
+              <p class="text-slate-400 text-sm mb-6 leading-relaxed">
+                Geminiや画像生成AIを駆使して作成した4コマ漫画および通常のストーリー漫画の作品集。キャラクターのセリフ出しから画像プロンプトまでAIと協働しています。
+              </p>
+              <div class="flex flex-wrap gap-2 mt-auto">
+                <span class="text-xs font-mono text-blue-400 bg-blue-400/10 px-2 py-1 rounded">AI Art</span>
+                <span class="text-xs font-mono text-blue-400 bg-blue-400/10 px-2 py-1 rounded">Comic</span>
+                <span class="text-xs font-mono text-blue-400 bg-blue-400/10 px-2 py-1 rounded">Story Generation</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- --- Contact Section --- -->
+    <section id="contact" class="py-32 px-6 text-center">
+      <div class="max-w-2xl mx-auto">
+        <h2 class="text-[#06C755] font-mono mb-4 tracking-wide">Contact Me</h2>
+        <h2 class="text-4xl md:text-5xl font-bold text-white mb-6">公式LINEはこちら</h2>
+        <p class="text-slate-400 mb-10 leading-relaxed text-lg">
+          新しいプロジェクトのご相談、コラボレーションの提案、または技術的な質問など、お気軽に公式LINEからメッセージをお送りください。
+          最新のGemや開発情報などもお届けしています。
+        </p>
+        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+          <a href="https://lin.ee/yourlineid" target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center gap-2 bg-[#06C755] hover:bg-[#05b34c] text-white px-8 py-4 rounded-full font-bold transition-all text-lg shadow-lg shadow-green-900/20">
+            <i data-lucide="message-circle" class="w-6 h-6"></i>
+            LINEで友だち追加
+          </a>
+          <a href="https://github.com/yourusername" target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center gap-2 border border-slate-700 hover:bg-slate-800 text-slate-300 px-8 py-4 rounded-full font-medium transition-all text-lg">
+            <i data-lucide="github" class="w-5 h-5"></i>
+            GitHubを見る
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- --- Footer --- -->
+  <footer class="py-8 text-center bg-slate-950/80 backdrop-blur-md border-t border-slate-900/50">
+    <div class="flex justify-center gap-6 mb-6">
+      <a href="https://github.com/yourusername" class="text-slate-400 hover:text-white transition-colors">
+        <i data-lucide="github" class="w-6 h-6"></i>
+      </a>
+      <a href="https://twitter.com/yourusername" class="text-slate-400 hover:text-blue-400 transition-colors">
+        <i data-lucide="twitter" class="w-6 h-6"></i>
+      </a>
+      <a href="https://linkedin.com/in/yourusername" class="text-slate-400 hover:text-blue-600 transition-colors">
+        <i data-lucide="linkedin" class="w-6 h-6"></i>
+      </a>
+    </div>
+    <p class="text-slate-500 text-sm font-mono">
+      &copy; <span id="year"></span> すずき. Built with HTML & Tailwind.
+    </p>
+  </footer>
+
+  <!-- --- Scripts --- -->
+  <script>
+    // アイコンの初期化
+    lucide.createIcons();
+
+    // フッターの年を自動更新
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // モバイルメニューのトグル処理
+    const menuBtn = document.getElementById('menu-btn');
+    const mobileMenu = document.getElementById('mobile-menu');
+    const iconMenu = document.getElementById('icon-menu');
+    const iconX = document.getElementById('icon-x');
+    const mobileLinks = document.querySelectorAll('.mobile-link');
+
+    let isMenuOpen = false;
+
+    function toggleMenu() {
+      isMenuOpen = !isMenuOpen;
+      if (isMenuOpen) {
+        mobileMenu.classList.remove('hidden');
+        mobileMenu.classList.add('flex');
+        iconMenu.classList.add('hidden');
+        iconX.classList.remove('hidden');
+      } else {
+        mobileMenu.classList.add('hidden');
+        mobileMenu.classList.remove('flex');
+        iconMenu.classList.remove('hidden');
+        iconX.classList.add('hidden');
+      }
+    }
+
+    menuBtn.addEventListener('click', toggleMenu);
+
+    // モバイル用リンクをクリックしたらメニューを閉じる
+    mobileLinks.forEach(link => {
+      link.addEventListener('click', () => {
+        if (isMenuOpen) toggleMenu();
+      });
+    });
+
+    // === AI Neural Network Background Animation ===
+    const canvas = document.getElementById('neural-bg');
+    const ctx = canvas.getContext('2d');
+    
+    let width, height;
+    let particles = [];
+    
+    function resize() {
+      width = canvas.width = window.innerWidth;
+      height = canvas.height = window.innerHeight;
+    }
+    
+    window.addEventListener('resize', resize);
+    resize();
+    
+    class Particle {
+      constructor() {
+        this.x = Math.random() * width;
+        this.y = Math.random() * height;
+        this.vx = (Math.random() - 0.5) * 0.5; // ゆっくり移動
+        this.vy = (Math.random() - 0.5) * 0.5;
+        this.radius = Math.random() * 1.5 + 0.5;
+      }
+      update() {
+        this.x += this.vx;
+        this.y += this.vy;
+        if (this.x < 0 || this.x > width) this.vx *= -1;
+        if (this.y < 0 || this.y > height) this.vy *= -1;
+      }
+      draw() {
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+        ctx.fillStyle = 'rgba(96, 165, 250, 0.6)'; // Tailwind blue-400
+        ctx.fill();
+      }
+    }
+    
+    // 画面サイズに応じてパーティクル数を調整
+    const particleCount = window.innerWidth < 768 ? 40 : 80;
+    for (let i = 0; i < particleCount; i++) {
+      particles.push(new Particle());
+    }
+    
+    let mouse = { x: null, y: null };
+    window.addEventListener('mousemove', (e) => {
+      mouse.x = e.clientX;
+      mouse.y = e.clientY;
+    });
+    window.addEventListener('mouseout', () => {
+      mouse.x = null;
+      mouse.y = null;
+    });
+    
+    function animate() {
+      ctx.clearRect(0, 0, width, height);
+      
+      for (let i = 0; i < particles.length; i++) {
+        particles[i].update();
+        particles[i].draw();
+        
+        for (let j = i; j < particles.length; j++) {
+          let dx = particles[i].x - particles[j].x;
+          let dy = particles[i].y - particles[j].y;
+          let dist = Math.sqrt(dx * dx + dy * dy);
+          
+          if (dist < 150) {
+            ctx.beginPath();
+            ctx.strokeStyle = `rgba(56, 189, 248, ${0.15 - dist/1000})`; // 薄い青い線
+            ctx.lineWidth = 0.8;
+            ctx.moveTo(particles[i].x, particles[i].y);
+            ctx.lineTo(particles[j].x, particles[j].y);
+            ctx.stroke();
+          }
+        }
+        
+        // マウスとのインタラクション (紫の光)
+        if (mouse.x != null) {
+          let dx = particles[i].x - mouse.x;
+          let dy = particles[i].y - mouse.y;
+          let dist = Math.sqrt(dx * dx + dy * dy);
+          if (dist < 200) {
+            ctx.beginPath();
+            ctx.strokeStyle = `rgba(168, 85, 247, ${0.4 - dist/500})`; // Tailwind purple-500
+            ctx.lineWidth = 1.2;
+            ctx.moveTo(particles[i].x, particles[i].y);
+            ctx.lineTo(mouse.x, mouse.y);
+            ctx.stroke();
+          }
+        }
+      }
+      requestAnimationFrame(animate);
+    }
+    animate();
+  </script>
 </body>
 </html>
