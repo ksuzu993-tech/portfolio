@@ -1,447 +1,615 @@
 <!DOCTYPE html>
-<html lang="ja" class="scroll-smooth">
+<html lang="ja">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>すずき - ポートフォリオ</title>
-  
-  <!-- Tailwind CSS (CDN) -->
-  <script src="https://cdn.tailwindcss.com"></script>
-  
-  <!-- Lucide Icons (CDN) -->
-  <script src="https://unpkg.com/lucide@latest"></script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Your Name — Prompt Engineer & Designer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Mono:wght@300;400;500&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #f8f5f0;
+    --bg2: #f2ece3;
+    --surface: #ffffff;
+    --ink: #1a1410;
+    --ink2: #3d3530;
+    --muted: #9a8f86;
+    --accent: #c9622a;
+    --accent2: #8b4a9e;
+    --gold: #c9a84c;
+    --border: #e0d9d0;
+    --serif: 'Cormorant Garamond', Georgia, serif;
+    --mono: 'DM Mono', monospace;
+    --sans: 'Outfit', sans-serif;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--sans);
+    overflow-x: hidden;
+    cursor: none;
+  }
+
+  .cursor {
+    position: fixed;
+    width: 8px; height: 8px;
+    background: var(--accent);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 9999;
+    transform: translate(-50%,-50%);
+  }
+  .cursor-trail {
+    position: fixed;
+    width: 28px; height: 28px;
+    border: 1.5px solid var(--accent);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 9998;
+    transform: translate(-50%,-50%);
+    opacity: 0.5;
+    transition: width 0.3s, height 0.3s, opacity 0.3s;
+  }
+
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    padding: 1.4rem 5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: rgba(248,245,240,0.9);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--border);
+  }
+  .nav-logo {
+    font-family: var(--serif);
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: var(--ink);
+    text-decoration: none;
+    letter-spacing: 0.02em;
+  }
+  .nav-logo em { color: var(--accent); font-style: italic; }
+  .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+  .nav-links a {
+    font-size: 0.75rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--accent); }
+
+  #hero {
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    padding: 8rem 5rem 4rem;
+    gap: 4rem;
+  }
+  .hero-eyebrow {
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.15em;
+    color: var(--muted);
+    margin-bottom: 1.5rem;
+    opacity: 0;
+    animation: fadeUp 0.6s 0.2s ease forwards;
+  }
+  .hero-eyebrow span { color: var(--accent); }
+  .hero-title {
+    font-family: var(--serif);
+    font-size: clamp(3.5rem, 6vw, 6rem);
+    font-weight: 300;
+    line-height: 1.05;
+    margin-bottom: 2rem;
+    opacity: 0;
+    animation: fadeUp 0.7s 0.35s ease forwards;
+  }
+  .hero-title strong { font-weight: 600; color: var(--accent); font-style: italic; }
+  .hero-body {
+    font-size: 0.9rem;
+    color: var(--muted);
+    line-height: 1.85;
+    max-width: 440px;
+    margin-bottom: 2.5rem;
+    opacity: 0;
+    animation: fadeUp 0.7s 0.5s ease forwards;
+  }
+  .hero-body b { color: var(--ink2); font-weight: 500; }
+  .hero-cta {
+    display: flex; gap: 1rem; flex-wrap: wrap;
+    opacity: 0;
+    animation: fadeUp 0.7s 0.65s ease forwards;
+  }
+  .btn {
+    padding: 0.8rem 1.8rem;
+    font-family: var(--sans);
+    font-size: 0.78rem;
+    letter-spacing: 0.06em;
+    text-decoration: none;
+    border-radius: 2px;
+    cursor: none;
+    transition: all 0.25s;
+    font-weight: 500;
+  }
+  .btn-primary { background: var(--accent); color: #fff; }
+  .btn-primary:hover { background: #b5521f; box-shadow: 0 8px 30px rgba(201,98,42,0.3); }
+  .btn-ghost { border: 1.5px solid var(--border); color: var(--ink2); }
+  .btn-ghost:hover { border-color: var(--accent); color: var(--accent); }
+
+  .hero-right {
+    opacity: 0;
+    animation: fadeIn 1s 0.8s ease forwards;
+  }
+  .hero-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 2rem;
+    position: relative;
+    box-shadow: 0 20px 60px rgba(26,20,16,0.08);
+  }
+  .hero-card::before {
+    content: '';
+    position: absolute;
+    top: -1px; left: 2rem; right: 2rem;
+    height: 2px;
+    background: linear-gradient(90deg, var(--accent), var(--accent2));
+  }
+  .card-label {
+    font-family: var(--mono);
+    font-size: 0.65rem;
+    color: var(--muted);
+    letter-spacing: 0.12em;
+    margin-bottom: 1.2rem;
+  }
+  .card-label span { color: var(--accent); }
+  .card-prompt {
+    font-family: var(--mono);
+    font-size: 0.78rem;
+    color: var(--ink2);
+    line-height: 1.7;
+    background: var(--bg);
+    border-radius: 4px;
+    padding: 1rem 1.2rem;
+    border-left: 2px solid var(--accent);
+    margin-bottom: 1.2rem;
+  }
+  .card-tags { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+  .card-tag {
+    font-size: 0.65rem;
+    padding: 0.25rem 0.6rem;
+    border-radius: 100px;
+    font-family: var(--mono);
+    letter-spacing: 0.06em;
+  }
+  .tag-orange { background: rgba(201,98,42,0.1); color: var(--accent); }
+  .tag-purple { background: rgba(139,74,158,0.1); color: var(--accent2); }
+  .tag-gold   { background: rgba(201,168,76,0.12); color: var(--gold); }
+  .floating-badge {
+    position: absolute;
+    bottom: -1rem; right: -1rem;
+    background: var(--accent);
+    color: #fff;
+    font-size: 0.65rem;
+    font-family: var(--mono);
+    letter-spacing: 0.1em;
+    padding: 0.5rem 0.9rem;
+    border-radius: 100px;
+    box-shadow: 0 4px 16px rgba(201,98,42,0.35);
+  }
+
+  #services {
+    padding: 8rem 5rem;
+    background: var(--bg2);
+  }
+  .services-inner { max-width: 1100px; margin: 0 auto; }
+  .section-header {
+    display: flex;
+    align-items: baseline;
+    gap: 1.5rem;
+    margin-bottom: 4rem;
+  }
+  .section-num {
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    color: var(--muted);
+    letter-spacing: 0.1em;
+  }
+  .section-title {
+    font-family: var(--serif);
+    font-size: clamp(2rem, 4vw, 3.2rem);
+    font-weight: 300;
+    letter-spacing: -0.01em;
+  }
+  .section-title em { color: var(--accent); font-style: italic; }
+
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    overflow: hidden;
+  }
+  .service-item {
+    background: var(--bg2);
+    padding: 2.5rem;
+    transition: background 0.3s;
+  }
+  .service-item:hover { background: var(--surface); }
+  .service-icon { font-size: 1.6rem; margin-bottom: 1rem; }
+  .service-name {
+    font-family: var(--serif);
+    font-size: 1.3rem;
+    font-weight: 600;
+    margin-bottom: 0.75rem;
+  }
+  .service-desc { font-size: 0.82rem; color: var(--muted); line-height: 1.75; }
+  .service-platforms {
+    margin-top: 1rem;
+    font-family: var(--mono);
+    font-size: 0.65rem;
+    color: var(--accent);
+    letter-spacing: 0.08em;
+  }
+
+  #works { padding: 8rem 5rem; }
+  .works-inner { max-width: 1100px; margin: 0 auto; }
+  .works-list {
+    display: flex; flex-direction: column;
+    gap: 1.5px; background: var(--border);
+    border: 1px solid var(--border);
+    border-radius: 4px; overflow: hidden;
+  }
+  .work-item {
+    display: grid;
+    grid-template-columns: 3rem 1fr auto;
+    gap: 2rem;
+    align-items: center;
+    background: var(--bg);
+    padding: 1.8rem 2.5rem;
+    transition: background 0.25s;
+    cursor: none;
+  }
+  .work-item:hover { background: var(--surface); }
+  .work-num { font-family: var(--mono); font-size: 0.65rem; color: var(--muted); }
+  .work-title {
+    font-family: var(--serif);
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin-bottom: 0.3rem;
+  }
+  .work-meta {
+    font-size: 0.75rem;
+    color: var(--muted);
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+  .dot { width: 3px; height: 3px; background: var(--border); border-radius: 50%; display: inline-block; }
+  .work-link {
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    color: var(--muted);
+    text-decoration: none;
+    letter-spacing: 0.1em;
+    transition: color 0.2s;
+    white-space: nowrap;
+  }
+  .work-link:hover { color: var(--accent); }
+
+  #testimonial {
+    padding: 6rem 5rem;
+    background: var(--ink);
+  }
+  .testimonial-inner { max-width: 780px; margin: 0 auto; text-align: center; }
+  .testimonial-quote {
+    font-family: var(--serif);
+    font-size: clamp(1.6rem, 3.5vw, 2.4rem);
+    font-weight: 300;
+    line-height: 1.5;
+    margin-bottom: 2rem;
+    color: rgba(248,245,240,0.9);
+  }
+  .testimonial-quote em { color: var(--accent); font-style: italic; }
+  .testimonial-author {
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    color: rgba(248,245,240,0.4);
+    letter-spacing: 0.12em;
+  }
+
+  #contact { padding: 8rem 5rem; position: relative; overflow: hidden; }
+  .contact-inner { max-width: 700px; margin: 0 auto; text-align: center; }
+  .contact-title {
+    font-family: var(--serif);
+    font-size: clamp(2.5rem, 6vw, 5rem);
+    font-weight: 300;
+    letter-spacing: -0.02em;
+    line-height: 1;
+    margin-bottom: 1.5rem;
+  }
+  .contact-title strong { font-weight: 600; color: var(--accent); font-style: italic; }
+  .contact-desc { font-size: 0.85rem; color: var(--muted); line-height: 1.8; margin-bottom: 3rem; }
+  .contact-links { display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap; }
+  .contact-bg-text {
+    position: absolute;
+    bottom: -2rem; left: 50%;
+    transform: translateX(-50%);
+    font-family: var(--serif);
+    font-size: 11rem;
+    font-weight: 600;
+    color: var(--border);
+    white-space: nowrap;
+    pointer-events: none;
+    letter-spacing: -0.04em;
+    opacity: 0.6;
+  }
+
+  footer {
+    padding: 2rem 5rem;
+    border-top: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.72rem;
+    color: var(--muted);
+    font-family: var(--mono);
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(18px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+  }
+  .reveal {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .reveal.visible { opacity: 1; transform: none; }
+
+  @media (max-width: 900px) {
+    nav { padding: 1rem 1.5rem; }
+    #hero { grid-template-columns: 1fr; padding: 7rem 1.5rem 3rem; }
+    .hero-right { display: none; }
+    #services, #works, #contact, #testimonial { padding-left: 1.5rem; padding-right: 1.5rem; }
+    .services-grid { grid-template-columns: 1fr; }
+    .work-item { grid-template-columns: 1fr; gap: 0.5rem; }
+    footer { flex-direction: column; gap: 0.5rem; text-align: center; padding: 1.5rem; }
+  }
+</style>
 </head>
-<body class="min-h-screen bg-slate-950 text-slate-200 font-sans selection:bg-blue-500/30">
+<body>
 
-  <!-- AI Brain Background Effects -->
-  <div class="fixed inset-0 z-[-2] bg-slate-950"></div>
-  <!-- Glowing Orbs -->
-  <div class="fixed top-[-10%] left-[-10%] w-[50vw] h-[50vw] rounded-full bg-blue-900/20 blur-[120px] z-[-2] pointer-events-none"></div>
-  <div class="fixed bottom-[-10%] right-[-10%] w-[50vw] h-[50vw] rounded-full bg-purple-900/20 blur-[120px] z-[-2] pointer-events-none"></div>
-  <!-- Neural Network Canvas -->
-  <canvas id="neural-bg" class="fixed top-0 left-0 w-full h-full z-[-1] opacity-70 pointer-events-none"></canvas>
+<div class="cursor" id="cursor"></div>
+<div class="cursor-trail" id="trail"></div>
 
-  <!-- --- Header / Navigation --- -->
-  <header class="fixed top-0 w-full z-50 bg-slate-950/80 backdrop-blur-md border-b border-slate-800">
-    <div class="max-w-6xl mx-auto px-6 h-20 flex items-center justify-between">
-      <a href="#" class="text-xl font-bold tracking-tighter text-white">
-        すずき<span class="text-blue-500">.</span>
-      </a>
+<nav>
+  <a href="#" class="nav-logo">Your <em>Name</em></a>
+  <ul class="nav-links">
+    <li><a href="#services">Services</a></li>
+    <li><a href="#works">Works</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
 
-      <!-- Desktop Nav -->
-      <nav class="hidden md:flex gap-8">
-        <a href="#about" class="text-sm font-medium transition-colors hover:text-blue-400 text-slate-300">About</a>
-        <a href="#skills" class="text-sm font-medium transition-colors hover:text-blue-400 text-slate-300">Skills</a>
-        <a href="#projects" class="text-sm font-medium transition-colors hover:text-blue-400 text-slate-300">Projects</a>
-        <a href="#contact" class="text-sm font-medium transition-colors hover:text-blue-400 text-slate-300">Contact</a>
-      </nav>
-
-      <!-- Mobile Menu Button -->
-      <button id="menu-btn" class="md:hidden text-slate-300 hover:text-white">
-        <i data-lucide="menu" id="icon-menu"></i>
-        <i data-lucide="x" id="icon-x" class="hidden"></i>
-      </button>
-    </div>
-
-    <!-- Mobile Nav -->
-    <nav id="mobile-menu" class="hidden absolute top-20 left-0 w-full bg-slate-900 border-b border-slate-800 flex-col px-6 pb-6 md:hidden">
-      <a href="#about" class="mobile-link block py-4 border-b border-slate-800 text-center text-lg text-sm font-medium transition-colors hover:text-blue-400 text-slate-300">About</a>
-      <a href="#skills" class="mobile-link block py-4 border-b border-slate-800 text-center text-lg text-sm font-medium transition-colors hover:text-blue-400 text-slate-300">Skills</a>
-      <a href="#projects" class="mobile-link block py-4 border-b border-slate-800 text-center text-lg text-sm font-medium transition-colors hover:text-blue-400 text-slate-300">Projects</a>
-      <a href="#contact" class="mobile-link block py-4 text-center text-lg text-sm font-medium transition-colors hover:text-blue-400 text-slate-300">Contact</a>
-    </nav>
-  </header>
-
-  <main>
-    <!-- --- Hero Section --- -->
-    <section id="home" class="min-h-screen flex items-center justify-center pt-20 px-6 relative">
-      <div class="max-w-4xl mx-auto text-center">
-        <p class="text-blue-400 font-mono mb-4 tracking-wide">こんにちは、私の名前は</p>
-        <h1 class="text-5xl md:text-7xl font-extrabold text-white mb-6 tracking-tight">
-          すずき
-        </h1>
-        <h2 class="text-3xl md:text-5xl font-bold text-slate-400 mb-8">
-          AIエンジニア / 開発者
-        </h2>
-        <p class="text-lg text-slate-400 max-w-2xl mx-auto mb-12 leading-relaxed">
-          生成AIを活用したツール開発とオープンソースへの貢献。
-        </p>
-        <div class="flex flex-col sm:flex-row gap-4 justify-center">
-          <a href="#projects" class="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-full font-medium transition-colors">
-            プロジェクトを見る
-          </a>
-          <a href="#contact" class="border border-slate-700 hover:border-slate-500 hover:bg-slate-800 text-white px-8 py-3 rounded-full font-medium transition-all">
-            公式LINEはこちら
-          </a>
-        </div>
-      </div>
-      
-      <div class="absolute bottom-10 left-1/2 transform -translate-x-1/2 animate-bounce">
-        <a href="#about" class="text-slate-500 hover:text-blue-400">
-          <i data-lucide="chevron-down" class="w-8 h-8"></i>
-        </a>
-      </div>
-    </section>
-
-    <!-- --- About Section --- -->
-    <section id="about" class="py-24 px-6 bg-slate-900/40 backdrop-blur-sm">
-      <div class="max-w-4xl mx-auto">
-        <div class="flex items-center gap-4 mb-12">
-          <h2 class="text-3xl font-bold text-white">About Me</h2>
-          <div class="h-px bg-slate-700 flex-1"></div>
-        </div>
-        
-        <div class="grid md:grid-cols-2 gap-12 items-center">
-          <div>
-            <p class="text-slate-300 leading-relaxed mb-6">
-              Geminiをはじめとする生成AIを活用し、様々なコンテンツやGem、開発者向けツールを作成しているエンジニアです。AIを用いた学習の効率化やクリエイティブなコンテンツ生成を探求し、得られた知見やツールをGitHubを通じてオープンに共有しています。OSSコミュニティとのコラボレーションを常に歓迎しています。
-            </p>
-            <p class="text-slate-300 leading-relaxed">
-              新しい技術を学ぶこと、そしてそれを活用して人々の生活を少しでも豊かにするプロダクトを作ることが私の情熱です。趣味はコーヒーの飲み比べと、週末のハイキングです。
-            </p>
-          </div>
-          <div class="relative group">
-            <div class="absolute inset-0 bg-blue-500 rounded-2xl transform translate-x-4 translate-y-4 transition-transform group-hover:translate-x-2 group-hover:translate-y-2"></div>
-            <div class="relative bg-slate-800 rounded-2xl p-2 h-80 flex items-center justify-center border border-slate-700 overflow-hidden">
-               <!-- Placeholder for Profile Image -->
-               <div class="w-full h-full bg-slate-700 flex flex-col items-center justify-center text-slate-500 rounded-xl">
-                  <i data-lucide="bot" class="w-16 h-16 mb-4 opacity-50"></i>
-                  <p class="text-sm font-mono">Creator Profile</p>
-               </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- --- Skills Section --- -->
-    <section id="skills" class="py-24 px-6">
-      <div class="max-w-4xl mx-auto">
-        <div class="flex items-center gap-4 mb-12">
-          <h2 class="text-3xl font-bold text-white">Skills <span class="text-lg text-slate-400 font-normal ml-2">- 活用できる技術・得意なこと -</span></h2>
-          <div class="h-px bg-slate-800 flex-1"></div>
-        </div>
-
-        <div class="grid md:grid-cols-3 gap-8">
-          <!-- Skill 1 -->
-          <div class="bg-slate-900/60 backdrop-blur-md border border-slate-700/50 p-6 rounded-2xl hover:border-blue-500/50 transition-all shadow-lg shadow-blue-900/10 flex flex-col">
-            <div class="flex items-center gap-3 mb-4">
-              <i data-lucide="bot" class="text-blue-400 w-6 h-6"></i>
-              <h3 class="text-xl font-semibold text-white">AI・プロンプト</h3>
-            </div>
-            <p class="text-sm text-slate-400 mb-6 leading-relaxed flex-grow">
-              GeminiやChatGPTを活用し、意図した精度の高い出力を引き出すためのプロンプト構築や、特定の目的に特化したカスタムAI（Gem）の開発・調整を得意としています。
-            </p>
-            <div class="flex flex-wrap gap-2">
-              <span class="bg-slate-800 text-slate-300 text-xs px-3 py-1.5 rounded-full">Gemini</span>
-              <span class="bg-slate-800 text-slate-300 text-xs px-3 py-1.5 rounded-full">ChatGPT</span>
-              <span class="bg-slate-800 text-slate-300 text-xs px-3 py-1.5 rounded-full">プロンプト構築</span>
-              <span class="bg-slate-800 text-slate-300 text-xs px-3 py-1.5 rounded-full">カスタムGem開発</span>
-            </div>
-          </div>
-          <!-- Skill 2 -->
-          <div class="bg-slate-900/60 backdrop-blur-md border border-slate-700/50 p-6 rounded-2xl hover:border-purple-500/50 transition-all shadow-lg shadow-purple-900/10 flex flex-col">
-            <div class="flex items-center gap-3 mb-4">
-              <i data-lucide="image" class="text-purple-400 w-6 h-6"></i>
-              <h3 class="text-xl font-semibold text-white">コンテンツ制作</h3>
-            </div>
-            <p class="text-sm text-slate-400 mb-6 leading-relaxed flex-grow">
-              画像生成AIを活用したイラスト作成や、AIと対話しながら進める4コマ漫画のストーリー・セリフ作成など、AIと協働したクリエイティブなコンテンツ制作を行っています。
-            </p>
-            <div class="flex flex-wrap gap-2">
-              <span class="bg-slate-800 text-slate-300 text-xs px-3 py-1.5 rounded-full">AIマンガ制作</span>
-              <span class="bg-slate-800 text-slate-300 text-xs px-3 py-1.5 rounded-full">ストーリー構築</span>
-              <span class="bg-slate-800 text-slate-300 text-xs px-3 py-1.5 rounded-full">画像生成AI</span>
-            </div>
-          </div>
-          <!-- Skill 3 -->
-          <div class="bg-slate-900/60 backdrop-blur-md border border-slate-700/50 p-6 rounded-2xl hover:border-green-500/50 transition-all shadow-lg shadow-green-900/10 flex flex-col">
-            <div class="flex items-center gap-3 mb-4">
-              <i data-lucide="book-open" class="text-green-400 w-6 h-6"></i>
-              <h3 class="text-xl font-semibold text-white">語学・学習AI活用</h3>
-            </div>
-            <p class="text-sm text-slate-400 mb-6 leading-relaxed flex-grow">
-              AIを優秀なネイティブチューターとして活用し、実践的な英会話や韓国語学習を行う独自の効果的なメソッドを実践・体系化しています。
-            </p>
-            <div class="flex flex-wrap gap-2">
-              <span class="bg-slate-800 text-slate-300 text-xs px-3 py-1.5 rounded-full">英語学習</span>
-              <span class="bg-slate-800 text-slate-300 text-xs px-3 py-1.5 rounded-full">韓国語学習</span>
-              <span class="bg-slate-800 text-slate-300 text-xs px-3 py-1.5 rounded-full">AIチューター活用法</span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- --- Projects Section --- -->
-    <section id="projects" class="py-24 px-6 bg-slate-900/40 backdrop-blur-sm">
-      <div class="max-w-5xl mx-auto">
-        <div class="flex items-center gap-4 mb-12">
-          <h2 class="text-3xl font-bold text-white">Featured Projects</h2>
-          <div class="h-px bg-slate-700 flex-1"></div>
-        </div>
-
-        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-          <!-- Project 1 -->
-          <div class="bg-slate-950/80 backdrop-blur-md border border-slate-700/50 rounded-2xl overflow-hidden hover:-translate-y-2 transition-all duration-300 group shadow-lg shadow-purple-900/10">
-            <div class="h-48 bg-slate-800/80 relative overflow-hidden flex items-center justify-center border-b border-slate-700/50">
-               <div class="absolute inset-0 bg-blue-900/20 group-hover:bg-transparent transition-colors"></div>
-               <i data-lucide="bot" class="w-12 h-12 text-slate-500 group-hover:text-blue-400 transition-colors relative z-10"></i>
-            </div>
-            <div class="p-6">
-              <div class="flex justify-between items-start mb-4">
-                <h3 class="text-xl font-bold text-white group-hover:text-blue-400 transition-colors">
-                  オリジナルGem・開発紹介
-                </h3>
-                <div class="flex gap-3 text-slate-400">
-                  <a href="#" class="hover:text-white transition-colors"><i data-lucide="github" class="w-5 h-5"></i></a>
-                  <a href="#" class="hover:text-white transition-colors"><i data-lucide="external-link" class="w-5 h-5"></i></a>
-                </div>
-              </div>
-              <p class="text-slate-400 text-sm mb-6 leading-relaxed">
-                日々の業務や学習をサポートするために開発したカスタムGemのコレクション。ユーザーのニーズに合わせたプロンプトチューニングを行っています。
-              </p>
-              <div class="flex flex-wrap gap-2 mt-auto">
-                <span class="text-xs font-mono text-blue-400 bg-blue-400/10 px-2 py-1 rounded">Custom Gem</span>
-                <span class="text-xs font-mono text-blue-400 bg-blue-400/10 px-2 py-1 rounded">Gemini API</span>
-                <span class="text-xs font-mono text-blue-400 bg-blue-400/10 px-2 py-1 rounded">Prompt Engineering</span>
-              </div>
-            </div>
-          </div>
-
-          <!-- Project 2 -->
-          <div class="bg-slate-950/80 backdrop-blur-md border border-slate-700/50 rounded-2xl overflow-hidden hover:-translate-y-2 transition-all duration-300 group shadow-lg shadow-green-900/10">
-            <div class="h-48 bg-slate-800/80 relative overflow-hidden flex items-center justify-center border-b border-slate-700/50">
-               <div class="absolute inset-0 bg-blue-900/20 group-hover:bg-transparent transition-colors"></div>
-               <i data-lucide="book-open" class="w-12 h-12 text-slate-500 group-hover:text-green-400 transition-colors relative z-10"></i>
-            </div>
-            <div class="p-6">
-              <div class="flex justify-between items-start mb-4">
-                <h3 class="text-xl font-bold text-white group-hover:text-blue-400 transition-colors">
-                  生成AI x 語学学習の実践
-                </h3>
-                <div class="flex gap-3 text-slate-400">
-                  <a href="#" class="hover:text-white transition-colors"><i data-lucide="github" class="w-5 h-5"></i></a>
-                  <a href="#" class="hover:text-white transition-colors"><i data-lucide="external-link" class="w-5 h-5"></i></a>
-                </div>
-              </div>
-              <p class="text-slate-400 text-sm mb-6 leading-relaxed">
-                AIをネイティブスピーカーの友人に見立てて、英語や韓国語の会話練習を行うプロジェクト。効果的な学習プロンプトや、実際の会話ログをまとめています。
-              </p>
-              <div class="flex flex-wrap gap-2 mt-auto">
-                <span class="text-xs font-mono text-blue-400 bg-blue-400/10 px-2 py-1 rounded">English</span>
-                <span class="text-xs font-mono text-blue-400 bg-blue-400/10 px-2 py-1 rounded">Korean</span>
-                <span class="text-xs font-mono text-blue-400 bg-blue-400/10 px-2 py-1 rounded">AI Chat</span>
-                <span class="text-xs font-mono text-blue-400 bg-blue-400/10 px-2 py-1 rounded">Study Method</span>
-              </div>
-            </div>
-          </div>
-
-          <!-- Project 3 -->
-          <div class="bg-slate-950/80 backdrop-blur-md border border-slate-700/50 rounded-2xl overflow-hidden hover:-translate-y-2 transition-all duration-300 group shadow-lg shadow-blue-900/10">
-            <div class="h-48 bg-slate-800/80 relative overflow-hidden flex items-center justify-center border-b border-slate-700/50">
-               <div class="absolute inset-0 bg-blue-900/20 group-hover:bg-transparent transition-colors"></div>
-               <i data-lucide="image" class="w-12 h-12 text-slate-500 group-hover:text-purple-400 transition-colors relative z-10"></i>
-            </div>
-            <div class="p-6">
-              <div class="flex justify-between items-start mb-4">
-                <h3 class="text-xl font-bold text-white group-hover:text-blue-400 transition-colors">
-                  AI 漫画・4コマ漫画制作
-                </h3>
-                <div class="flex gap-3 text-slate-400">
-                  <a href="#" class="hover:text-white transition-colors"><i data-lucide="github" class="w-5 h-5"></i></a>
-                  <a href="#" class="hover:text-white transition-colors"><i data-lucide="external-link" class="w-5 h-5"></i></a>
-                </div>
-              </div>
-              <p class="text-slate-400 text-sm mb-6 leading-relaxed">
-                Geminiや画像生成AIを駆使して作成した4コマ漫画および通常のストーリー漫画の作品集。キャラクターのセリフ出しから画像プロンプトまでAIと協働しています。
-              </p>
-              <div class="flex flex-wrap gap-2 mt-auto">
-                <span class="text-xs font-mono text-blue-400 bg-blue-400/10 px-2 py-1 rounded">AI Art</span>
-                <span class="text-xs font-mono text-blue-400 bg-blue-400/10 px-2 py-1 rounded">Comic</span>
-                <span class="text-xs font-mono text-blue-400 bg-blue-400/10 px-2 py-1 rounded">Story Generation</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- --- Contact Section --- -->
-    <section id="contact" class="py-32 px-6 text-center">
-      <div class="max-w-2xl mx-auto">
-        <h2 class="text-[#06C755] font-mono mb-4 tracking-wide">Contact Me</h2>
-        <h2 class="text-4xl md:text-5xl font-bold text-white mb-6">公式LINEはこちら</h2>
-        <p class="text-slate-400 mb-10 leading-relaxed text-lg">
-          新しいプロジェクトのご相談、コラボレーションの提案、または技術的な質問など、お気軽に公式LINEからメッセージをお送りください。
-          最新のGemや開発情報などもお届けしています。
-        </p>
-        <div class="flex flex-col sm:flex-row gap-4 justify-center">
-          <a href="https://lin.ee/yourlineid" target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center gap-2 bg-[#06C755] hover:bg-[#05b34c] text-white px-8 py-4 rounded-full font-bold transition-all text-lg shadow-lg shadow-green-900/20">
-            <i data-lucide="message-circle" class="w-6 h-6"></i>
-            LINEで友だち追加
-          </a>
-          <a href="https://github.com/yourusername" target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center gap-2 border border-slate-700 hover:bg-slate-800 text-slate-300 px-8 py-4 rounded-full font-medium transition-all text-lg">
-            <i data-lucide="github" class="w-5 h-5"></i>
-            GitHubを見る
-          </a>
-        </div>
-      </div>
-    </section>
-  </main>
-
-  <!-- --- Footer --- -->
-  <footer class="py-8 text-center bg-slate-950/80 backdrop-blur-md border-t border-slate-900/50">
-    <div class="flex justify-center gap-6 mb-6">
-      <a href="https://github.com/yourusername" class="text-slate-400 hover:text-white transition-colors">
-        <i data-lucide="github" class="w-6 h-6"></i>
-      </a>
-      <a href="https://twitter.com/yourusername" class="text-slate-400 hover:text-blue-400 transition-colors">
-        <i data-lucide="twitter" class="w-6 h-6"></i>
-      </a>
-      <a href="https://linkedin.com/in/yourusername" class="text-slate-400 hover:text-blue-600 transition-colors">
-        <i data-lucide="linkedin" class="w-6 h-6"></i>
-      </a>
-    </div>
-    <p class="text-slate-500 text-sm font-mono">
-      &copy; <span id="year"></span> すずき. Built with HTML & Tailwind.
+<section id="hero">
+  <div class="hero-left">
+    <p class="hero-eyebrow">Prompt Engineer &amp; <span>Designer</span></p>
+    <h1 class="hero-title">
+      言葉を<br>
+      <strong>設計する</strong>、<br>
+      美しく。
+    </h1>
+    <p class="hero-body">
+      <b>Brain・Tips</b> にてプロンプトを販売。プロンプト設計からデザイン制作まで、AIと人の間にある無限の可能性を形にしています。
     </p>
-  </footer>
+    <div class="hero-cta">
+      <a href="#works" class="btn btn-primary">実績を見る</a>
+      <a href="#contact" class="btn btn-ghost">お問い合わせ</a>
+    </div>
+  </div>
 
-  <!-- --- Scripts --- -->
-  <script>
-    // アイコンの初期化
-    lucide.createIcons();
+  <div class="hero-right">
+    <div class="hero-card">
+      <p class="card-label">// <span>Prompt Sample</span></p>
+      <div class="card-prompt">
+あなたは一流のコピーライターです。<br>
+以下の制約に従って、読者の心に<br>
+刺さるキャッチコピーを5つ生成してください。<br><br>
+#制約<br>
+- 20文字以内<br>
+- 感情に訴える表現を使う<br>
+- ターゲット: 30代女性
+      </div>
+      <div class="card-tags">
+        <span class="card-tag tag-orange">コピーライティング</span>
+        <span class="card-tag tag-purple">マーケティング</span>
+        <span class="card-tag tag-gold">Brain掲載</span>
+      </div>
+      <div class="floating-badge">★ 人気作品</div>
+    </div>
+  </div>
+</section>
 
-    // フッターの年を自動更新
-    document.getElementById('year').textContent = new Date().getFullYear();
+<section id="services">
+  <div class="services-inner">
+    <div class="section-header reveal">
+      <span class="section-num">01</span>
+      <h2 class="section-title">できること、<em>すべて。</em></h2>
+    </div>
+    <div class="services-grid">
+      <div class="service-item reveal">
+        <div class="service-icon">✦</div>
+        <h3 class="service-name">プロンプト販売</h3>
+        <p class="service-desc">Brain・Tipsにて高品質なプロンプトを販売。業務効率化、コンテンツ制作、マーケティングなど幅広いジャンルに対応。</p>
+        <p class="service-platforms">Brain / Tips</p>
+      </div>
+      <div class="service-item reveal">
+        <div class="service-icon">◈</div>
+        <h3 class="service-name">プロンプト設計</h3>
+        <p class="service-desc">目的・ターゲット・出力形式を緻密に設計するカスタムプロンプト構築。再現性と品質の高いAI活用を実現します。</p>
+        <p class="service-platforms">オーダーメイド対応</p>
+      </div>
+      <div class="service-item reveal">
+        <div class="service-icon">❋</div>
+        <h3 class="service-name">デザイン制作</h3>
+        <p class="service-desc">SNS投稿、バナー、資料デザインなど。AIツールと人の感性を組み合わせた、印象に残るビジュアル制作。</p>
+        <p class="service-platforms">Canva / Figma / Adobe</p>
+      </div>
+    </div>
+  </div>
+</section>
 
-    // モバイルメニューのトグル処理
-    const menuBtn = document.getElementById('menu-btn');
-    const mobileMenu = document.getElementById('mobile-menu');
-    const iconMenu = document.getElementById('icon-menu');
-    const iconX = document.getElementById('icon-x');
-    const mobileLinks = document.querySelectorAll('.mobile-link');
+<section id="works">
+  <div class="works-inner">
+    <div class="section-header reveal">
+      <span class="section-num">02</span>
+      <h2 class="section-title"><em>実績</em>・作品。</h2>
+    </div>
+    <div class="works-list reveal">
+      <div class="work-item">
+        <span class="work-num">01</span>
+        <div>
+          <h3 class="work-title">SNS集客プロンプト完全セット</h3>
+          <div class="work-meta">
+            <span>Brain</span><span class="dot"></span>
+            <span>プロンプト販売</span><span class="dot"></span>
+            <span class="card-tag tag-gold">人気作品</span>
+          </div>
+        </div>
+        <a href="#" class="work-link">購入ページ ↗</a>
+      </div>
+      <div class="work-item">
+        <span class="work-num">02</span>
+        <div>
+          <h3 class="work-title">ChatGPT業務効率化プロンプト集</h3>
+          <div class="work-meta">
+            <span>Tips</span><span class="dot"></span>
+            <span>プロンプト販売</span><span class="dot"></span>
+            <span class="card-tag tag-purple">業務効率</span>
+          </div>
+        </div>
+        <a href="#" class="work-link">購入ページ ↗</a>
+      </div>
+      <div class="work-item">
+        <span class="work-num">03</span>
+        <div>
+          <h3 class="work-title">ブランドロゴ＆SNSデザインパッケージ</h3>
+          <div class="work-meta">
+            <span>制作実績</span><span class="dot"></span>
+            <span>デザイン</span><span class="dot"></span>
+            <span class="card-tag tag-orange">デザイン</span>
+          </div>
+        </div>
+        <a href="#" class="work-link">詳細を見る ↗</a>
+      </div>
+      <div class="work-item">
+        <span class="work-num">04</span>
+        <div>
+          <h3 class="work-title">カスタムプロンプト構築支援</h3>
+          <div class="work-meta">
+            <span>受注制作</span><span class="dot"></span>
+            <span>プロンプト設計</span><span class="dot"></span>
+            <span class="card-tag tag-gold">オーダー</span>
+          </div>
+        </div>
+        <a href="#contact" class="work-link">依頼する ↗</a>
+      </div>
+    </div>
+  </div>
+</section>
 
-    let isMenuOpen = false;
+<section id="testimonial">
+  <div class="testimonial-inner reveal">
+    <p class="testimonial-quote">
+      「プロンプト一つで、AIの<em>使い方が変わった。</em><br>
+      言葉の設計次第で、アウトプットは無限に広がる。」
+    </p>
+    <p class="testimonial-author">— Your Name / Prompt Engineer & Designer</p>
+  </div>
+</section>
 
-    function toggleMenu() {
-      isMenuOpen = !isMenuOpen;
-      if (isMenuOpen) {
-        mobileMenu.classList.remove('hidden');
-        mobileMenu.classList.add('flex');
-        iconMenu.classList.add('hidden');
-        iconX.classList.remove('hidden');
-      } else {
-        mobileMenu.classList.add('hidden');
-        mobileMenu.classList.remove('flex');
-        iconMenu.classList.remove('hidden');
-        iconX.classList.add('hidden');
-      }
-    }
+<section id="contact">
+  <div class="contact-bg-text">Contact</div>
+  <div class="contact-inner">
+    <div class="section-header reveal" style="justify-content:center;">
+      <span class="section-num">03</span>
+    </div>
+    <h2 class="contact-title reveal">一緒に<br><strong>作りませんか。</strong></h2>
+    <p class="contact-desc reveal">
+      プロンプト設計・デザイン制作のご依頼、<br>
+      コラボレーションのご相談はお気軽にどうぞ。
+    </p>
+    <div class="contact-links reveal">
+      <a href="mailto:your@email.com" class="btn btn-primary">メールを送る</a>
+      <a href="https://brain-market.com/u/yourusername" class="btn btn-ghost" target="_blank">Brain ↗</a>
+      <a href="https://tips.stores.jp/yourusername" class="btn btn-ghost" target="_blank">Tips ↗</a>
+      <a href="https://twitter.com/yourusername" class="btn btn-ghost" target="_blank">X (Twitter) ↗</a>
+    </div>
+  </div>
+</section>
 
-    menuBtn.addEventListener('click', toggleMenu);
+<footer>
+  <span>© 2026 Your Name</span>
+  <span>Prompt Engineer &amp; Designer</span>
+</footer>
 
-    // モバイル用リンクをクリックしたらメニューを閉じる
-    mobileLinks.forEach(link => {
-      link.addEventListener('click', () => {
-        if (isMenuOpen) toggleMenu();
-      });
+<script>
+  const cur = document.getElementById('cursor');
+  const trail = document.getElementById('trail');
+  let mx = 0, my = 0, tx = 0, ty = 0;
+
+  document.addEventListener('mousemove', e => {
+    mx = e.clientX; my = e.clientY;
+    cur.style.left = mx + 'px';
+    cur.style.top  = my + 'px';
+  });
+
+  (function loop() {
+    tx += (mx - tx) * 0.1;
+    ty += (my - ty) * 0.1;
+    trail.style.left = tx + 'px';
+    trail.style.top  = ty + 'px';
+    requestAnimationFrame(loop);
+  })();
+
+  document.querySelectorAll('a, .work-item, .service-item').forEach(el => {
+    el.addEventListener('mouseenter', () => {
+      trail.style.width = trail.style.height = '48px';
+      trail.style.opacity = '0.8';
     });
+    el.addEventListener('mouseleave', () => {
+      trail.style.width = trail.style.height = '28px';
+      trail.style.opacity = '0.5';
+    });
+  });
 
-    // === AI Neural Network Background Animation ===
-    const canvas = document.getElementById('neural-bg');
-    const ctx = canvas.getContext('2d');
-    
-    let width, height;
-    let particles = [];
-    
-    function resize() {
-      width = canvas.width = window.innerWidth;
-      height = canvas.height = window.innerHeight;
-    }
-    
-    window.addEventListener('resize', resize);
-    resize();
-    
-    class Particle {
-      constructor() {
-        this.x = Math.random() * width;
-        this.y = Math.random() * height;
-        this.vx = (Math.random() - 0.5) * 0.5; // ゆっくり移動
-        this.vy = (Math.random() - 0.5) * 0.5;
-        this.radius = Math.random() * 1.5 + 0.5;
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach((e, i) => {
+      if (e.isIntersecting) {
+        setTimeout(() => e.target.classList.add('visible'), i * 100);
+        obs.unobserve(e.target);
       }
-      update() {
-        this.x += this.vx;
-        this.y += this.vy;
-        if (this.x < 0 || this.x > width) this.vx *= -1;
-        if (this.y < 0 || this.y > height) this.vy *= -1;
-      }
-      draw() {
-        ctx.beginPath();
-        ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
-        ctx.fillStyle = 'rgba(96, 165, 250, 0.6)'; // Tailwind blue-400
-        ctx.fill();
-      }
-    }
-    
-    // 画面サイズに応じてパーティクル数を調整
-    const particleCount = window.innerWidth < 768 ? 40 : 80;
-    for (let i = 0; i < particleCount; i++) {
-      particles.push(new Particle());
-    }
-    
-    let mouse = { x: null, y: null };
-    window.addEventListener('mousemove', (e) => {
-      mouse.x = e.clientX;
-      mouse.y = e.clientY;
     });
-    window.addEventListener('mouseout', () => {
-      mouse.x = null;
-      mouse.y = null;
-    });
-    
-    function animate() {
-      ctx.clearRect(0, 0, width, height);
-      
-      for (let i = 0; i < particles.length; i++) {
-        particles[i].update();
-        particles[i].draw();
-        
-        for (let j = i; j < particles.length; j++) {
-          let dx = particles[i].x - particles[j].x;
-          let dy = particles[i].y - particles[j].y;
-          let dist = Math.sqrt(dx * dx + dy * dy);
-          
-          if (dist < 150) {
-            ctx.beginPath();
-            ctx.strokeStyle = `rgba(56, 189, 248, ${0.15 - dist/1000})`; // 薄い青い線
-            ctx.lineWidth = 0.8;
-            ctx.moveTo(particles[i].x, particles[i].y);
-            ctx.lineTo(particles[j].x, particles[j].y);
-            ctx.stroke();
-          }
-        }
-        
-        // マウスとのインタラクション (紫の光)
-        if (mouse.x != null) {
-          let dx = particles[i].x - mouse.x;
-          let dy = particles[i].y - mouse.y;
-          let dist = Math.sqrt(dx * dx + dy * dy);
-          if (dist < 200) {
-            ctx.beginPath();
-            ctx.strokeStyle = `rgba(168, 85, 247, ${0.4 - dist/500})`; // Tailwind purple-500
-            ctx.lineWidth = 1.2;
-            ctx.moveTo(particles[i].x, particles[i].y);
-            ctx.lineTo(mouse.x, mouse.y);
-            ctx.stroke();
-          }
-        }
-      }
-      requestAnimationFrame(animate);
-    }
-    animate();
-  </script>
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.reveal').forEach(r => obs.observe(r));
+</script>
 </body>
 </html>
