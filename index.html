@@ -3,23 +3,25 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>すずき | Gemini・Gem活用術 × AI monetization</title>
+<title>すずき — Gemini × AI Monetization</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@300;400;500;700&family=Zen+Kaku+Gothic+New:wght@300;400;500;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&family=Noto+Serif+JP:wght@300;400;500&family=DM+Mono:wght@300;400&family=Zen+Kaku+Gothic+New:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
 :root {
-  --bg: #f8f5f0;
-  --bg2: #f2ece3;
-  --surface: #ffffff;
-  --surface2: #faf7f3;
-  --border: #e0d9d0;
-  --accent: #c9622a;
-  --accent2: #8b4a9e;
-  --gold: #c9a84c;
-  --teal: #2a9d8f;
-  --text: #1a1410;
-  --muted: #9a8f86;
-  --serif: 'Noto Serif JP', serif;
+  --cream: #faf7f2;
+  --cream2: #f4efe6;
+  --cream3: #ede5d8;
+  --ink: #1c1712;
+  --ink2: #3a322a;
+  --muted: #8c7f72;
+  --faint: #c4b9ac;
+  --rust: #b85c2a;
+  --rust2: #d4763a;
+  --plum: #7a4a6e;
+  --gold: #b8924a;
+  --border: #ddd5c8;
+  --serif-en: 'Playfair Display', Georgia, serif;
+  --serif-jp: 'Noto Serif JP', serif;
   --sans: 'Zen Kaku Gothic New', sans-serif;
   --mono: 'DM Mono', monospace;
 }
@@ -28,754 +30,745 @@
 html { scroll-behavior: smooth; }
 
 body {
-  background: var(--bg);
-  color: var(--text);
+  background: var(--cream);
+  color: var(--ink);
   font-family: var(--sans);
   overflow-x: hidden;
   cursor: none;
 }
 
-/* Cursor */
-.cursor {
-  position: fixed; width: 10px; height: 10px;
-  background: var(--accent); border-radius: 50%;
-  pointer-events: none; z-index: 9999;
-  transform: translate(-50%,-50%);
-  transition: transform 0.1s;
-  mix-blend-mode: multiply;
-}
-.cursor-ring {
-  position: fixed; width: 36px; height: 36px;
-  border: 1px solid var(--accent); border-radius: 50%;
-  pointer-events: none; z-index: 9998;
-  transform: translate(-50%,-50%);
-  opacity: 0.5;
-  transition: width 0.3s, height 0.3s, opacity 0.3s;
+/* ── Cursor ── */
+.cur { position: fixed; pointer-events: none; z-index: 9999; transform: translate(-50%,-50%); }
+.cur-dot { width: 6px; height: 6px; background: var(--rust); border-radius: 50%; }
+.cur-ring {
+  width: 32px; height: 32px;
+  border: 1px solid var(--rust);
+  border-radius: 50%; opacity: 0.4;
+  transition: width .3s, height .3s, opacity .3s;
 }
 
-/* Subtle noise texture */
-.stars {
+/* ── Background texture ── */
+body::before {
+  content: '';
   position: fixed; inset: 0;
-  background-image:
-    radial-gradient(ellipse at 80% 10%, rgba(201,98,42,0.06) 0%, transparent 50%),
-    radial-gradient(ellipse at 10% 80%, rgba(139,74,158,0.05) 0%, transparent 50%);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.025'/%3E%3C/svg%3E");
   pointer-events: none; z-index: 0;
 }
 
-/* Glow blobs */
-.blob {
-  position: fixed; border-radius: 50%;
-  filter: blur(80px); pointer-events: none; z-index: 0;
-}
-.blob-1 {
-  width: 500px; height: 500px;
-  background: radial-gradient(circle, rgba(201,98,42,0.07), transparent 70%);
-  top: -100px; right: -100px;
-}
-.blob-2 {
-  width: 400px; height: 400px;
-  background: radial-gradient(circle, rgba(139,74,158,0.05), transparent 70%);
-  bottom: 200px; left: -100px;
-}
-
-/* NAV */
+/* ── NAV ── */
 nav {
   position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-  padding: 1.2rem 4rem;
+  padding: 0 5vw;
+  height: 68px;
   display: flex; justify-content: space-between; align-items: center;
-  background: rgba(248,245,240,0.92);
-  backdrop-filter: blur(16px);
+  background: rgba(250,247,242,0.88);
+  backdrop-filter: blur(14px);
   border-bottom: 1px solid var(--border);
 }
 .nav-logo {
-  font-family: var(--serif);
-  font-size: 1rem; font-weight: 700;
-  color: var(--text); text-decoration: none;
-  display: flex; align-items: center; gap: 0.6rem;
+  font-family: var(--serif-en);
+  font-size: 1.05rem; font-weight: 700; font-style: italic;
+  color: var(--ink); text-decoration: none; letter-spacing: 0.02em;
 }
-.nav-logo .logo-gem {
-  width: 28px; height: 28px;
-  background: linear-gradient(135deg, var(--accent), var(--accent2));
-  border-radius: 6px;
+.nav-logo span { color: var(--rust); }
+.nav-center { display: flex; gap: 2.5rem; list-style: none; }
+.nav-center a {
+  font-size: 0.72rem; letter-spacing: 0.14em;
+  text-transform: uppercase; color: var(--muted);
+  text-decoration: none; transition: color .2s;
+  font-weight: 400;
+}
+.nav-center a:hover { color: var(--rust); }
+.nav-right {
+  display: flex; align-items: center; gap: 1rem;
+}
+.nav-social {
+  width: 34px; height: 34px;
+  border: 1px solid var(--border); border-radius: 50%;
   display: flex; align-items: center; justify-content: center;
-  font-size: 0.9rem;
+  font-size: 0.85rem; text-decoration: none; color: var(--muted);
+  transition: all .2s; cursor: none;
 }
-.nav-links { display: flex; gap: 2rem; list-style: none; align-items: center; }
-.nav-links a {
-  font-size: 0.75rem; letter-spacing: 0.08em;
-  color: var(--muted); text-decoration: none; transition: color 0.2s;
-}
-.nav-links a:hover { color: var(--accent); }
-.nav-cta {
+.nav-social:hover { border-color: var(--rust); color: var(--rust); }
+.nav-btn {
   padding: 0.5rem 1.2rem;
-  background: linear-gradient(135deg, var(--accent), var(--accent2));
-  border-radius: 100px; font-size: 0.72rem; font-weight: 700;
-  color: #fff; text-decoration: none; letter-spacing: 0.05em;
-  transition: opacity 0.2s; cursor: none;
+  border: 1.5px solid var(--ink);
+  border-radius: 100px; font-size: 0.7rem;
+  font-weight: 500; letter-spacing: 0.1em;
+  text-transform: uppercase; color: var(--ink);
+  text-decoration: none; cursor: none;
+  transition: all .25s;
 }
-.nav-cta:hover { opacity: 0.85; }
+.nav-btn:hover { background: var(--ink); color: var(--cream); }
 
-/* HERO */
+/* ── HERO ── */
 #hero {
   min-height: 100vh;
-  display: flex; align-items: center;
-  padding: 8rem 4rem 4rem;
+  display: grid; grid-template-columns: 1fr 1fr;
   position: relative; z-index: 1;
 }
-.hero-inner {
-  max-width: 1200px; margin: 0 auto; width: 100%;
-  display: grid; grid-template-columns: 1fr 420px;
-  gap: 5rem; align-items: center;
-}
-.hero-badge {
-  display: inline-flex; align-items: center; gap: 0.5rem;
-  padding: 0.35rem 0.9rem;
-  border: 1px solid rgba(201,98,42,0.25);
-  border-radius: 100px;
-  background: rgba(201,98,42,0.07);
-  font-size: 0.7rem; font-family: var(--mono);
-  color: var(--accent); letter-spacing: 0.1em;
-  margin-bottom: 1.5rem;
-  opacity: 0; animation: fadeUp 0.5s 0.1s ease forwards;
-}
-.hero-badge::before { content: '●'; font-size: 0.5rem; color: var(--teal); }
-.hero-title {
-  font-family: var(--serif);
-  font-size: clamp(2.4rem, 5vw, 4rem);
-  font-weight: 700; line-height: 1.3;
-  letter-spacing: -0.01em; margin-bottom: 0.75rem;
-  opacity: 0; animation: fadeUp 0.6s 0.25s ease forwards;
-}
-.hero-title .highlight {
-  background: linear-gradient(135deg, var(--accent), var(--accent2));
-  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-.hero-sub {
-  font-size: 1rem; color: var(--muted); line-height: 1.8;
-  margin-bottom: 0.5rem;
-  opacity: 0; animation: fadeUp 0.6s 0.4s ease forwards;
-}
-.hero-tagline {
-  font-size: 0.85rem; color: var(--muted); line-height: 1.9;
-  margin-bottom: 2.5rem; max-width: 520px;
-  opacity: 0; animation: fadeUp 0.6s 0.5s ease forwards;
-}
-.hero-tagline strong { color: var(--text); font-weight: 500; }
-.hero-stats {
-  display: flex; gap: 2rem; margin-bottom: 2.5rem;
-  opacity: 0; animation: fadeUp 0.6s 0.6s ease forwards;
-}
-.stat { text-align: center; }
-.stat-n {
-  font-family: var(--serif);
-  font-size: 2rem; font-weight: 700;
-  background: linear-gradient(135deg, var(--accent), var(--accent2));
-  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-  background-clip: text; line-height: 1;
-}
-.stat-l { font-size: 0.7rem; color: var(--muted); letter-spacing: 0.08em; margin-top: 0.3rem; }
-.hero-cta {
-  display: flex; gap: 1rem; flex-wrap: wrap;
-  opacity: 0; animation: fadeUp 0.6s 0.7s ease forwards;
-}
-.btn {
-  padding: 0.85rem 2rem;
-  font-family: var(--sans); font-size: 0.82rem;
-  font-weight: 700; letter-spacing: 0.05em;
-  text-decoration: none; border-radius: 100px;
-  cursor: none; transition: all 0.25s; display: inline-flex;
-  align-items: center; gap: 0.5rem;
-}
-.btn-primary {
-  background: linear-gradient(135deg, var(--accent), var(--accent2));
-  color: #fff; box-shadow: 0 8px 30px rgba(124,111,255,0.35);
-}
-.btn-primary:hover { transform: translateY(-2px); box-shadow: 0 12px 40px rgba(124,111,255,0.5); }
-.btn-outline {
-  border: 1px solid var(--border); color: var(--muted);
-  background: rgba(255,255,255,0.03);
-}
-.btn-outline:hover { border-color: var(--accent); color: var(--accent); }
 
-/* Hero photo card */
-.hero-photo-wrap {
+/* Left panel */
+.hero-left {
+  display: flex; flex-direction: column; justify-content: flex-end;
+  padding: 8rem 5vw 5rem;
+  border-right: 1px solid var(--border);
   position: relative;
-  opacity: 0; animation: fadeIn 0.8s 0.8s ease forwards;
 }
-.hero-photo-card {
-  border-radius: 20px; overflow: hidden;
-  border: 1px solid var(--border);
-  position: relative;
-  box-shadow: 0 30px 80px rgba(0,0,0,0.5), 0 0 0 1px var(--border);
-}
-.hero-photo-card img {
-  width: 100%; display: block;
-  aspect-ratio: 3/4; object-fit: cover;
-}
-.hero-photo-card::after {
-  content: '';
-  position: absolute; inset: 0;
-  background: linear-gradient(to top, rgba(11,11,20,0.7) 0%, transparent 50%);
-}
-.photo-overlay {
-  position: absolute; bottom: 0; left: 0; right: 0;
-  padding: 1.5rem; z-index: 2;
-  background: linear-gradient(to top, rgba(26,20,16,0.75) 0%, transparent 100%);
-}
-.photo-name {
-  font-family: var(--serif);
-  font-size: 1.3rem; font-weight: 700; color: #fff;
-  margin-bottom: 0.25rem;
-}
-.photo-role {
-  font-size: 0.72rem; color: rgba(255,255,255,0.6);
-  font-family: var(--mono); letter-spacing: 0.08em;
-}
-.float-badge {
-  position: absolute; top: 1rem; right: -1rem;
-  background: linear-gradient(135deg, var(--gold), #ff9f43);
-  color: #0b0b14; font-size: 0.65rem; font-weight: 700;
-  font-family: var(--mono); letter-spacing: 0.08em;
-  padding: 0.45rem 0.9rem; border-radius: 100px;
-  box-shadow: 0 4px 20px rgba(255,209,102,0.5);
-  white-space: nowrap;
-}
-.float-badge2 {
-  position: absolute; top: 4rem; right: -1.5rem;
-  background: rgba(6,214,160,0.15);
-  border: 1px solid rgba(6,214,160,0.3);
-  color: var(--teal); font-size: 0.62rem;
-  font-family: var(--mono); letter-spacing: 0.06em;
-  padding: 0.35rem 0.8rem; border-radius: 100px;
-  white-space: nowrap;
-}
-
-/* FEATURES */
-#features {
-  padding: 6rem 4rem;
-  position: relative; z-index: 1;
-  background: linear-gradient(180deg, transparent, rgba(124,111,255,0.03) 50%, transparent);
-}
-.features-inner { max-width: 1100px; margin: 0 auto; }
-.section-eyebrow {
+.hero-eyebrow {
   font-family: var(--mono); font-size: 0.68rem;
-  letter-spacing: 0.2em; text-transform: uppercase;
-  color: var(--accent); margin-bottom: 1rem;
+  letter-spacing: 0.2em; color: var(--muted);
+  text-transform: uppercase; margin-bottom: 2rem;
+  opacity: 0; animation: up .6s .15s ease forwards;
 }
-.section-title {
-  font-family: var(--serif); font-size: clamp(1.8rem, 3.5vw, 2.8rem);
-  font-weight: 700; margin-bottom: 3.5rem; line-height: 1.3;
+.hero-eyebrow em { color: var(--rust); font-style: normal; }
+.hero-h1 {
+  font-family: var(--serif-en);
+  font-size: clamp(3.2rem, 6vw, 6rem);
+  font-weight: 400; line-height: 1.1;
+  letter-spacing: -0.02em; margin-bottom: 2rem;
+  opacity: 0; animation: up .7s .3s ease forwards;
 }
-.section-title .g { color: var(--accent); }
-.features-grid {
-  display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem;
+.hero-h1 em { font-style: italic; color: var(--rust); }
+.hero-h1 .jp {
+  font-family: var(--serif-jp);
+  font-size: 0.55em; font-weight: 300;
+  display: block; color: var(--muted);
+  letter-spacing: 0.1em; margin-top: 0.5rem;
 }
-.feature-card {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: 16px; padding: 2rem;
-  transition: all 0.3s; cursor: none;
+.hero-desc {
+  font-size: 0.83rem; color: var(--muted); line-height: 1.9;
+  max-width: 400px; margin-bottom: 3rem;
+  opacity: 0; animation: up .7s .45s ease forwards;
+}
+.hero-desc strong { color: var(--ink2); font-weight: 500; }
+.hero-actions {
+  display: flex; gap: 1rem; align-items: center;
+  opacity: 0; animation: up .7s .6s ease forwards;
+}
+.btn-solid {
+  padding: 0.85rem 2rem;
+  background: var(--ink); color: var(--cream);
+  font-size: 0.75rem; letter-spacing: 0.1em;
+  text-transform: uppercase; font-weight: 500;
+  text-decoration: none; border-radius: 100px;
+  cursor: none; transition: all .25s;
+}
+.btn-solid:hover { background: var(--rust); transform: translateY(-2px); }
+.btn-line {
+  font-size: 0.72rem; color: var(--muted);
+  letter-spacing: 0.08em; text-decoration: none;
+  cursor: none; transition: color .2s;
+  display: flex; align-items: center; gap: 0.4rem;
+}
+.btn-line:hover { color: var(--rust); }
+.btn-line::after { content: '→'; }
+
+/* Decorative line left bottom */
+.hero-deco-line {
+  position: absolute; bottom: 5rem; left: 5vw;
+  width: 60px; height: 1px; background: var(--faint);
+}
+
+/* Right panel */
+.hero-right {
+  background: var(--cream2);
+  display: flex; flex-direction: column; justify-content: center;
+  padding: 8rem 5vw 5rem;
   position: relative; overflow: hidden;
 }
-.feature-card::before {
-  content: '';
-  position: absolute; top: 0; left: 0; right: 0; height: 1px;
-  opacity: 0; transition: opacity 0.3s;
-}
-.feature-card:hover { border-color: rgba(201,98,42,0.3); transform: translateY(-4px); }
-.feature-card:hover::before { opacity: 1; }
-.fc1::before { background: linear-gradient(90deg, transparent, var(--accent), transparent); }
-.fc2::before { background: linear-gradient(90deg, transparent, var(--accent2), transparent); }
-.fc3::before { background: linear-gradient(90deg, transparent, var(--gold), transparent); }
-.feature-icon {
-  font-size: 2rem; margin-bottom: 1rem;
-  display: inline-block;
-}
-.feature-title {
-  font-family: var(--serif); font-size: 1.1rem; font-weight: 700;
-  margin-bottom: 0.6rem;
-}
-.feature-desc { font-size: 0.8rem; color: var(--muted); line-height: 1.75; }
 
-/* PRODUCTS */
-#products {
-  padding: 6rem 4rem;
+/* Large decorative letter */
+.hero-deco-letter {
+  position: absolute; top: -2rem; right: -1rem;
+  font-family: var(--serif-en); font-size: 22rem;
+  font-weight: 700; font-style: italic;
+  color: rgba(184,92,42,0.04); line-height: 1;
+  pointer-events: none; user-select: none;
+}
+
+/* Profile visual */
+.profile-visual {
   position: relative; z-index: 1;
+  opacity: 0; animation: fadeIn .9s .7s ease forwards;
 }
-.products-inner { max-width: 1100px; margin: 0 auto; }
-.products-grid {
-  display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.5rem;
-}
-.product-card {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: 16px; overflow: hidden;
-  transition: all 0.3s; cursor: none;
-  display: flex; flex-direction: column;
-}
-.product-card:hover {
-  border-color: rgba(201,98,42,0.35);
-  transform: translateY(-3px);
-  box-shadow: 0 20px 50px rgba(26,20,16,0.1);
-}
-.product-top {
-  padding: 1.5rem 1.5rem 0;
-  display: flex; justify-content: space-between; align-items: flex-start;
-}
-.product-emoji { font-size: 2.2rem; }
-.product-badge {
-  font-size: 0.62rem; font-family: var(--mono);
-  padding: 0.25rem 0.65rem; border-radius: 100px;
-  letter-spacing: 0.08em; font-weight: 700;
-}
-.badge-new { background: rgba(6,214,160,0.12); color: var(--teal); border: 1px solid rgba(6,214,160,0.2); }
-.badge-hot { background: rgba(255,107,157,0.12); color: var(--accent2); border: 1px solid rgba(255,107,157,0.2); }
-.badge-rec { background: rgba(255,209,102,0.12); color: var(--gold); border: 1px solid rgba(255,209,102,0.2); }
-.product-body { padding: 1rem 1.5rem 1.5rem; flex: 1; display: flex; flex-direction: column; }
-.product-title {
-  font-family: var(--serif); font-size: 1rem; font-weight: 700;
-  margin-bottom: 0.5rem; line-height: 1.4;
-}
-.product-desc { font-size: 0.78rem; color: var(--muted); line-height: 1.7; flex: 1; margin-bottom: 1.2rem; }
-.product-footer {
-  display: flex; justify-content: space-between; align-items: center;
-  padding-top: 1rem; border-top: 1px solid var(--border);
-}
-.product-price {
-  font-family: var(--mono); font-size: 0.8rem; color: var(--gold);
-}
-.product-link {
-  font-size: 0.7rem; font-family: var(--mono);
-  color: var(--accent); text-decoration: none;
-  letter-spacing: 0.08em; transition: opacity 0.2s;
-}
-.product-link:hover { opacity: 0.7; }
-
-/* ABOUT */
-#about {
-  padding: 6rem 4rem;
-  position: relative; z-index: 1;
-  background: var(--bg2);
-  border-top: 1px solid var(--border);
-  border-bottom: 1px solid var(--border);
-}
-.about-inner {
-  max-width: 1100px; margin: 0 auto;
-  display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: center;
-}
-.about-img {
-  border-radius: 16px; overflow: hidden;
-  border: 1px solid var(--border);
-  position: relative;
-}
-.about-img img { width: 100%; display: block; }
-.about-img-glow {
-  position: absolute; inset: 0;
-  background: linear-gradient(135deg, rgba(124,111,255,0.1), transparent);
-  pointer-events: none;
-}
-.about-text {}
-.about-name {
-  font-family: var(--serif);
-  font-size: 2rem; font-weight: 700; margin-bottom: 0.5rem;
-}
-.about-role {
-  font-family: var(--mono); font-size: 0.72rem;
-  color: var(--accent); letter-spacing: 0.12em; margin-bottom: 1.5rem;
-}
-.about-body { font-size: 0.85rem; color: var(--muted); line-height: 1.9; margin-bottom: 1.5rem; }
-.about-body strong { color: var(--text); font-weight: 500; }
-.about-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 2rem; }
-.about-tag {
-  padding: 0.3rem 0.8rem;
-  border: 1px solid var(--border);
-  border-radius: 100px; font-size: 0.7rem;
-  color: var(--muted); font-family: var(--mono);
-  transition: all 0.2s;
-}
-.about-tag:hover { border-color: var(--accent); color: var(--accent); }
-.about-links { display: flex; flex-direction: column; gap: 0.75rem; }
-.about-link {
-  display: flex; align-items: center; gap: 0.75rem;
-  font-size: 0.8rem; color: var(--muted); text-decoration: none;
-  transition: color 0.2s;
-}
-.about-link:hover { color: var(--accent); }
-.about-link .icon {
-  width: 32px; height: 32px;
-  border: 1px solid var(--border); border-radius: 8px;
-  display: flex; align-items: center; justify-content: center;
-  font-size: 1rem; transition: border-color 0.2s;
-}
-.about-link:hover .icon { border-color: var(--accent); }
-
-/* NOTE */
-#note {
-  padding: 6rem 4rem;
-  position: relative; z-index: 1;
-  background: linear-gradient(135deg, rgba(201,98,42,0.04), rgba(139,74,158,0.03));
-}
-.note-inner { max-width: 1100px; margin: 0 auto; text-align: center; }
-.note-title {
-  font-family: var(--serif);
-  font-size: clamp(1.8rem, 3.5vw, 2.8rem);
-  font-weight: 700; margin-bottom: 1rem; line-height: 1.3;
-}
-.note-desc { font-size: 0.85rem; color: var(--muted); line-height: 1.8; margin-bottom: 3rem; }
-.note-card-row {
-  display: grid; grid-template-columns: repeat(3, 1fr);
-  gap: 1rem; margin-bottom: 3rem;
-}
-.note-card {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: 12px; padding: 1.5rem;
-  text-align: left; transition: all 0.3s;
-}
-.note-card:hover { border-color: rgba(201,98,42,0.3); transform: translateY(-2px); }
-.note-card-num {
-  font-family: var(--mono); font-size: 0.6rem;
-  color: var(--accent); letter-spacing: 0.12em; margin-bottom: 0.6rem;
-}
-.note-card-title {
-  font-family: var(--serif); font-size: 0.9rem; font-weight: 700;
-  line-height: 1.4; color: var(--text);
-}
-
-/* CTA */
-#cta {
-  padding: 8rem 4rem;
-  position: relative; z-index: 1;
-  text-align: center;
-}
-.cta-inner { max-width: 700px; margin: 0 auto; }
-.cta-title {
-  font-family: var(--serif);
-  font-size: clamp(2rem, 5vw, 3.5rem);
-  font-weight: 700; line-height: 1.25; margin-bottom: 1.5rem;
-}
-.cta-title .grad {
-  background: linear-gradient(135deg, var(--accent), var(--accent2));
-  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-.cta-desc { font-size: 0.85rem; color: var(--muted); line-height: 1.8; margin-bottom: 3rem; }
-.cta-btns { display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap; }
-
-/* FOOTER */
-footer {
-  padding: 2rem 4rem;
-  border-top: 1px solid var(--border);
-  display: flex; justify-content: space-between; align-items: center;
-  font-size: 0.7rem; color: var(--muted);
-  font-family: var(--mono); position: relative; z-index: 1;
-}
-
-/* Animations */
-@keyframes fadeUp {
-  from { opacity: 0; transform: translateY(20px); }
-  to   { opacity: 1; transform: translateY(0); }
-}
-@keyframes fadeIn {
-  from { opacity: 0; } to { opacity: 1; }
-}
-.reveal {
-  opacity: 0; transform: translateY(24px);
-  transition: opacity 0.7s ease, transform 0.7s ease;
-}
-.reveal.visible { opacity: 1; transform: none; }
-
-/* Divider */
-.divider {
-  height: 1px; background: var(--border);
-  margin: 0; position: relative; z-index: 1;
-}
-
-/* ── Profile Card ── */
-.profile-card-main {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: 24px;
-  padding: 2.5rem 2rem 2rem;
-  position: relative;
-  overflow: hidden;
-  box-shadow: 0 20px 60px rgba(26,20,16,0.08);
-  text-align: center;
-}
-.profile-card-main::before {
-  content: '';
-  position: absolute; top: 0; left: 0; right: 0; height: 3px;
-  background: linear-gradient(90deg, var(--accent), var(--accent2), var(--gold));
-}
-.profile-card-main::after {
-  content: '';
-  position: absolute;
-  top: -60px; right: -60px;
-  width: 200px; height: 200px;
-  border-radius: 50%;
-  background: radial-gradient(circle, rgba(201,98,42,0.06), transparent 70%);
-  pointer-events: none;
-}
-
-.pc-avatar-wrap {
-  position: relative;
-  display: inline-block;
-  margin-bottom: 1.2rem;
-}
-.pc-avatar {
-  width: 100px; height: 100px;
+.pv-photo {
+  width: 180px; height: 180px;
   border-radius: 50%; overflow: hidden;
-  border: 3px solid var(--border);
-  position: relative; z-index: 1;
-  background: var(--bg2);
+  border: 3px solid var(--cream3);
+  margin-bottom: 2.5rem;
+  box-shadow: 0 20px 50px rgba(28,23,18,0.12);
+  position: relative;
 }
-.pc-avatar img { width: 100%; height: 100%; object-fit: cover; display: block; }
-.pc-avatar-ring {
-  position: absolute; inset: -6px;
-  border-radius: 50%;
-  border: 1.5px dashed rgba(201,98,42,0.3);
-  animation: spin 12s linear infinite;
+.pv-photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.pv-photo-fallback {
+  display: none; width: 100%; height: 100%;
+  background: var(--cream3); align-items: center;
+  justify-content: center; font-size: 4rem;
 }
-@keyframes spin { to { transform: rotate(360deg); } }
-.pc-online {
-  position: absolute; bottom: 2px; right: 2px;
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: 100px;
-  padding: 0.2rem 0.55rem;
-  font-size: 0.6rem; font-family: var(--mono);
-  color: var(--muted); letter-spacing: 0.06em;
-  display: flex; align-items: center; gap: 0.3rem;
-  z-index: 2;
+.pv-name {
+  font-family: var(--serif-jp); font-size: 1.8rem;
+  font-weight: 500; margin-bottom: 0.3rem;
+  letter-spacing: 0.05em;
+}
+.pv-role {
+  font-family: var(--mono); font-size: 0.65rem;
+  color: var(--muted); letter-spacing: 0.15em;
+  text-transform: uppercase; margin-bottom: 2.5rem;
+}
+
+/* Stat pills */
+.pv-stats { display: flex; flex-direction: column; gap: 0.75rem; margin-bottom: 2.5rem; }
+.pv-stat {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0.9rem 1.2rem;
+  background: var(--cream); border: 1px solid var(--border);
+  border-radius: 12px;
+}
+.pv-stat-label { font-size: 0.75rem; color: var(--muted); letter-spacing: 0.05em; }
+.pv-stat-val {
+  font-family: var(--serif-en); font-size: 1.1rem;
+  font-weight: 700; color: var(--rust); font-style: italic;
+}
+
+/* Social row */
+.pv-socials { display: flex; gap: 0.6rem; }
+.pv-social {
+  padding: 0.5rem 1rem;
+  border: 1px solid var(--border); border-radius: 100px;
+  font-size: 0.65rem; font-family: var(--mono);
+  color: var(--muted); text-decoration: none;
+  letter-spacing: 0.08em; cursor: none;
+  transition: all .2s; display: flex; align-items: center; gap: 0.4rem;
   white-space: nowrap;
 }
-.pc-online span {
-  width: 6px; height: 6px; border-radius: 50%;
-  background: var(--teal);
-  animation: pulse 2s ease infinite;
-}
-@keyframes pulse {
-  0%,100% { opacity: 1; }
-  50% { opacity: 0.4; }
-}
+.pv-social:hover { border-color: var(--rust); color: var(--rust); background: rgba(184,92,42,0.04); }
 
-.pc-name {
-  font-family: var(--serif);
-  font-size: 1.5rem; font-weight: 700;
-  letter-spacing: -0.01em; margin-bottom: 0.3rem;
+/* ── MARQUEE ── */
+.marquee-wrap {
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  background: var(--cream2);
+  overflow: hidden; position: relative; z-index: 1;
+  padding: 1rem 0;
 }
-.pc-role {
+.marquee-track {
+  display: flex; width: max-content;
+  animation: scroll 28s linear infinite;
+}
+.marquee-item {
+  font-family: var(--serif-en); font-style: italic;
+  font-size: 0.95rem; color: var(--faint);
+  padding: 0 2.5rem; white-space: nowrap;
+  letter-spacing: 0.05em;
+}
+.marquee-item span { color: var(--rust); font-style: normal; margin: 0 0.5rem; }
+@keyframes scroll { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+/* ── SECTION SHARED ── */
+.section-wrap { max-width: 1200px; margin: 0 auto; padding: 0 5vw; }
+.section-label {
+  display: flex; align-items: center; gap: 1.2rem;
+  margin-bottom: 4rem;
+}
+.section-label-num {
   font-family: var(--mono); font-size: 0.65rem;
-  color: var(--muted); letter-spacing: 0.08em;
-  margin-bottom: 1.5rem; line-height: 1.5;
+  color: var(--faint); letter-spacing: 0.15em;
+}
+.section-label-line { flex: 1; height: 1px; background: var(--border); }
+.section-label-text {
+  font-family: var(--mono); font-size: 0.65rem;
+  color: var(--muted); letter-spacing: 0.18em; text-transform: uppercase;
 }
 
-.pc-stats {
-  display: flex; justify-content: center; align-items: center;
-  gap: 1rem; margin-bottom: 1.5rem;
-  padding: 1rem;
-  background: var(--bg2);
-  border-radius: 12px;
+/* ── WHAT I DO ── */
+#services {
+  padding: 8rem 0;
+  position: relative; z-index: 1;
+}
+.services-header { margin-bottom: 5rem; }
+.services-h2 {
+  font-family: var(--serif-en);
+  font-size: clamp(2.5rem, 4.5vw, 4.5rem);
+  font-weight: 400; line-height: 1.15;
+  letter-spacing: -0.02em;
+}
+.services-h2 em { font-style: italic; color: var(--rust); }
+.services-h2 .jp {
+  font-family: var(--serif-jp); font-size: 0.45em;
+  font-weight: 300; color: var(--muted);
+  display: block; letter-spacing: 0.12em; margin-top: 0.6rem;
+}
+
+.services-list { display: flex; flex-direction: column; gap: 0; }
+.service-row {
+  display: grid; grid-template-columns: 80px 1fr 1fr;
+  gap: 3rem; align-items: start;
+  padding: 2.5rem 0;
+  border-bottom: 1px solid var(--border);
+  cursor: none; transition: background .2s;
+}
+.service-row:first-child { border-top: 1px solid var(--border); }
+.service-row:hover { background: var(--cream2); margin: 0 -5vw; padding: 2.5rem 5vw; }
+.service-num {
+  font-family: var(--mono); font-size: 0.65rem;
+  color: var(--faint); letter-spacing: 0.12em; padding-top: 0.3rem;
+}
+.service-name {
+  font-family: var(--serif-jp); font-size: 1.3rem;
+  font-weight: 500; line-height: 1.4; margin-bottom: 0.5rem;
+}
+.service-name-en {
+  font-family: var(--serif-en); font-size: 0.8rem;
+  font-style: italic; color: var(--muted);
+}
+.service-detail { font-size: 0.8rem; color: var(--muted); line-height: 1.85; }
+.service-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: 1rem; }
+.service-tag {
+  padding: 0.2rem 0.65rem;
+  border: 1px solid var(--border); border-radius: 100px;
+  font-size: 0.62rem; color: var(--faint); font-family: var(--mono);
+}
+
+/* ── PRODUCTS ── */
+#products {
+  padding: 8rem 0;
+  background: var(--cream2);
+  border-top: 1px solid var(--border);
+  position: relative; z-index: 1;
+}
+.products-grid {
+  display: grid; grid-template-columns: repeat(2, 1fr);
+  gap: 1px; background: var(--border);
   border: 1px solid var(--border);
+  border-radius: 4px; overflow: hidden;
 }
-.pc-stat { text-align: center; }
-.pc-stat-n {
-  font-family: var(--serif);
-  font-size: 1.2rem; font-weight: 700;
-  color: var(--accent); line-height: 1;
-  margin-bottom: 0.2rem;
+.product-item {
+  background: var(--cream2); padding: 2.5rem;
+  transition: background .25s; cursor: none;
+  position: relative;
 }
-.pc-stat-l { font-size: 0.62rem; color: var(--muted); font-family: var(--mono); letter-spacing: 0.06em; }
-.pc-divider { width: 1px; height: 2rem; background: var(--border); }
+.product-item:hover { background: var(--cream); }
+.product-num {
+  font-family: var(--mono); font-size: 0.6rem;
+  color: var(--faint); letter-spacing: 0.15em; margin-bottom: 1.2rem;
+}
+.product-icon { font-size: 2rem; margin-bottom: 1rem; display: block; }
+.product-name {
+  font-family: var(--serif-jp); font-size: 1.1rem;
+  font-weight: 500; margin-bottom: 0.6rem; line-height: 1.4;
+}
+.product-desc { font-size: 0.78rem; color: var(--muted); line-height: 1.8; margin-bottom: 1.5rem; }
+.product-footer {
+  display: flex; align-items: center; justify-content: space-between;
+  padding-top: 1.2rem; border-top: 1px solid var(--border);
+}
+.product-platform {
+  font-family: var(--mono); font-size: 0.6rem;
+  color: var(--faint); letter-spacing: 0.1em;
+}
+.product-link {
+  font-family: var(--mono); font-size: 0.65rem;
+  color: var(--rust); text-decoration: none; letter-spacing: 0.08em;
+  transition: opacity .2s;
+}
+.product-link:hover { opacity: 0.65; }
+.product-badge {
+  position: absolute; top: 1.5rem; right: 1.5rem;
+  font-size: 0.58rem; font-family: var(--mono);
+  padding: 0.2rem 0.6rem; border-radius: 100px; letter-spacing: 0.08em;
+}
+.badge-hot { background: rgba(184,92,42,0.1); color: var(--rust); border: 1px solid rgba(184,92,42,0.2); }
+.badge-new { background: rgba(122,74,110,0.1); color: var(--plum); border: 1px solid rgba(122,74,110,0.2); }
 
-.pc-tags {
-  display: flex; flex-wrap: wrap; gap: 0.4rem;
-  justify-content: center; margin-bottom: 1.5rem;
+/* ── ABOUT FULL ── */
+#about {
+  padding: 8rem 0;
+  position: relative; z-index: 1;
+  border-top: 1px solid var(--border);
 }
-.pc-tag {
-  padding: 0.3rem 0.7rem;
-  background: var(--bg2);
+.about-grid {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 8rem; align-items: start;
+}
+.about-photo {
+  position: relative;
+}
+.about-photo-frame {
+  border-radius: 4px; overflow: hidden;
   border: 1px solid var(--border);
-  border-radius: 100px;
-  font-size: 0.68rem; color: var(--muted);
-  font-family: var(--mono);
-  transition: all 0.2s;
-}
-.pc-tag:hover { border-color: var(--accent); color: var(--accent); }
-
-.pc-btn {
-  display: block; width: 100%;
-  padding: 0.8rem;
-  background: linear-gradient(135deg, var(--accent), var(--accent2));
-  color: #fff; text-decoration: none;
-  border-radius: 100px;
-  font-size: 0.75rem; font-weight: 700;
-  font-family: var(--sans); letter-spacing: 0.05em;
-  transition: opacity 0.2s, transform 0.2s;
-}
-.pc-btn:hover { opacity: 0.88; transform: translateY(-1px); }
-
-.pc-corner-deco {
-  position: absolute; bottom: 1rem; right: 1.2rem;
-  font-size: 1.2rem; color: var(--border);
-  pointer-events: none;
-}
-
-.pc-socials {
-  display: flex; justify-content: center; gap: 0.6rem;
-  margin-top: 0.9rem;
-}
-.pc-social {
-  width: 36px; height: 36px;
-  border: 1px solid var(--border); border-radius: 10px;
+  aspect-ratio: 3/4; background: var(--cream3);
   display: flex; align-items: center; justify-content: center;
-  font-size: 1rem; text-decoration: none;
-  transition: all 0.2s; background: var(--bg2);
 }
-.pc-social:hover { border-color: var(--accent); transform: translateY(-2px); }
+.about-photo-frame img {
+  width: 100%; height: 100%; object-fit: cover; display: block;
+}
+.about-photo-frame-fallback {
+  font-size: 5rem; display: none;
+}
+.about-photo-caption {
+  position: absolute; bottom: -1px; left: -1px; right: -1px;
+  background: var(--ink); color: var(--cream);
+  padding: 1.2rem 1.5rem;
+  display: flex; justify-content: space-between; align-items: center;
+}
+.about-caption-name {
+  font-family: var(--serif-jp); font-size: 1rem; font-weight: 500;
+}
+.about-caption-role {
+  font-family: var(--mono); font-size: 0.6rem;
+  color: rgba(250,247,242,0.5); letter-spacing: 0.1em;
+}
+.about-photo-num {
+  position: absolute; top: 1.5rem; left: -1rem;
+  font-family: var(--serif-en); font-size: 5rem;
+  font-weight: 700; font-style: italic;
+  color: rgba(184,92,42,0.12); line-height: 1; pointer-events: none;
+}
 
-.footer-socials {
-  display: flex; gap: 1.5rem; align-items: center;
+.about-content {}
+.about-h2 {
+  font-family: var(--serif-en);
+  font-size: clamp(2rem, 3.5vw, 3rem);
+  font-weight: 400; font-style: italic;
+  line-height: 1.2; margin-bottom: 2rem;
+  color: var(--ink);
 }
-.footer-social {
-  font-size: 0.7rem; color: var(--muted);
-  text-decoration: none; font-family: var(--mono);
-  letter-spacing: 0.08em; transition: color 0.2s;
-}
-.footer-social:hover { color: var(--accent); }
+.about-body { font-size: 0.83rem; color: var(--muted); line-height: 1.95; margin-bottom: 2.5rem; }
+.about-body strong { color: var(--ink2); font-weight: 500; }
 
-@media (max-width: 900px) {
-  nav { padding: 1rem 1.5rem; }
-  .nav-links { display: none; }
-  #hero, #features, #products, #about, #note, #cta { padding-left: 1.5rem; padding-right: 1.5rem; }
-  .hero-inner { grid-template-columns: 1fr; gap: 3rem; }
-  .hero-photo-wrap { order: -1; max-width: 360px; margin: 0 auto; }
-  .features-grid { grid-template-columns: 1fr; }
+.about-skills { margin-bottom: 2.5rem; }
+.about-skills-label {
+  font-family: var(--mono); font-size: 0.62rem;
+  color: var(--faint); letter-spacing: 0.18em;
+  text-transform: uppercase; margin-bottom: 1rem;
+}
+.about-skills-grid { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+.skill-chip {
+  padding: 0.35rem 0.85rem;
+  border: 1px solid var(--border); border-radius: 100px;
+  font-size: 0.68rem; color: var(--muted); font-family: var(--mono);
+  letter-spacing: 0.05em; transition: all .2s;
+}
+.skill-chip:hover { border-color: var(--rust); color: var(--rust); }
+
+.about-links-col { display: flex; flex-direction: column; gap: 0.6rem; }
+.about-link-row {
+  display: flex; align-items: center; gap: 1rem;
+  padding: 0.9rem 1.2rem;
+  border: 1px solid var(--border); border-radius: 10px;
+  text-decoration: none; color: var(--muted); font-size: 0.78rem;
+  transition: all .2s; cursor: none;
+}
+.about-link-row:hover { border-color: var(--rust); color: var(--rust); background: rgba(184,92,42,0.03); }
+.about-link-icon { font-size: 1rem; width: 24px; text-align: center; }
+.about-link-label { flex: 1; }
+.about-link-arrow { font-size: 0.7rem; opacity: 0.4; }
+
+/* ── NOTE ── */
+#note-section {
+  padding: 8rem 0;
+  background: var(--ink);
+  position: relative; z-index: 1; overflow: hidden;
+}
+.note-bg-text {
+  position: absolute; top: 50%; left: 0; right: 0;
+  transform: translateY(-50%);
+  font-family: var(--serif-en); font-size: 20rem;
+  font-weight: 700; font-style: italic;
+  color: rgba(255,255,255,0.025); pointer-events: none;
+  text-align: center; white-space: nowrap; user-select: none;
+}
+.note-inner { position: relative; z-index: 1; }
+.note-label-text { color: rgba(250,247,242,0.3) !important; }
+.note-label-line { background: rgba(250,247,242,0.1) !important; }
+.note-label-num { color: rgba(250,247,242,0.15) !important; }
+.note-h2 {
+  font-family: var(--serif-en);
+  font-size: clamp(2.5rem, 5vw, 5rem);
+  font-weight: 400; font-style: italic;
+  color: var(--cream); margin-bottom: 1rem; line-height: 1.1;
+}
+.note-h2 em { color: var(--rust2); }
+.note-sub {
+  font-size: 0.82rem; color: rgba(250,247,242,0.45);
+  margin-bottom: 4rem; line-height: 1.8;
+  font-family: var(--sans);
+}
+.note-articles {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 4px; overflow: hidden; margin-bottom: 3rem;
+}
+.note-article {
+  padding: 2rem; background: rgba(255,255,255,0.02);
+  transition: background .25s; cursor: none;
+}
+.note-article:hover { background: rgba(255,255,255,0.05); }
+.note-article-num {
+  font-family: var(--mono); font-size: 0.6rem;
+  color: var(--rust2); letter-spacing: 0.15em; margin-bottom: 1rem;
+}
+.note-article-title {
+  font-family: var(--serif-jp); font-size: 0.9rem;
+  font-weight: 400; color: rgba(250,247,242,0.75);
+  line-height: 1.65;
+}
+.note-cta {
+  display: inline-flex; align-items: center; gap: 0.6rem;
+  padding: 0.85rem 2rem;
+  border: 1px solid rgba(250,247,242,0.2); border-radius: 100px;
+  font-size: 0.72rem; letter-spacing: 0.12em; text-transform: uppercase;
+  color: rgba(250,247,242,0.6); text-decoration: none;
+  cursor: none; transition: all .25s;
+}
+.note-cta:hover { border-color: var(--rust2); color: var(--rust2); }
+
+/* ── CTA ── */
+#cta {
+  padding: 10rem 0;
+  position: relative; z-index: 1;
+  text-align: center; overflow: hidden;
+}
+.cta-deco {
+  position: absolute; top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  width: 600px; height: 600px; border-radius: 50%;
+  border: 1px solid var(--border); pointer-events: none;
+}
+.cta-deco2 {
+  position: absolute; top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  width: 400px; height: 400px; border-radius: 50%;
+  border: 1px dashed var(--cream3); pointer-events: none;
+  animation: spin2 30s linear infinite;
+}
+@keyframes spin2 { to { transform: translate(-50%,-50%) rotate(360deg); } }
+.cta-inner { position: relative; z-index: 1; max-width: 700px; margin: 0 auto; padding: 0 5vw; }
+.cta-label {
+  font-family: var(--mono); font-size: 0.65rem;
+  color: var(--faint); letter-spacing: 0.2em;
+  text-transform: uppercase; margin-bottom: 2rem;
+}
+.cta-h2 {
+  font-family: var(--serif-en);
+  font-size: clamp(2.5rem, 6vw, 5.5rem);
+  font-weight: 400; line-height: 1.1;
+  letter-spacing: -0.02em; margin-bottom: 1.5rem;
+}
+.cta-h2 em { font-style: italic; color: var(--rust); }
+.cta-desc { font-size: 0.83rem; color: var(--muted); line-height: 1.9; margin-bottom: 3rem; }
+.cta-btns { display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap; }
+
+/* ── FOOTER ── */
+footer {
+  padding: 2.5rem 5vw;
+  border-top: 1px solid var(--border);
+  display: flex; justify-content: space-between; align-items: center;
+  position: relative; z-index: 1;
+}
+.footer-copy {
+  font-family: var(--mono); font-size: 0.65rem;
+  color: var(--faint); letter-spacing: 0.1em;
+}
+.footer-links { display: flex; gap: 1.8rem; }
+.footer-link {
+  font-family: var(--mono); font-size: 0.65rem;
+  color: var(--muted); text-decoration: none; letter-spacing: 0.1em;
+  transition: color .2s;
+}
+.footer-link:hover { color: var(--rust); }
+
+/* ── Animations ── */
+@keyframes up {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+.reveal {
+  opacity: 0; transform: translateY(22px);
+  transition: opacity .75s ease, transform .75s ease;
+}
+.reveal.on { opacity: 1; transform: none; }
+
+/* ── Mobile ── */
+@media (max-width: 860px) {
+  nav { padding: 0 1.5rem; }
+  .nav-center { display: none; }
+  #hero { grid-template-columns: 1fr; }
+  .hero-left { border-right: none; border-bottom: 1px solid var(--border); padding: 7rem 1.5rem 3rem; }
+  .hero-right { padding: 3rem 1.5rem; }
+  .services-list .service-row { grid-template-columns: 1fr; gap: 1rem; }
   .products-grid { grid-template-columns: 1fr; }
-  .about-inner { grid-template-columns: 1fr; gap: 2.5rem; }
-  .note-card-row { grid-template-columns: 1fr; }
-  footer { flex-direction: column; gap: 0.5rem; text-align: center; padding: 1.5rem; }
+  .about-grid { grid-template-columns: 1fr; gap: 3rem; }
+  .note-articles { grid-template-columns: 1fr; }
+  footer { flex-direction: column; gap: 1.2rem; text-align: center; }
+  .section-wrap { padding: 0 1.5rem; }
+  #services, #products, #about, #note-section, #cta { padding: 5rem 0; }
 }
 </style>
 </head>
 <body>
 
-<div class="cursor" id="cursor"></div>
-<div class="cursor-ring" id="ring"></div>
-<div class="stars"></div>
-<div class="blob blob-1"></div>
-<div class="blob blob-2"></div>
+<div class="cur" id="cur-dot" style="position:fixed;z-index:9999;pointer-events:none;transform:translate(-50%,-50%);">
+  <div style="width:6px;height:6px;background:#b85c2a;border-radius:50%;"></div>
+</div>
+<div class="cur" id="cur-ring" style="position:fixed;z-index:9998;pointer-events:none;transform:translate(-50%,-50%);">
+  <div class="cur-ring"></div>
+</div>
 
 <!-- NAV -->
 <nav>
-  <a href="#" class="nav-logo">
-    <div class="logo-gem">✦</div>
-    すずき's Gemini活用術
-  </a>
-  <ul class="nav-links">
-    <li><a href="#features">できること</a></li>
+  <a href="#" class="nav-logo">すずき<span>.</span></a>
+  <ul class="nav-center">
+    <li><a href="#services">できること</a></li>
     <li><a href="#products">販売実績</a></li>
     <li><a href="#about">プロフィール</a></li>
-    <li><a href="#note">note</a></li>
+    <li><a href="#note-section">note</a></li>
   </ul>
-  <a href="https://brain-market.com/u/ksuzu993/a/b0gTMyQjMgoTZsNWa0JXY?free_pass=4iu9T98EiiY35W53eVtLag" class="nav-cta" target="_blank">💰 Brainで購入</a>
+  <div class="nav-right">
+    <a href="https://note.com/YOUR_NOTE_ID" class="nav-social" target="_blank" title="note">📝</a>
+    <a href="https://x.com/YOUR_X_ID" class="nav-social" target="_blank" title="X">𝕏</a>
+    <a href="https://www.instagram.com/YOUR_INSTAGRAM_ID" class="nav-social" target="_blank" title="Instagram">📷</a>
+    <a href="https://brain-market.com/u/ksuzu993/a/b0gTMyQjMgoTZsNWa0JXY?free_pass=4iu9T98EiiY35W53eVtLag" class="nav-btn" target="_blank">Brain ↗</a>
+  </div>
 </nav>
 
 <!-- HERO -->
 <section id="hero">
-  <div class="hero-inner">
-    <div>
-      <div class="hero-badge">生成AI歴3年 × Gemini特化</div>
-      <h1 class="hero-title">
-        <span class="highlight">Geminiで稼ぐ</span>を<br>
-        最短で実現する。
-      </h1>
-      <p class="hero-sub">すずき | Gemini・Gem活用術</p>
-      <p class="hero-tagline">
-        生成AI歴3年の知見を凝縮した<strong>Gemini・Gem活用術</strong>🚀<br>
-        Amazon絵本出版×コンテンツ販売で<strong>ゼロイチ突破</strong>の再現性ある手法を公開📚<br>
-        初心者でも今日から使えるプロンプト〜<strong>マネタイズ導線</strong>まで一気通貫✨
-      </p>
-      <div class="hero-stats">
-        <div class="stat">
-          <div class="stat-n">37</div>
-          <div class="stat-l">販売実績</div>
-        </div>
-        <div class="stat" style="border-left:1px solid var(--border);padding-left:2rem;">
-          <div class="stat-n">3年</div>
-          <div class="stat-l">生成AI歴</div>
-        </div>
-        <div class="stat" style="border-left:1px solid var(--border);padding-left:2rem;">
-          <div class="stat-n">∞</div>
-          <div class="stat-l">可能性</div>
-        </div>
-      </div>
-      <div class="hero-cta">
-        <a href="https://brain-market.com/u/ksuzu993/a/b0gTMyQjMgoTZsNWa0JXY?free_pass=4iu9T98EiiY35W53eVtLag" class="btn btn-primary" target="_blank">💰 Brainでプロンプトを見る</a>
-        <a href="/portfolio/works.html" class="btn btn-outline">実績一覧 →</a>
-      </div>
+  <div class="hero-left">
+    <p class="hero-eyebrow">Prompt Engineer × <em>AI Monetization</em></p>
+    <h1 class="hero-h1">
+      <em>Gemini</em>で<br>稼ぐを、<br>現実にする。
+      <span class="jp">生成AI歴3年の知見を、あなたへ。</span>
+    </h1>
+    <p class="hero-desc">
+      <strong>Brain・Tips</strong> にてプロンプトを販売。４コマ漫画・占い・コーチングなど多彩なプロンプトと、<strong>Amazon絵本出版</strong>を組み合わせたゼロイチ突破の再現性ある手法を公開中。
+    </p>
+    <div class="hero-actions">
+      <a href="https://brain-market.com/u/ksuzu993/a/b0gTMyQjMgoTZsNWa0JXY?free_pass=4iu9T98EiiY35W53eVtLag" class="btn-solid" target="_blank">Brainで見る</a>
+      <a href="#products" class="btn-line">実績一覧を見る</a>
     </div>
+    <div class="hero-deco-line"></div>
+  </div>
 
-    <div class="hero-photo-wrap">
-      <div class="profile-card-main">
-        <div class="pc-avatar-wrap">
-          <div class="pc-avatar">
-            <img src="1777782845940_image.png" alt="すずき" onerror="this.style.display='none';document.getElementById('av-fb').style.display='flex';">
-            <div id="av-fb" style="display:none;width:100%;height:100%;align-items:center;justify-content:center;font-size:3rem;background:linear-gradient(135deg,#f2ece3,#e8ddd0);">🤖</div>
-          </div>
-          <div class="pc-avatar-ring"></div>
-          <div class="pc-online"><span></span>発信中</div>
+  <div class="hero-right">
+    <div class="hero-deco-letter">G</div>
+    <div class="profile-visual">
+      <div class="pv-photo">
+        <img src="photo.png" alt="すずき"
+          onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+        <div class="pv-photo-fallback">🤖</div>
+      </div>
+      <div class="pv-name">すずき</div>
+      <p class="pv-role">Gemini · Gem活用術 · AI Monetization</p>
+
+      <div class="pv-stats">
+        <div class="pv-stat">
+          <span class="pv-stat-label">販売実績</span>
+          <span class="pv-stat-val">37 items</span>
         </div>
-        <div class="pc-name">すずき</div>
-        <div class="pc-role">Gemini・Gem活用術 × AI Monetization</div>
-        <div class="pc-stats">
-          <div class="pc-stat"><div class="pc-stat-n">37</div><div class="pc-stat-l">販売実績</div></div>
-          <div class="pc-divider"></div>
-          <div class="pc-stat"><div class="pc-stat-n">3年</div><div class="pc-stat-l">生成AI歴</div></div>
-          <div class="pc-divider"></div>
-          <div class="pc-stat"><div class="pc-stat-n">★4.9</div><div class="pc-stat-l">平均評価</div></div>
+        <div class="pv-stat">
+          <span class="pv-stat-label">生成AI歴</span>
+          <span class="pv-stat-val">3 years</span>
         </div>
-        <div class="pc-tags">
-          <span class="pc-tag">🤖 Gemini</span>
-          <span class="pc-tag">✨ Gem機能</span>
-          <span class="pc-tag">📚 Amazon出版</span>
-          <span class="pc-tag">💰 マネタイズ</span>
-          <span class="pc-tag">🎭 ４コマ漫画</span>
-          <span class="pc-tag">🔮 占い</span>
+        <div class="pv-stat">
+          <span class="pv-stat-label">対応プラットフォーム</span>
+          <span class="pv-stat-val">Brain · Tips</span>
         </div>
-        <a href="https://brain-market.com/u/ksuzu993/a/b0gTMyQjMgoTZsNWa0JXY?free_pass=4iu9T98EiiY35W53eVtLag" class="pc-btn" target="_blank">Brain でプロンプトを見る ↗</a>
-        <div class="pc-socials">
-          <a href="https://note.com/YOUR_NOTE_ID" class="pc-social" target="_blank" title="note">📝</a>
-          <a href="https://x.com/YOUR_X_ID" class="pc-social" target="_blank" title="X">𝕏</a>
-          <a href="https://www.instagram.com/YOUR_INSTAGRAM_ID" class="pc-social" target="_blank" title="Instagram">📷</a>
-        </div>
-        <div class="pc-corner-deco">✦</div>
+      </div>
+
+      <div class="pv-socials">
+        <a href="https://note.com/YOUR_NOTE_ID" class="pv-social" target="_blank">📝 note</a>
+        <a href="https://x.com/YOUR_X_ID" class="pv-social" target="_blank">𝕏 X</a>
+        <a href="https://www.instagram.com/YOUR_INSTAGRAM_ID" class="pv-social" target="_blank">📷 IG</a>
       </div>
     </div>
   </div>
 </section>
 
-<!-- FEATURES -->
-<section id="features">
-  <div class="features-inner">
-    <p class="section-eyebrow reveal">// What I Do</p>
-    <h2 class="section-title reveal">あなたの<span class="g">AIマネタイズ</span>を<br>一気通貫でサポート</h2>
-    <div class="features-grid">
-      <div class="feature-card fc1 reveal">
-        <div class="feature-icon">🤖</div>
-        <h3 class="feature-title">Gemini・Gem活用プロンプト</h3>
-        <p class="feature-desc">４コマ漫画・占い・コーチングなど、すぐに使えるプロンプトをBrainで販売中。初心者でも今日から実践できます。</p>
+<!-- MARQUEE -->
+<div class="marquee-wrap">
+  <div class="marquee-track">
+    <span class="marquee-item">Gemini活用術<span>✦</span></span>
+    <span class="marquee-item">プロンプト設計<span>✦</span></span>
+    <span class="marquee-item">Amazon絵本出版<span>✦</span></span>
+    <span class="marquee-item">AI Monetization<span>✦</span></span>
+    <span class="marquee-item">Brain販売<span>✦</span></span>
+    <span class="marquee-item">Gem機能活用<span>✦</span></span>
+    <span class="marquee-item">コンテンツ収益化<span>✦</span></span>
+    <span class="marquee-item">note発信<span>✦</span></span>
+    <span class="marquee-item">Gemini活用術<span>✦</span></span>
+    <span class="marquee-item">プロンプト設計<span>✦</span></span>
+    <span class="marquee-item">Amazon絵本出版<span>✦</span></span>
+    <span class="marquee-item">AI Monetization<span>✦</span></span>
+    <span class="marquee-item">Brain販売<span>✦</span></span>
+    <span class="marquee-item">Gem機能活用<span>✦</span></span>
+    <span class="marquee-item">コンテンツ収益化<span>✦</span></span>
+    <span class="marquee-item">note発信<span>✦</span></span>
+  </div>
+</div>
+
+<!-- SERVICES -->
+<section id="services">
+  <div class="section-wrap">
+    <div class="section-label reveal">
+      <span class="section-label-num">01</span>
+      <span class="section-label-line"></span>
+      <span class="section-label-text">What I Do</span>
+    </div>
+    <div class="services-header reveal">
+      <h2 class="services-h2">
+        AIで稼ぐための<br><em>すべてを、届ける。</em>
+        <span class="jp">プロンプト設計からマネタイズまで一気通貫</span>
+      </h2>
+    </div>
+    <div class="services-list">
+      <div class="service-row reveal">
+        <div class="service-num">001</div>
+        <div>
+          <div class="service-name">プロンプト販売</div>
+          <div class="service-name-en">Prompt Sales</div>
+        </div>
+        <div>
+          <p class="service-detail">Brain・Tipsにて高品質なプロンプトを販売。４コマ漫画・占い・コーチングなど多彩なジャンルに対応。初心者でも今日から使える設計になっています。</p>
+          <div class="service-tags">
+            <span class="service-tag">Brain</span>
+            <span class="service-tag">Tips</span>
+            <span class="service-tag">Gemini</span>
+          </div>
+        </div>
       </div>
-      <div class="feature-card fc2 reveal">
-        <div class="feature-icon">📚</div>
-        <h3 class="feature-title">Amazon絵本出版 × コンテンツ販売</h3>
-        <p class="feature-desc">AIを活用したAmazon絵本出版の手法とコンテンツ販売でゼロイチを突破。再現性のある収益化モデルを公開。</p>
+      <div class="service-row reveal">
+        <div class="service-num">002</div>
+        <div>
+          <div class="service-name">Amazon絵本出版</div>
+          <div class="service-name-en">Amazon KDP Publishing</div>
+        </div>
+        <div>
+          <p class="service-detail">GeminiとAIツールを組み合わせてAmazon KDPで絵本を出版。ゼロイチ突破の再現性ある手法を公開中。コンテンツ販売との掛け合わせで収益を最大化。</p>
+          <div class="service-tags">
+            <span class="service-tag">Amazon KDP</span>
+            <span class="service-tag">絵本</span>
+            <span class="service-tag">収益化</span>
+          </div>
+        </div>
       </div>
-      <div class="feature-card fc3 reveal">
-        <div class="feature-icon">💰</div>
-        <h3 class="feature-title">マネタイズ導線の設計</h3>
-        <p class="feature-desc">プロンプト作成からnote発信、Brain販売まで。AIで稼ぐための一気通貫の導線づくりをわかりやすく解説します。</p>
+      <div class="service-row reveal">
+        <div class="service-num">003</div>
+        <div>
+          <div class="service-name">マネタイズ設計</div>
+          <div class="service-name-en">Monetization Design</div>
+        </div>
+        <div>
+          <p class="service-detail">プロンプト作成→note発信→Brain販売まで一気通貫のマネタイズ導線を設計。生成AI歴3年の知見を凝縮した、初心者でも再現できる手法を共有します。</p>
+          <div class="service-tags">
+            <span class="service-tag">note</span>
+            <span class="service-tag">導線設計</span>
+            <span class="service-tag">ゼロイチ</span>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -783,198 +776,230 @@ footer {
 
 <!-- PRODUCTS -->
 <section id="products">
-  <div class="products-inner">
-    <p class="section-eyebrow reveal">// Products</p>
-    <h2 class="section-title reveal">販売中の<span class="g">プロンプト</span></h2>
+  <div class="section-wrap">
+    <div class="section-label reveal">
+      <span class="section-label-num">02</span>
+      <span class="section-label-line"></span>
+      <span class="section-label-text">Products</span>
+    </div>
     <div class="products-grid">
-
-      <div class="product-card reveal">
-        <div class="product-top">
-          <div class="product-emoji">🎭</div>
-          <span class="product-badge badge-hot">人気</span>
-        </div>
-        <div class="product-body">
-          <h3 class="product-title">４コマ漫画生成プロンプト</h3>
-          <p class="product-desc">GeminiのGem機能を使って、テーマを入力するだけで面白い４コマ漫画のストーリーを自動生成。SNS発信・コンテンツ制作に最適。</p>
-          <div class="product-footer">
-            <span class="product-price">Brain にて販売中</span>
-            <a href="https://brain-market.com/u/ksuzu993/a/b0gTMyQjMgoTZsNWa0JXY?free_pass=4iu9T98EiiY35W53eVtLag" class="product-link" target="_blank">購入する ↗</a>
-          </div>
+      <div class="product-item reveal">
+        <span class="product-badge badge-hot">人気</span>
+        <div class="product-num">001</div>
+        <span class="product-icon">🎭</span>
+        <div class="product-name">４コマ漫画生成プロンプト</div>
+        <p class="product-desc">テーマを入力するだけで面白い４コマのストーリーを自動生成。SNS発信・コンテンツ制作に最適なGem対応プロンプト。</p>
+        <div class="product-footer">
+          <span class="product-platform">Brain</span>
+          <a href="https://brain-market.com/u/ksuzu993/a/b0gTMyQjMgoTZsNWa0JXY?free_pass=4iu9T98EiiY35W53eVtLag" class="product-link" target="_blank">購入する ↗</a>
         </div>
       </div>
-
-      <div class="product-card reveal">
-        <div class="product-top">
-          <div class="product-emoji">🔮</div>
-          <span class="product-badge badge-new">新着</span>
-        </div>
-        <div class="product-body">
-          <h3 class="product-title">占いプロンプト</h3>
-          <p class="product-desc">タロット・星座・数秘術などをGeminiで本格的に占えるプロンプト集。SNSコンテンツや有料サービスとして活用できます。</p>
-          <div class="product-footer">
-            <span class="product-price">Brain にて販売中</span>
-            <a href="https://brain-market.com/u/ksuzu993/a/b0gTMyQjMgoTZsNWa0JXY?free_pass=4iu9T98EiiY35W53eVtLag" class="product-link" target="_blank">購入する ↗</a>
-          </div>
+      <div class="product-item reveal">
+        <span class="product-badge badge-new">New</span>
+        <div class="product-num">002</div>
+        <span class="product-icon">🔮</span>
+        <div class="product-name">占いプロンプト</div>
+        <p class="product-desc">タロット・星座・数秘術をGeminiで本格的に実現。SNSコンテンツや有料サービスとして活用できる高品質プロンプト。</p>
+        <div class="product-footer">
+          <span class="product-platform">Brain</span>
+          <a href="https://brain-market.com/u/ksuzu993/a/b0gTMyQjMgoTZsNWa0JXY?free_pass=4iu9T98EiiY35W53eVtLag" class="product-link" target="_blank">購入する ↗</a>
         </div>
       </div>
-
-      <div class="product-card reveal">
-        <div class="product-top">
-          <div class="product-emoji">🧠</div>
-          <span class="product-badge badge-rec">おすすめ</span>
-        </div>
-        <div class="product-body">
-          <h3 class="product-title">コーチングプロンプト</h3>
-          <p class="product-desc">目標設定・振り返り・行動計画をGeminiがコーチング形式でサポート。セルフコーチングはもちろん、コーチングサービスにも応用できます。</p>
-          <div class="product-footer">
-            <span class="product-price">Brain にて販売中</span>
-            <a href="https://brain-market.com/u/ksuzu993/a/b0gTMyQjMgoTZsNWa0JXY?free_pass=4iu9T98EiiY35W53eVtLag" class="product-link" target="_blank">購入する ↗</a>
-          </div>
+      <div class="product-item reveal">
+        <div class="product-num">003</div>
+        <span class="product-icon">🧠</span>
+        <div class="product-name">コーチングプロンプト</div>
+        <p class="product-desc">目標設定・振り返り・行動計画をGeminiがコーチング形式でサポート。セルフコーチングからサービス展開まで幅広く活用可能。</p>
+        <div class="product-footer">
+          <span class="product-platform">Brain</span>
+          <a href="https://brain-market.com/u/ksuzu993/a/b0gTMyQjMgoTZsNWa0JXY?free_pass=4iu9T98EiiY35W53eVtLag" class="product-link" target="_blank">購入する ↗</a>
         </div>
       </div>
-
-      <div class="product-card reveal">
-        <div class="product-top">
-          <div class="product-emoji">📖</div>
-          <span class="product-badge badge-hot">人気</span>
-        </div>
-        <div class="product-body">
-          <h3 class="product-title">Amazon絵本出版プロンプトセット</h3>
-          <p class="product-desc">GeminiでAmazon KDP向け絵本を作るためのプロンプトセット。ストーリー・キャラクター・説明文まで一気に生成できます。</p>
-          <div class="product-footer">
-            <span class="product-price">Brain にて販売中</span>
-            <a href="https://brain-market.com/u/ksuzu993/a/b0gTMyQjMgoTZsNWa0JXY?free_pass=4iu9T98EiiY35W53eVtLag" class="product-link" target="_blank">購入する ↗</a>
-          </div>
+      <div class="product-item reveal">
+        <span class="product-badge badge-hot">人気</span>
+        <div class="product-num">004</div>
+        <span class="product-icon">📖</span>
+        <div class="product-name">Amazon絵本出版プロンプトセット</div>
+        <p class="product-desc">Amazon KDP向け絵本をGeminiで丸ごと作るプロンプトセット。ストーリー・キャラクター・説明文まで一気に生成。</p>
+        <div class="product-footer">
+          <span class="product-platform">Brain</span>
+          <a href="https://brain-market.com/u/ksuzu993/a/b0gTMyQjMgoTZsNWa0JXY?free_pass=4iu9T98EiiY35W53eVtLag" class="product-link" target="_blank">購入する ↗</a>
         </div>
       </div>
-
     </div>
   </div>
 </section>
 
 <!-- ABOUT -->
 <section id="about">
-  <div class="about-inner">
-    <div class="about-img reveal">
-      <img src="1777782845940_image.png" alt="すずき" onerror="this.style.display='none';this.parentElement.style.minHeight='400px';this.parentElement.style.background='linear-gradient(135deg,#f2ece3,#e8ddd0)';">      <div class="about-img-glow"></div>
+  <div class="section-wrap">
+    <div class="section-label reveal">
+      <span class="section-label-num">03</span>
+      <span class="section-label-line"></span>
+      <span class="section-label-text">About</span>
     </div>
-    <div class="about-text">
-      <p class="section-eyebrow reveal">// About</p>
-      <h2 class="about-name reveal">すずき</h2>
-      <p class="about-role reveal">Gemini・Gem活用術 × AI Monetization</p>
-      <p class="about-body reveal">
-        <strong>生成AI歴3年</strong>の知見を凝縮し、Gemini・Gemを使ったコンテンツ制作・マネタイズ手法を発信しています。<br><br>
-        <strong>Amazon絵本出版</strong>とコンテンツ販売でゼロイチを突破した<strong>再現性ある手法</strong>を、初心者でも今日から実践できる形で公開中📚<br><br>
-        プロンプト設計からマネタイズ導線まで<strong>一気通貫</strong>でサポートします✨
-      </p>
-      <div class="about-tags reveal">
-        <span class="about-tag">Gemini</span>
-        <span class="about-tag">Gem機能</span>
-        <span class="about-tag">プロンプト設計</span>
-        <span class="about-tag">Amazon KDP</span>
-        <span class="about-tag">絵本出版</span>
-        <span class="about-tag">コンテンツ販売</span>
-        <span class="about-tag">マネタイズ</span>
-        <span class="about-tag">note発信</span>
+    <div class="about-grid">
+      <div class="about-photo reveal">
+        <div class="about-photo-num">03</div>
+        <div class="about-photo-frame">
+          <img src="photo.png" alt="すずき"
+            onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+          <div class="about-photo-frame-fallback">🤖</div>
+        </div>
+        <div class="about-photo-caption">
+          <div>
+            <div class="about-caption-name">すずき</div>
+            <div class="about-caption-role">Gemini · AI Monetization</div>
+          </div>
+          <div style="font-family:var(--mono);font-size:0.6rem;color:rgba(250,247,242,0.4);">Since 2022</div>
+        </div>
       </div>
-      <div class="about-links reveal">
-        <a href="https://brain-market.com/u/ksuzu993/a/b0gTMyQjMgoTZsNWa0JXY?free_pass=4iu9T98EiiY35W53eVtLag" class="about-link" target="_blank">
-          <div class="icon">💰</div>
-          Brain ショップ — プロンプト販売中（37件）
-        </a>
-        <a href="https://note.com/YOUR_NOTE_ID" class="about-link" target="_blank">
-          <div class="icon">📝</div>
-          note — すずき's｜Gemini・Gem活用術
-        </a>
-        <a href="https://x.com/YOUR_X_ID" class="about-link" target="_blank">
-          <div class="icon">𝕏</div>
-          X (Twitter) — AI活用情報を発信中
-        </a>
-        <a href="https://www.instagram.com/YOUR_INSTAGRAM_ID" class="about-link" target="_blank">
-          <div class="icon">📷</div>
-          Instagram — Gemini活用術を発信中
-        </a>
+
+      <div class="about-content reveal">
+        <h2 class="about-h2">Turning AI<br>into income.</h2>
+        <p class="about-body">
+          生成AI歴<strong>3年</strong>の知見を凝縮し、Gemini・Gem機能を活用したコンテンツ制作・マネタイズ手法を発信しています。<br><br>
+          <strong>Amazon絵本出版</strong>とコンテンツ販売を組み合わせたゼロイチ突破の手法は、初心者でも再現できる設計になっています📚<br><br>
+          プロンプト設計からnote発信、Brain販売まで<strong>一気通貫</strong>のサポートで、あなたのAIマネタイズを実現します✨
+        </p>
+
+        <div class="about-skills">
+          <div class="about-skills-label">専門領域</div>
+          <div class="about-skills-grid">
+            <span class="skill-chip">Gemini</span>
+            <span class="skill-chip">Gem機能</span>
+            <span class="skill-chip">プロンプト設計</span>
+            <span class="skill-chip">Amazon KDP</span>
+            <span class="skill-chip">絵本出版</span>
+            <span class="skill-chip">コンテンツ販売</span>
+            <span class="skill-chip">マネタイズ</span>
+            <span class="skill-chip">note発信</span>
+          </div>
+        </div>
+
+        <div class="about-links-col">
+          <a href="https://brain-market.com/u/ksuzu993/a/b0gTMyQjMgoTZsNWa0JXY?free_pass=4iu9T98EiiY35W53eVtLag" class="about-link-row" target="_blank">
+            <span class="about-link-icon">💰</span>
+            <span class="about-link-label">Brain — プロンプト販売中（37件）</span>
+            <span class="about-link-arrow">↗</span>
+          </a>
+          <a href="https://note.com/YOUR_NOTE_ID" class="about-link-row" target="_blank">
+            <span class="about-link-icon">📝</span>
+            <span class="about-link-label">note — すずき's｜Gemini・Gem活用術</span>
+            <span class="about-link-arrow">↗</span>
+          </a>
+          <a href="https://x.com/YOUR_X_ID" class="about-link-row" target="_blank">
+            <span class="about-link-icon">𝕏</span>
+            <span class="about-link-label">X (Twitter) — AI活用情報を発信中</span>
+            <span class="about-link-arrow">↗</span>
+          </a>
+          <a href="https://www.instagram.com/YOUR_INSTAGRAM_ID" class="about-link-row" target="_blank">
+            <span class="about-link-icon">📷</span>
+            <span class="about-link-label">Instagram — Gemini活用術を発信中</span>
+            <span class="about-link-arrow">↗</span>
+          </a>
+        </div>
       </div>
     </div>
   </div>
 </section>
 
 <!-- NOTE -->
-<section id="note">
-  <div class="note-inner">
-    <p class="section-eyebrow reveal">// note</p>
-    <h2 class="note-title reveal">すずき's<br><span style="background:linear-gradient(135deg,var(--accent),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">Gemini・Gem活用術</span></h2>
-    <p class="note-desc reveal">初心者でも今日から使える、Gemini活用の実践ノウハウを毎週発信中🏆</p>
-    <div class="note-card-row reveal">
-      <div class="note-card">
-        <div class="note-card-num">01 / Tips</div>
-        <div class="note-card-title">Geminiで稼ぐ第一歩｜プロンプト設計の基本</div>
+<section id="note-section">
+  <div class="note-bg-text">note</div>
+  <div class="section-wrap note-inner">
+    <div class="section-label reveal">
+      <span class="section-label-num note-label-num">04</span>
+      <span class="section-label-line note-label-line"></span>
+      <span class="section-label-text note-label-text">note</span>
+    </div>
+    <h2 class="note-h2 reveal">すずき's<br><em>Gemini活用術</em></h2>
+    <p class="note-sub reveal">初心者でも今日から使える、Geminiマネタイズの実践ノウハウを発信中🏆</p>
+    <div class="note-articles reveal">
+      <div class="note-article">
+        <div class="note-article-num">Article 01</div>
+        <div class="note-article-title">Geminiで稼ぐ第一歩｜プロンプト設計の基本と収益化への道筋</div>
       </div>
-      <div class="note-card">
-        <div class="note-card-num">02 / Guide</div>
-        <div class="note-card-title">Gem機能をフル活用してコンテンツを自動化する方法</div>
+      <div class="note-article">
+        <div class="note-article-num">Article 02</div>
+        <div class="note-article-title">Gem機能をフル活用してコンテンツを半自動化する完全ガイド</div>
       </div>
-      <div class="note-card">
-        <div class="note-card-num">03 / Case</div>
-        <div class="note-card-title">Amazon絵本出版でゼロイチ達成した全手順を公開</div>
+      <div class="note-article">
+        <div class="note-article-num">Article 03</div>
+        <div class="note-article-title">Amazon絵本出版でゼロイチ達成した全手順と再現性ある方法</div>
       </div>
     </div>
-    <a href="#" class="btn btn-outline" style="margin:0 auto;">📝 noteを読む →</a>
+    <div style="text-align:center;">
+      <a href="https://note.com/YOUR_NOTE_ID" class="note-cta reveal" target="_blank">
+        noteを読む ↗
+      </a>
+    </div>
   </div>
 </section>
 
 <!-- CTA -->
 <section id="cta">
+  <div class="cta-deco"></div>
+  <div class="cta-deco2"></div>
   <div class="cta-inner">
-    <h2 class="cta-title reveal">
-      今日から始める、<br>
-      <span class="grad">AIで稼ぐ</span>未来。
-    </h2>
-    <p class="cta-desc reveal">
-      Brainのプロンプトで、あなたのAIマネタイズをゼロから始めましょう。<br>
-      販売実績37件の知見が、すぐにあなたの手元に届きます。
-    </p>
+    <p class="cta-label reveal">Get Started</p>
+    <h2 class="cta-h2 reveal">今日から始める、<br><em>AIで稼ぐ</em>未来。</h2>
+    <p class="cta-desc reveal">販売実績37件の知見が、すぐにあなたの手元に。<br>Brainのプロンプトで、AIマネタイズをゼロから始めましょう。</p>
     <div class="cta-btns reveal">
-      <a href="https://brain-market.com/u/ksuzu993/a/b0gTMyQjMgoTZsNWa0JXY?free_pass=4iu9T98EiiY35W53eVtLag" class="btn btn-primary" target="_blank">💰 Brainでプロンプトを見る</a>
-      <a href="/portfolio/works.html" class="btn btn-outline">実績一覧 →</a>
+      <a href="https://brain-market.com/u/ksuzu993/a/b0gTMyQjMgoTZsNWa0JXY?free_pass=4iu9T98EiiY35W53eVtLag" class="btn-solid" target="_blank">Brainでプロンプトを見る</a>
+      <a href="https://note.com/YOUR_NOTE_ID" class="btn-line" target="_blank">noteを読む</a>
     </div>
   </div>
 </section>
 
+<!-- FOOTER -->
 <footer>
-  <span>© 2026 すずき | Gemini・Gem活用術</span>
-  <div class="footer-socials">
-    <a href="https://note.com/YOUR_NOTE_ID" target="_blank" class="footer-social">📝 note</a>
-    <a href="https://x.com/YOUR_X_ID" target="_blank" class="footer-social">𝕏 X</a>
-    <a href="https://www.instagram.com/YOUR_INSTAGRAM_ID" target="_blank" class="footer-social">📷 Instagram</a>
-    <a href="https://brain-market.com/u/ksuzu993/a/b0gTMyQjMgoTZsNWa0JXY?free_pass=4iu9T98EiiY35W53eVtLag" target="_blank" class="footer-social">💰 Brain</a>
+  <span class="footer-copy">© 2026 すずき — Gemini · Gem活用術</span>
+  <div class="footer-links">
+    <a href="https://note.com/YOUR_NOTE_ID" class="footer-link" target="_blank">note</a>
+    <a href="https://x.com/YOUR_X_ID" class="footer-link" target="_blank">X</a>
+    <a href="https://www.instagram.com/YOUR_INSTAGRAM_ID" class="footer-link" target="_blank">Instagram</a>
+    <a href="https://brain-market.com/u/ksuzu993/a/b0gTMyQjMgoTZsNWa0JXY?free_pass=4iu9T98EiiY35W53eVtLag" class="footer-link" target="_blank">Brain</a>
   </div>
 </footer>
 
 <script>
-  const cur = document.getElementById('cursor');
-  const ring = document.getElementById('ring');
+  // Cursor
+  const dot  = document.getElementById('cur-dot');
+  const ring = document.getElementById('cur-ring');
   let mx=0,my=0,rx=0,ry=0;
-  document.addEventListener('mousemove', e=>{
+  document.addEventListener('mousemove', e => {
     mx=e.clientX; my=e.clientY;
-    cur.style.left=mx+'px'; cur.style.top=my+'px';
+    dot.style.left=mx+'px'; dot.style.top=my+'px';
   });
   (function loop(){
     rx+=(mx-rx)*0.1; ry+=(my-ry)*0.1;
     ring.style.left=rx+'px'; ring.style.top=ry+'px';
     requestAnimationFrame(loop);
   })();
-  document.querySelectorAll('a,button,.product-card,.feature-card,.note-card').forEach(el=>{
-    el.addEventListener('mouseenter',()=>{ ring.style.width=ring.style.height='52px'; ring.style.opacity='0.8'; });
-    el.addEventListener('mouseleave',()=>{ ring.style.width=ring.style.height='36px'; ring.style.opacity='0.5'; });
+  document.querySelectorAll('a, .service-row, .product-item, .note-article').forEach(el => {
+    el.addEventListener('mouseenter', () => {
+      ring.querySelector('.cur-ring').style.width='52px';
+      ring.querySelector('.cur-ring').style.height='52px';
+      ring.querySelector('.cur-ring').style.opacity='0.7';
+    });
+    el.addEventListener('mouseleave', () => {
+      ring.querySelector('.cur-ring').style.width='32px';
+      ring.querySelector('.cur-ring').style.height='32px';
+      ring.querySelector('.cur-ring').style.opacity='0.4';
+    });
   });
 
-  const obs = new IntersectionObserver(entries=>{
-    entries.forEach((e,i)=>{
-      if(e.isIntersecting){ setTimeout(()=>e.target.classList.add('visible'),i*90); obs.unobserve(e.target); }
+  // Scroll reveal
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach((e, i) => {
+      if (e.isIntersecting) {
+        setTimeout(() => e.target.classList.add('on'), i * 90);
+        obs.unobserve(e.target);
+      }
     });
-  },{threshold:0.08});
-  document.querySelectorAll('.reveal').forEach(r=>obs.observe(r));
+  }, { threshold: 0.08 });
+  document.querySelectorAll('.reveal').forEach(r => obs.observe(r));
 </script>
 </body>
 </html>
